@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}404 Not Found &middot; UniLibrary{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center py-5 text-center">
+  <div class="col-md-7 col-lg-6">
+    <div class="card-custom p-5">
+      <div class="display-1 text-warning fw-bold mb-2">404</div>
+      <h1 class="h3 fw-bold text-navy mb-2">Page Not Found</h1>
+      <p class="text-muted mb-4">
+        The library catalog record, student file, or requested URL could not be found. It may have been moved or withdrawn.
+      </p>
+      <div class="d-flex justify-content-center gap-2">
+        <a href="{% url 'home' %}" class="btn btn-navy">
+          &larr; Back to Home
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

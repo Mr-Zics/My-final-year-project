@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}My Reservations &middot; UniLibrary{% endblock %}
+
+{% block content %}
+<div class="py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <div>
+      <h1 class="h3 fw-bold text-navy mb-1">My Reserved Books</h1>
+      <p class="text-muted small mb-0">Track automated reservation queues and hold deadlines for collection.</p>
+    </div>
+    <div>
+      <a href="{% url 'catalogue_list' %}" class="btn btn-gold btn-sm"><i class="fa-solid fa-magnifying-glass"></i> Browse Catalogue</a>
+    </div>
+  </div>
+
+  <!-- Active Reservations -->
+  <div class="card-custom mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+      <h2 class="h5 mb-0 fw-bold text-navy">Active Book Holds &amp; Waitlist Queues</h2>
+      <span class="badge-status {% if active_reservations|length >= max_reservations %}badge-warning{% else %}badge-info{% endif %}">
+        Active ({{ active_reservations|length }}/{{ max_reservations }})
+      </span>
+    </div>
+
+    {% if active_reservations|length >= max_reservations %}
+      <div class="alert alert-warning d-flex align-items-center gap-2 mb-3 py-2 small">
+        <i class="fa-solid fa-circle-info"></i>
+        <span>You have reached your maximum reservation quota (<strong>{{ max_reservations }} active reservations</strong>). To place new reservations, please collect your ready books from the library circulation desk or cancel an existing hold.</span>
+      </div>
+    {% endif %}
+
+    {% if active_reservations %}
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Book Title</th>
+              <th>Accession</th>
+              <th>Reserved On</th>
+              <th>Status</th>
+              <th>Queue Position / Pickup Window</th>
+              <th class="text-end">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for res in active_reservations %}
+              <tr>
+                <td>
+                  <div class="fw-bold">
+                    <a href="{% url 'book_detail' res.book.id %}">{{ res.book.title }}</a>
+                  </div>
+                  <small class="text-muted">{{ res.book.author }}</small>
+                </td>
+                <td>
+                  {% if res.copy %}
+                    <span class="badge-accession">{{ res.copy.accession_number }}</span>
+                  {% else %}
+                    <span class="text-muted small">&mdash;</span>
+                  {% endif %}
+                </td>
+                <td>{{ res.reservation_date|date:"d M Y H:i" }}</td>
+                <td>
+                  {% if res.status == 'READY' %}
+                    <span class="badge-status badge-info"><i class="fa-solid fa-star"></i> Ready for Pickup</span>
+                  {% else %}
+                    <span class="badge-status badge-warning"># Waiting in Queue</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if res.status == 'READY' %}
+                    <div>
+                      <strong class="text-success">Held on reservation shelf ({{ res.copy.accession_number }})</strong>
+                      <div class="small text-danger fw-bold">
+                        Collect before: {{ res.expires_at|date:"D, d M Y H:i" }}
+                      </div>
+                    </div>
+                  {% else %}
+                    <div>
+                      <span class="badge bg-secondary fs-6">Position #{{ res.queue_position }}</span>
+                      <small class="text-muted d-block">First-Come, First-Served</small>
+                    </div>
+                  {% endif %}
+                </td>
+                <td class="text-end">
+                  <form method="POST" action="{% url 'student_cancel_reservation' res.id %}" onsubmit="return confirm('Are you sure you want to cancel this reservation?');">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline-danger" id="btnCancelRes-{{ res.id }}">
+                      <i class="fa-solid fa-xmark"></i> Cancel
+                    </button>
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="text-center py-5 text-muted">
+        <div class="fs-1 mb-2"><i class="fa-solid fa-hourglass-half"></i></div>
+        <h3 class="h5 text-navy">No Active Reservations</h3>
+        <p class="mb-3">You do not have any pending reservations in queue or held for pickup.</p>
+        <a href="{% url 'catalogue_list' %}" class="btn btn-gold btn-sm">Find Books in Catalogue</a>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Past Reservations History -->
+  <div class="card-custom">
+    <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+      <h2 class="h5 mb-0 fw-bold text-navy">Reservation History</h2>
+      <span class="badge-status badge-success">Fulfilled &amp; Expired</span>
+    </div>
+
+    {% if reservation_history %}
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Book Title</th>
+              <th>Date Requested</th>
+              <th>Final Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for past in reservation_history %}
+              <tr>
+                <td>
+                  <div class="fw-bold">{{ past.book.title }}</div>
+                  <small class="text-muted">{{ past.book.author }}</small>
+                </td>
+                <td>{{ past.reservation_date|date:"d M Y" }}</td>
+                <td>
+                  {% if past.status == 'FULFILLED' %}
+                    <span class="badge-status badge-success"><i class="fa-solid fa-check"></i> Fulfilled (Borrowed)</span>
+                  {% elif past.status == 'CANCELLED' %}
+                    <span class="badge-status badge-grey">– Cancelled</span>
+                  {% elif past.status == 'EXPIRED' %}
+                    <span class="badge-status badge-danger"><i class="fa-solid fa-xmark"></i> Expired (Uncollected)</span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="text-center py-4 text-muted">
+        <p class="mb-0">No past reservation records yet.</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Student Registration &middot; UniLibrary{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center py-5">
+  <div class="col-xl-7 col-lg-8 col-md-10">
+    <div class="card-custom shadow-md p-4 p-md-5" style="border-radius: 12px;">
+      <div class="text-center mb-4">
+        <div class="d-inline-flex align-items-center gap-2 mb-2">
+          <img src="{% static 'img/logo.svg' %}" alt="UniLibrary" width="36" height="36">
+          <span class="h3 fw-bold text-navy mb-0" style="font-family: var(--font-heading);">UniLibrary</span>
+        </div>
+        <h1 class="h4 fw-bold text-navy mb-1">Student Borrower Registration</h1>
+        <p class="text-muted small">Create your library account to search, reserve, and borrow physical textbooks.</p>
+      </div>
+
+      <form method="POST" action="{% url 'register' %}" novalidate id="register-form">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger py-2 small" role="alert">
+          {% for err in form.non_field_errors %}
+          <div>&bull; {{ err }}</div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="row g-3 mb-3">
+          <!-- Full Name -->
+          <div class="col-12">
+            <label for="{{ form.full_name.id_for_label }}" class="form-label small fw-semibold text-navy">
+              Full Name <span class="text-danger">*</span>
+            </label>
+            {{ form.full_name }}
+            <div class="form-text small text-muted">Enter your official name as registered with the University.</div>
+            {% if form.full_name.errors %}
+            <div class="text-danger small mt-1">{{ form.full_name.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Matric Number -->
+          <div class="col-md-6">
+            <label for="{{ form.matric_number.id_for_label }}" class="form-label small fw-semibold text-navy">
+              Matriculation Number <span class="text-danger">*</span>
+            </label>
+            {{ form.matric_number }}
+            <div class="form-text small text-muted">Format: e.g. <code>2022/123456</code></div>
+            {% if form.matric_number.errors %}
+            <div class="text-danger small mt-1">{{ form.matric_number.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Email -->
+          <div class="col-md-6">
+            <label for="{{ form.email.id_for_label }}" class="form-label small fw-semibold text-navy">
+              Email Address <span class="text-danger">*</span>
+            </label>
+            {{ form.email }}
+            <div class="form-text small text-muted">Used for login and due-date notices.</div>
+            {% if form.email.errors %}
+            <div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Password -->
+          <div class="col-md-6">
+            <label for="{{ form.password.id_for_label }}" class="form-label small fw-semibold text-navy">
+              Password <span class="text-danger">*</span>
+            </label>
+            <div class="input-group">
+              {{ form.password }}
+              <button class="btn btn-outline-secondary toggle-password-btn" type="button"
+                data-target="{{ form.password.id_for_label }}" title="Show / Hide Password"
+                aria-label="Toggle password visibility">
+                <span class="password-eye-icon"><i class="fa-solid fa-eye"></i></span>
+              </button>
+            </div>
+            <div class="form-text small text-muted">Minimum 8 characters.</div>
+            {% if form.password.errors %}
+            <div class="text-danger small mt-1">{{ form.password.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="col-md-6">
+            <label for="{{ form.confirm_password.id_for_label }}" class="form-label small fw-semibold text-navy">
+              Confirm Password <span class="text-danger">*</span>
+            </label>
+            <div class="input-group">
+              {{ form.confirm_password }}
+              <button class="btn btn-outline-secondary toggle-password-btn" type="button"
+                data-target="{{ form.confirm_password.id_for_label }}" title="Show / Hide Password"
+                aria-label="Toggle password visibility">
+                <span class="password-eye-icon"><i class="fa-solid fa-eye"></i></span>
+              </button>
+            </div>
+            {% if form.confirm_password.errors %}
+            <div class="text-danger small mt-1">{{ form.confirm_password.errors.0 }}</div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="p-3 bg-light rounded border mb-4 small text-muted">
+          <strong>Borrowing Policy:</strong> Registered students may borrow up to 3 books concurrently for 7 days.
+          Uncollected hold reservations expire after 48 hours.
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-grid mb-3">
+          <button type="submit" class="btn btn-gold btn-lg py-2" id="btn-submit-register">
+            Create Borrower Account
+          </button>
+        </div>
+
+        <div class="text-center small text-muted pt-2 border-top">
+          Already registered?
+          <a href="{% url 'login' %}" class="fw-bold" style="color: var(--navy);">Sign In Here</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,3465 @@
+[
+{
+  "model": "auth.permission",
+  "pk": 1,
+  "fields": {
+    "name": "Can add log entry",
+    "content_type": 1,
+    "codename": "add_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 2,
+  "fields": {
+    "name": "Can change log entry",
+    "content_type": 1,
+    "codename": "change_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 3,
+  "fields": {
+    "name": "Can delete log entry",
+    "content_type": 1,
+    "codename": "delete_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 4,
+  "fields": {
+    "name": "Can view log entry",
+    "content_type": 1,
+    "codename": "view_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 5,
+  "fields": {
+    "name": "Can add permission",
+    "content_type": 2,
+    "codename": "add_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 6,
+  "fields": {
+    "name": "Can change permission",
+    "content_type": 2,
+    "codename": "change_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 7,
+  "fields": {
+    "name": "Can delete permission",
+    "content_type": 2,
+    "codename": "delete_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 8,
+  "fields": {
+    "name": "Can view permission",
+    "content_type": 2,
+    "codename": "view_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 9,
+  "fields": {
+    "name": "Can add group",
+    "content_type": 3,
+    "codename": "add_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 10,
+  "fields": {
+    "name": "Can change group",
+    "content_type": 3,
+    "codename": "change_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 11,
+  "fields": {
+    "name": "Can delete group",
+    "content_type": 3,
+    "codename": "delete_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 12,
+  "fields": {
+    "name": "Can view group",
+    "content_type": 3,
+    "codename": "view_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 13,
+  "fields": {
+    "name": "Can add content type",
+    "content_type": 4,
+    "codename": "add_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 14,
+  "fields": {
+    "name": "Can change content type",
+    "content_type": 4,
+    "codename": "change_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 15,
+  "fields": {
+    "name": "Can delete content type",
+    "content_type": 4,
+    "codename": "delete_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 16,
+  "fields": {
+    "name": "Can view content type",
+    "content_type": 4,
+    "codename": "view_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 17,
+  "fields": {
+    "name": "Can add session",
+    "content_type": 5,
+    "codename": "add_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 18,
+  "fields": {
+    "name": "Can change session",
+    "content_type": 5,
+    "codename": "change_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 19,
+  "fields": {
+    "name": "Can delete session",
+    "content_type": 5,
+    "codename": "delete_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 20,
+  "fields": {
+    "name": "Can view session",
+    "content_type": 5,
+    "codename": "view_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 21,
+  "fields": {
+    "name": "Can add User",
+    "content_type": 6,
+    "codename": "add_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 22,
+  "fields": {
+    "name": "Can change User",
+    "content_type": 6,
+    "codename": "change_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 23,
+  "fields": {
+    "name": "Can delete User",
+    "content_type": 6,
+    "codename": "delete_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 24,
+  "fields": {
+    "name": "Can view User",
+    "content_type": 6,
+    "codename": "view_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 25,
+  "fields": {
+    "name": "Can add System Log",
+    "content_type": 7,
+    "codename": "add_systemlog"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 26,
+  "fields": {
+    "name": "Can change System Log",
+    "content_type": 7,
+    "codename": "change_systemlog"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 27,
+  "fields": {
+    "name": "Can delete System Log",
+    "content_type": 7,
+    "codename": "delete_systemlog"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 28,
+  "fields": {
+    "name": "Can view System Log",
+    "content_type": 7,
+    "codename": "view_systemlog"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 29,
+  "fields": {
+    "name": "Can add Category",
+    "content_type": 8,
+    "codename": "add_category"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 30,
+  "fields": {
+    "name": "Can change Category",
+    "content_type": 8,
+    "codename": "change_category"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 31,
+  "fields": {
+    "name": "Can delete Category",
+    "content_type": 8,
+    "codename": "delete_category"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 32,
+  "fields": {
+    "name": "Can view Category",
+    "content_type": 8,
+    "codename": "view_category"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 33,
+  "fields": {
+    "name": "Can add Book",
+    "content_type": 9,
+    "codename": "add_book"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 34,
+  "fields": {
+    "name": "Can change Book",
+    "content_type": 9,
+    "codename": "change_book"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 35,
+  "fields": {
+    "name": "Can delete Book",
+    "content_type": 9,
+    "codename": "delete_book"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 36,
+  "fields": {
+    "name": "Can view Book",
+    "content_type": 9,
+    "codename": "view_book"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 37,
+  "fields": {
+    "name": "Can add Copy",
+    "content_type": 10,
+    "codename": "add_copy"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 38,
+  "fields": {
+    "name": "Can change Copy",
+    "content_type": 10,
+    "codename": "change_copy"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 39,
+  "fields": {
+    "name": "Can delete Copy",
+    "content_type": 10,
+    "codename": "delete_copy"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 40,
+  "fields": {
+    "name": "Can view Copy",
+    "content_type": 10,
+    "codename": "view_copy"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 41,
+  "fields": {
+    "name": "Can add System Setting",
+    "content_type": 11,
+    "codename": "add_setting"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 42,
+  "fields": {
+    "name": "Can change System Setting",
+    "content_type": 11,
+    "codename": "change_setting"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 43,
+  "fields": {
+    "name": "Can delete System Setting",
+    "content_type": 11,
+    "codename": "delete_setting"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 44,
+  "fields": {
+    "name": "Can view System Setting",
+    "content_type": 11,
+    "codename": "view_setting"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 45,
+  "fields": {
+    "name": "Can add Reservation",
+    "content_type": 12,
+    "codename": "add_reservation"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 46,
+  "fields": {
+    "name": "Can change Reservation",
+    "content_type": 12,
+    "codename": "change_reservation"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 47,
+  "fields": {
+    "name": "Can delete Reservation",
+    "content_type": 12,
+    "codename": "delete_reservation"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 48,
+  "fields": {
+    "name": "Can view Reservation",
+    "content_type": 12,
+    "codename": "view_reservation"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 49,
+  "fields": {
+    "name": "Can add Borrow Record",
+    "content_type": 13,
+    "codename": "add_borrowrecord"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 50,
+  "fields": {
+    "name": "Can change Borrow Record",
+    "content_type": 13,
+    "codename": "change_borrowrecord"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 51,
+  "fields": {
+    "name": "Can delete Borrow Record",
+    "content_type": 13,
+    "codename": "delete_borrowrecord"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 52,
+  "fields": {
+    "name": "Can view Borrow Record",
+    "content_type": 13,
+    "codename": "view_borrowrecord"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 53,
+  "fields": {
+    "name": "Can add Fine",
+    "content_type": 14,
+    "codename": "add_fine"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 54,
+  "fields": {
+    "name": "Can change Fine",
+    "content_type": 14,
+    "codename": "change_fine"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 55,
+  "fields": {
+    "name": "Can delete Fine",
+    "content_type": 14,
+    "codename": "delete_fine"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 56,
+  "fields": {
+    "name": "Can view Fine",
+    "content_type": 14,
+    "codename": "view_fine"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 57,
+  "fields": {
+    "name": "Can add Notification",
+    "content_type": 15,
+    "codename": "add_notification"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 58,
+  "fields": {
+    "name": "Can change Notification",
+    "content_type": 15,
+    "codename": "change_notification"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 59,
+  "fields": {
+    "name": "Can delete Notification",
+    "content_type": 15,
+    "codename": "delete_notification"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 60,
+  "fields": {
+    "name": "Can view Notification",
+    "content_type": 15,
+    "codename": "view_notification"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 1,
+  "fields": {
+    "app_label": "admin",
+    "model": "logentry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 2,
+  "fields": {
+    "app_label": "auth",
+    "model": "permission"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 3,
+  "fields": {
+    "app_label": "auth",
+    "model": "group"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 4,
+  "fields": {
+    "app_label": "contenttypes",
+    "model": "contenttype"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 5,
+  "fields": {
+    "app_label": "sessions",
+    "model": "session"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 6,
+  "fields": {
+    "app_label": "accounts",
+    "model": "user"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 7,
+  "fields": {
+    "app_label": "core",
+    "model": "systemlog"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 8,
+  "fields": {
+    "app_label": "catalogue",
+    "model": "category"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 9,
+  "fields": {
+    "app_label": "catalogue",
+    "model": "book"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 10,
+  "fields": {
+    "app_label": "catalogue",
+    "model": "copy"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 11,
+  "fields": {
+    "app_label": "core",
+    "model": "setting"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 12,
+  "fields": {
+    "app_label": "reservations",
+    "model": "reservation"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 13,
+  "fields": {
+    "app_label": "circulation",
+    "model": "borrowrecord"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 14,
+  "fields": {
+    "app_label": "fines",
+    "model": "fine"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 15,
+  "fields": {
+    "app_label": "notifications",
+    "model": "notification"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "1m5dl92u2mt2v767pvgy3b3dqvi1eauv",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSG8BZfu_QYyDINUDSSlXRn_3TbpQrf3nHPfLMK61LgOmuOU2YVpdvrdEuCT2g7yA9q9c-xtmafEd4UfdPBbz_S6Hu7fQYVRt9prAYEIlKTilUPQhkKWhqTHrLVSJllAsaFicwoGA1glpKACzqE_s88X7HA3-g:1xKYvH:WgkaHwQKfD7015jvlOklnqifsgyVHQ6tWUjHt9rBOiA",
+    "expire_date": "2026-10-24T12:24:23.790Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "88g1y3dze3r6y8ktlanjhgf8sqzowky2",
+  "fields": {
+    "session_data": ".eJxVjMsOgjAURP-la9NYaLmtS_d-A7mvWtRAQmFl_HchYaGrSeacmbfpcV1Kv1ad-0HMxQRnTr8lIT913Ik8cLxPlqdxmQeyu2IPWu1tEn1dD_fvoGAt27ohyFE7TzkAJ03ixStplwIDU-hEErfOgcsct_DsIysinqHNjScwny8tJzja:1xKICu:Mgyk_gQuCrhUmTng18drXUeQrAPw50C01PnWIArAZ1c",
+    "expire_date": "2026-10-23T18:33:28.111Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "9agfidkazp9fwruzakajs1ite33vawhu",
+  "fields": {
+    "session_data": ".eJxVjEEOgjAQRe_StWlKx9LBpXvO0Mx0poIaSCisjHdXEha6_e-9_zKJtnVIW9UljWIuBqM5_Y5M-aHTTuRO0222eZ7WZWS7K_ag1faz6PN6uH8HA9XhW4PLATxFyMCARTRSEOfYd754Li3iGaX1BB2wIklo0Cmzb4Lmhgub9wcNtTiM:1xKXM3:bmVYIT26AET6I2LduzSKENzVAPBeyeQ79cGtNvtaYQI",
+    "expire_date": "2026-10-24T10:43:55.407Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "bo6yvcuu2nhyhtjwjpsh0qrmet24t3da",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hBIC9Nx6d4zkGEGpGogKe3KeHdt0oVu_3vvv1SgbS1h62kJs6izGrw6_Y6R-JHqTuRO9dY0t7ouc9S7og_a9bVJel4O9--gUC_f2uYRMxhgjuCzBR6tYwTnCD1asWhATBRA8tOUwAgzsjPM3vIoA6n3BwEAOB0:1xKIDm:9hkoDDBsE26Q4xr7RoQrIt5u3LszyokIl6IAqXgYM5s",
+    "expire_date": "2026-10-23T18:34:22.318Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "cunf03zyay6u7f8b0xuj8kmt8jc2o2cq",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSG8BZfu_QYyDINUDSSlXRn_3TbpQrf3nHPfLMK61LgOmuOU2YVpdvrdEuCT2g7yA9q9c-xtmafEd4UfdPBbz_S6Hu7fQYVRt9prAYEIlKTilUPQhkKWhqTHrLVSJllAsaFicwoGA1glpKACzqE_s88X7HA3-g:1xKcRy:qIhZrNRyMX8jJfE9bbT6EHQmzhVmGdG4DT_k5pSmvms",
+    "expire_date": "2026-10-24T16:10:22.087Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "d328rzia5xxtp6td7gsb991eygphi62m",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAURP-FtSFweVRcuvcbCBcuUjWQlHZl_Hdp0oUms5o5Z97Mh20tfuu0-DmxCzPs9NthiE-q-5Aeod4bj62uy4x8R_ixdn5riV7Xg_07KKGXYVsdnRiZQszWZqEJM6IBCQZISYAJdRLp7BAxKlIWEbIwWpnhOCnY5wvpHDeQ:1xKYUh:V9JK9stdXftpxr_X7SE-qNbzP7wgSGo1dYrIzyRTONg",
+    "expire_date": "2026-10-24T11:56:55.070Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "dc4pbe2soxi9vqzf76iij8li695kwmri",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hBmamFw6b5nIJRhpGpoUtqV8e7apAvd_vfef6kQt7WEreUlTKwuis7q9DuOMT1y3QnfY73NOs11XaZR74o-aNPDzPl5Pdy_gxJb-dboHKOVhE7AdOyBxJAkIw6Y2IokC64nYQRB8WAMQEzRdIjUewL1_gAEpDd9:1xKWkz:xGK66V34HM4DTbrfz6JZwWRoYGqLOQAX5Cus7b9ettM",
+    "expire_date": "2026-10-24T10:05:37.264Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "e5gif9a5a0fzn5zfdy6hgo27jyib0dfo",
+  "fields": {
+    "session_data": ".eJxVjDEOwjAMRe-SGUVxEqsOIztnqOw4pQXUSE07Ie4OlTrA-t97_2V63tax31pZ-knN2RCZ0-8onB9l3oneeb5Vm-u8LpPYXbEHbfZatTwvh_t3MHIbvzXqkEAKCTAqO_IMESQ530WXKXtllOyhK25IASmjxwgwBI5BCFMy7w8Qnjef:1xKYDe:BG9eR8zYg0OU7T1T_EgfIErzRm5cAyMUV_2lHE8DzOY",
+    "expire_date": "2026-10-24T11:39:18.015Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "jr7fyrfjcejc95i4mcscea0a171d9koj",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hAKlna6dO8ZCMwMFjXQlDbRGO-uTbrQ7X_vv5dwfl1Gt1aeXSIxiEYcfrfg8cZ5A3T1-VIklrzMKchNkTut8lyI76fd_QuMvo7fd7RK6dhqbUOrICJCNA0TQm8B-wBd58l4qwiIGsNAlgxaJsagGcJxi1auNZXs-DGl-SkG9f4AqX1AFQ:1xKcnT:niqIucMheKTTUUkbavYa0z9KekekfdX2cFpeRgfBcEw",
+    "expire_date": "2026-10-24T16:32:35.678Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "kjrl2keb6g4fofdirlopzpzi51twhpcb",
+  "fields": {
+    "session_data": ".eJxVjEEOgjAQRe_StWlKx9LBpXvO0Mx0poIaSCisjHdXEha6_e-9_zKJtnVIW9UljWIuBqM5_Y5M-aHTTuRO0222eZ7WZWS7K_ag1faz6PN6uH8HA9XhW4PLATxFyMCARTRSEOfYd754Li3iGaX1BB2wIklo0Cmzb4Lmhgub9wcNtTiM:1xKXQE:W0yjRcTGRhu4uiabCxbRwz5xTL9DxU-IDxyB_50htgE",
+    "expire_date": "2026-10-24T10:48:14.690Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "kjwif3edul2dbe4h6onbyoy64my1cyep",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2pDBFqZ06d4zEJihFjXQlDbRGO-uTbrQ7X_vv5dwfl1Gt9Y4u8SiF40Rh98xeLrFvBG--nwpkkpe5hTkpsidVnkuHO-n3f0LjL6O37caWjsgIFFAMyikVmmyqLW3xipWFpAhMFpvui4iMJElDURGUcuN36I11ppKdvExpfkpejwCvD9sDD_z:1xKKR8:5xa_gzczGdZJOWVrOWpi_V_uov2Dq_jxQXSZ7xtXJdc",
+    "expire_date": "2026-10-23T20:56:18.996Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "muvbima4isamsgxhsmuvncrpiur4zybg",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSG8BZfu_QYyDINUDSSlXRn_3TbpQrf3nHPfLMK61LgOmuOU2YVpdvrdEuCT2g7yA9q9c-xtmafEd4UfdPBbz_S6Hu7fQYVRt9prAYEIlKTilUPQhkKWhqTHrLVSJllAsaFicwoGA1glpKACzqE_s88X7HA3-g:1xKYnJ:Ta65impvBhQ2CfFUXUPUy5_GePrP4dJZqdhAJrJOqsQ",
+    "expire_date": "2026-10-24T12:16:09.650Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "o3x5hxnlojy4yxx0481haf93h1gggaqs",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2pBpYRro0r1nIANMLWrAQJtojHfXJl3o9r_330s4WpfZrY2rS1GMQllx-B09hSvnjcQL5XORoeSlJi83Re60yVOJfDvu7l9gpjZ_3xq7ngMGUmwtKD_5Tk8mGtLQA0cFRlMwEzJDT0OwAAgWcTCobGcMbNHGraWSHT_uqT7FCO8Ppe0-hQ:1xKI8I:5raP-7EvZCzz8ONiZNz3GcAzteq-XQvsZwwE6oHgI_8",
+    "expire_date": "2026-10-23T18:28:42.126Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "oe6ui80cqiv1khl68gm10ghxszoj3jhw",
+  "fields": {
+    "session_data": ".eJxVjLEOgzAMRP8lcxVhCA7p2J1viOzYKbQVSASmqv9ekBha3Xbv3b1NpG0d4lZ0iaOYq3GdufyWTOmp00HkQdN9tmme1mVkeyj2pMX2s-jrdrp_BwOVYV8jVFBXAlmD8569ItchtzUgJQbJHUOW4Js9FDCpA-SWFABzYEmN-XwBAVs4Pw:1xKICV:6UPQFChURfCzK_O_8JyZvOcniGjcyqmdFsZKqR18454",
+    "expire_date": "2026-10-23T18:33:03.175Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "painx3s45q3u0143d1nvf5rzy5dqu4q1",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hBmWkJx6d4zkAFmpGogKe3KeHdt0oVu_3vvv1SgbS1h67yEOauzGtTpd4uUHlx3kO9Ub02nVtdljnpX9EG7vrbMz8vh_h0U6uVb-0QCKJIMsh-cRSBAa7yAmxzINFo3ElsU44hIIgzGG4YMCI7RWPX-ANYxNys:1xKcf2:amLZmFHZ_Ctvs-Big6AsNeH9awZr-xfYqRLKjN_LIBo",
+    "expire_date": "2026-10-24T16:23:52.851Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "rpd1g49fu3pefex4q19gvd6tswbu4e1t",
+  "fields": {
+    "session_data": ".eJxVjEsOwjAMBe-SNYrcBmKHJXvOENmOSwuokfpZIe4OlbqA7ZuZ93KZ16XP62xTHoo7u0Du8DsK68PGjZQ7j7fqtY7LNIjfFL_T2V9rsedld_8Oep77by2FBNmQSSXwERJ0qNghnCxyaySCQaMClZAsQouigWLsKFmTGhD3_gAvCDh5:1xKIDM:d-QJbNj2xOv6hX_LAiLlIJcwri8Quh3K64Qhaz1u3VM",
+    "expire_date": "2026-10-23T18:33:56.771Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "svxouuk6si8bpt43b6e2cccjjglmudmi",
+  "fields": {
+    "session_data": ".eJxVjDsOwjAQBe_iGlmO499S0nMGa2Pv4gCypTipEHeHSCmgfTPzXiLitpa4dVrinMVZgBKn33HC9KC6k3zHemsytbou8yR3RR60y2vL9Lwc7t9BwV6-tXMqGKtHS0E7r0DzoL0DVMApBUDUhtE7dpQ4oWHOngktGMqsYRjF-wPt5Tha:1xKYEe:QfBFAOoDjdaNyjkgneNjIkyxIumKVbmhoD5TJy1UBC0",
+    "expire_date": "2026-10-24T11:40:20.015Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "uh7z5tj9k7ututzt6vl0gm4qhwcu01gf",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hBmamFw6b5nIJRhpGpoUtqV8e7apAvd_vfef6kQt7WEreUlTKwuis7q9DuOMT1y3QnfY73NOs11XaZR74o-aNPDzPl5Pdy_gxJb-dboHKOVhE7AdOyBxJAkIw6Y2IokC64nYQRB8WAMQEzRdIjUewL1_gAEpDd9:1xKWvb:3abQQkUDjmHnYLzD6U5cyqXZ6iUyCbSw1ZV1j6lszTk",
+    "expire_date": "2026-10-24T10:16:35.629Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "vuv4kj0fn3qqr8ri511re5wpq1htp1zf",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSG8BZfu_QYyDINUDSSlXRn_3TbpQrf3nHPfLMK61LgOmuOU2YVpdvrdEuCT2g7yA9q9c-xtmafEd4UfdPBbz_S6Hu7fQYVRt9prAYEIlKTilUPQhkKWhqTHrLVSJllAsaFicwoGA1glpKACzqE_s88X7HA3-g:1xKZ5d:o_gjZ3BhD2NkuP8r7wUB3C0OhOMdoTuPFtcCv4r_ttY",
+    "expire_date": "2026-10-24T12:35:05.657Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "y0wxe8t257f8oxm14iypo4mwl4vb3i4w",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2pCCpXS6dO8ZyJQZLGrAQJtojHc3JF3o9r_331s43NbFbZWLiyQmocXhd5vR3zg1QFdMlyx9TmuJs2yK3GmV50x8P-3uX2DBurS3HgfWDAQQQm-HI4UwetA0WKtRqx5QKRvYsLFmVBTAovJgkMCYToUWrVxrzMnx8xHLS0xWd93nC03HP6k:1xKZ71:x2v6Hn6XYxhZ0iCrzlZGkHDM1InKuk1Y8FvDBoOMeQU",
+    "expire_date": "2026-10-24T12:36:31.001Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "ykhm6b3sjgwoy4sk4bpldj19rmdf9qq6",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSG8BZfu_QYyDINUDSSlXRn_3TbpQrf3nHPfLMK61LgOmuOU2YVpdvrdEuCT2g7yA9q9c-xtmafEd4UfdPBbz_S6Hu7fQYVRt9prAYEIlKTilUPQhkKWhqTHrLVSJllAsaFicwoGA1glpKACzqE_s88X7HA3-g:1xKYTl:zkbJJJSLSUNYmpPJYCkFY6GsbEUpYmqeOWCX8KyF2e0",
+    "expire_date": "2026-10-24T11:55:57.243Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "z19cm8xhheyu7rfea7ti9psntu38j9wh",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSG8BZfu_QYyDINUDSSlXRn_3TbpQrf3nHPfLMK61LgOmuOU2YVpdvrdEuCT2g7yA9q9c-xtmafEd4UfdPBbz_S6Hu7fQYVRt9prAYEIlKTilUPQhkKWhqTHrLVSJllAsaFicwoGA1glpKACzqE_s88X7HA3-g:1xKYjA:ikDSXUhcC3mDd4_6BVIuzTA94fIbNKuDYpiHJebCplA",
+    "expire_date": "2026-10-24T12:11:52.688Z"
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$RJwvqBsJGsvbNVjuxVD79C$ZplTM2rKA1PjltgRWzVX/R5AmzxZfoLKuEp507uP9io=",
+    "last_login": "2026-10-24T14:28:35.663Z",
+    "is_superuser": false,
+    "full_name": "Adaeze Okonkwo",
+    "email": "admin@uni.edu.ng",
+    "matric_number": null,
+    "role": "ADMINISTRATOR",
+    "is_active": true,
+    "is_staff": false,
+    "date_registered": "2025-09-19T14:18:31.873Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$eEunjrA85O3ztNTAE5rLh3$gBp9Oom7PlwyTYo4okPlF37Zzh3mgZ0E7T9jKp65wOA=",
+    "last_login": "2026-10-24T14:20:34.692Z",
+    "is_superuser": false,
+    "full_name": "Emmanuel Udoh",
+    "email": "emmanuel.udoh@uni.edu.ng",
+    "matric_number": null,
+    "role": "LIBRARIAN",
+    "is_active": true,
+    "is_staff": false,
+    "date_registered": "2025-11-08T14:18:31.873Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$DoG0nlSStO4qtgeGXJ27tK$lniQjqrK5JnGfepySANz6tXjmVwa9pvFwdk6MDzbtcc=",
+    "last_login": "2026-10-24T14:23:52.753Z",
+    "is_superuser": false,
+    "full_name": "Funke Adeyemi",
+    "email": "funke.adeyemi@uni.edu.ng",
+    "matric_number": null,
+    "role": "LIBRARIAN",
+    "is_active": true,
+    "is_staff": false,
+    "date_registered": "2025-12-28T14:18:31.873Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$6IXw4JEwldWqpwGQRLDbou$sporV94humK1QVEZEuSCtDTG5INl7S46Y5ahOXeo2xg=",
+    "last_login": null,
+    "is_superuser": false,
+    "full_name": "Amina Bello",
+    "email": "amina.bello@uni.edu.ng",
+    "matric_number": "2022/100001",
+    "role": "STUDENT",
+    "is_active": true,
+    "is_staff": false,
+    "date_registered": "2025-10-09T14:18:31.873Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$rC6FD4lGy1TvIC3n8MSrRo$x5dG5a+k+qrPpm6PJah0uuZ6LpzPhg8o9Y86fHC/5Ww=",
+    "last_login": null,
+    "is_superuser": false,
+    "full_name": "Chinedu Okafor",
+    "email": "chinedu.okafor@uni.edu.ng",
+    "matric_number": "2022/100002",
+    "role": "STUDENT",
+    "is_active": true,
+    "is_staff": false,
+    "date_registered": "2025-10-19T14:18:31.873Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 6,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$sWBpmRr7YHWSWxTocZg5ur$OwpxXfPdSDMPOOXH+3GHpgRiZ+UH1OdRwqNZs83UjmI=",
+    "last_login": null,
+    "is_superuser": false,
+    "full_name": "Blessing Etim",
+    "email": "blessing.etim@uni.edu.ng",
+    "matric_number": "2022/100003",
+    "role": "STUDENT",
+    "is_active": true,
+    "is_staff": false,
+    "date_registered": "2025-10-29T14:18:31.873Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 7,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$KQa2Z88oulFhyCJxoFFVEQ$Gc+eic5lAxCJK+AfqVcdpLLCmYN+6rB1MGQUYoFD7wM=",
+    "last_login": null,
+    "is_superuser": false,
+    "full_name": "Ibrahim Musa",
+    "email": "ibrahim.musa@uni.edu.ng",
+    "matric_number": "2022/100004",
+    "role": "STUDENT",
+    "is_active": true,
+    "is_staff": false,
+    "date_registered": "2025-11-18T14:18:31.873Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 8,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$Wsgs76RHGqL4ElecY9QGIG$w3mj+XS61k08Uuiyae26QBz1Ik9uneo4Wvx+xOYTFxY=",
+    "last_login": null,
+    "is_superuser": false,
+    "full_name": "Ngozi Nwosu",
+    "email": "ngozi.nwosu@uni.edu.ng",
+    "matric_number": "2023/100005",
+    "role": "STUDENT",
+    "is_active": true,
+    "is_staff": false,
+    "date_registered": "2026-04-07T14:18:31.873Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 9,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$PEcUnk47r0mDfVLxzFLmSl$JdlIiwRQhmrPY4xG6oXyFNCLKu/h989/ALet/XoJA1Y=",
+    "last_login": null,
+    "is_superuser": false,
+    "full_name": "Tunde Bakare",
+    "email": "tunde.bakare@uni.edu.ng",
+    "matric_number": "2023/100006",
+    "role": "STUDENT",
+    "is_active": true,
+    "is_staff": false,
+    "date_registered": "2026-04-17T14:18:31.873Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 10,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$Pfv5IUikvW2PrrcVFqxXXn$QvbBicbSx+nD3Q9DJWOHUcqbf24ItcJWuhIlEhuOq38=",
+    "last_login": null,
+    "is_superuser": false,
+    "full_name": "Esther Akpan",
+    "email": "esther.akpan@uni.edu.ng",
+    "matric_number": "2023/100007",
+    "role": "STUDENT",
+    "is_active": true,
+    "is_staff": false,
+    "date_registered": "2026-04-27T14:18:31.873Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 11,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$eWlWDnwnjSVIU5gjqgAQUH$i7AYbrdGeLo9DdKMlvFKnn1LEA4iF11aJWgPoUqUOVs=",
+    "last_login": null,
+    "is_superuser": false,
+    "full_name": "Samuel Ibe",
+    "email": "samuel.ibe@uni.edu.ng",
+    "matric_number": "2021/100008",
+    "role": "STUDENT",
+    "is_active": true,
+    "is_staff": false,
+    "date_registered": "2026-05-27T14:18:31.873Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 12,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$RwOgzVYcdKlLpq9wJcBADc$nBUgxYHOfLFDnx8JKdOpk3gRSZqxm8KAxg1WMTbgqus=",
+    "last_login": null,
+    "is_superuser": false,
+    "full_name": "Fatima Yusuf",
+    "email": "fatima.yusuf@uni.edu.ng",
+    "matric_number": "2021/100009",
+    "role": "STUDENT",
+    "is_active": true,
+    "is_staff": false,
+    "date_registered": "2026-06-16T14:18:31.873Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 13,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$zm6vHSDLn58Sq3JsLKq4Qe$rV1/9GiJlaYKtdobN0OSYFb8jYkduhA2kR7AOpl61W8=",
+    "last_login": null,
+    "is_superuser": false,
+    "full_name": "Daniel Effiong",
+    "email": "daniel.effiong@uni.edu.ng",
+    "matric_number": "2024/100010",
+    "role": "STUDENT",
+    "is_active": true,
+    "is_staff": false,
+    "date_registered": "2026-07-26T14:18:31.873Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 14,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$lIWmZPKLpL8K0JZDoaHFKN$jDsASc/woLRfahCHbXUUDAHgAwnPq/JFGriu+Fi1FDQ=",
+    "last_login": null,
+    "is_superuser": false,
+    "full_name": "Grace Obi",
+    "email": "grace.obi@uni.edu.ng",
+    "matric_number": "2024/100011",
+    "role": "STUDENT",
+    "is_active": true,
+    "is_staff": false,
+    "date_registered": "2026-08-05T14:18:31.873Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 15,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$UVm3gRK2LWJTMKRWMiyxSJ$EQKL+SjDcL5p+BgdERiERZ5AcJww6BSmqIwO7X+atp0=",
+    "last_login": null,
+    "is_superuser": false,
+    "full_name": "Victor Eke",
+    "email": "victor.eke@uni.edu.ng",
+    "matric_number": "2024/100012",
+    "role": "STUDENT",
+    "is_active": true,
+    "is_staff": false,
+    "date_registered": "2026-08-15T14:18:31.873Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 16,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$dUDrmKdv5fKI9owWTkQ7l1$EEMmmo+mvBvwJ4CCqf6E4HyoLybyDjSR2GUxyOYCLNI=",
+    "last_login": null,
+    "is_superuser": false,
+    "full_name": "Peter Ogar",
+    "email": "peter.ogar@uni.edu.ng",
+    "matric_number": "2020/100013",
+    "role": "STUDENT",
+    "is_active": false,
+    "is_staff": false,
+    "date_registered": "2025-09-19T14:18:31.873Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "catalogue.category",
+  "pk": 1,
+  "fields": {
+    "category_name": "Computer Science",
+    "code": ""
+  }
+},
+{
+  "model": "catalogue.category",
+  "pk": 2,
+  "fields": {
+    "category_name": "Mathematics",
+    "code": ""
+  }
+},
+{
+  "model": "catalogue.category",
+  "pk": 3,
+  "fields": {
+    "category_name": "Engineering",
+    "code": ""
+  }
+},
+{
+  "model": "catalogue.category",
+  "pk": 4,
+  "fields": {
+    "category_name": "Economics and Business",
+    "code": ""
+  }
+},
+{
+  "model": "catalogue.category",
+  "pk": 5,
+  "fields": {
+    "category_name": "Literature",
+    "code": ""
+  }
+},
+{
+  "model": "catalogue.category",
+  "pk": 6,
+  "fields": {
+    "category_name": "Physics",
+    "code": ""
+  }
+},
+{
+  "model": "catalogue.category",
+  "pk": 7,
+  "fields": {
+    "category_name": "Chemistry",
+    "code": ""
+  }
+},
+{
+  "model": "catalogue.category",
+  "pk": 8,
+  "fields": {
+    "category_name": "General Studies",
+    "code": ""
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 1,
+  "fields": {
+    "title": "Introduction to Algorithms",
+    "author": "Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein",
+    "isbn": "97800000000010",
+    "category": 1,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:47.876Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 2,
+  "fields": {
+    "title": "Database System Concepts",
+    "author": "Abraham Silberschatz, Henry F. Korth, S. Sudarshan",
+    "isbn": "97800000000020",
+    "category": 1,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:47.889Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 3,
+  "fields": {
+    "title": "Software Engineering",
+    "author": "Ian Sommerville",
+    "isbn": "97800000000030",
+    "category": 1,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:47.898Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 4,
+  "fields": {
+    "title": "Computer Networks",
+    "author": "Andrew S. Tanenbaum, David J. Wetherall",
+    "isbn": "97800000000040",
+    "category": 1,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:47.908Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 5,
+  "fields": {
+    "title": "Operating System Concepts",
+    "author": "Abraham Silberschatz, Peter B. Galvin, Greg Gagne",
+    "isbn": "97800000000050",
+    "category": 1,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:47.915Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 6,
+  "fields": {
+    "title": "Artificial Intelligence: A Modern Approach",
+    "author": "Stuart Russell, Peter Norvig",
+    "isbn": "97800000000060",
+    "category": 1,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:47.926Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 7,
+  "fields": {
+    "title": "Clean Code",
+    "author": "Robert C. Martin",
+    "isbn": "97800000000070",
+    "category": 1,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:47.934Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 8,
+  "fields": {
+    "title": "Python Crash Course",
+    "author": "Eric Matthes",
+    "isbn": "97800000000080",
+    "category": 1,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:47.945Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 9,
+  "fields": {
+    "title": "Fundamentals of Database Systems",
+    "author": "Ramez Elmasri, Shamkant B. Navathe",
+    "isbn": "97800000000090",
+    "category": 1,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:47.953Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 10,
+  "fields": {
+    "title": "Systems Analysis and Design",
+    "author": "Alan Dennis, Barbara Haley Wixom, Roberta M. Roth",
+    "isbn": "97800000000100",
+    "category": 1,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:47.962Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 11,
+  "fields": {
+    "title": "Computer Organization and Architecture",
+    "author": "William Stallings",
+    "isbn": "97800000000110",
+    "category": 1,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:47.969Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 12,
+  "fields": {
+    "title": "Discrete Mathematics and Its Applications",
+    "author": "Kenneth H. Rosen",
+    "isbn": "97800000000120",
+    "category": 2,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:47.979Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 13,
+  "fields": {
+    "title": "Calculus",
+    "author": "James Stewart",
+    "isbn": "97800000000130",
+    "category": 2,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:47.994Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 14,
+  "fields": {
+    "title": "Linear Algebra and Its Applications",
+    "author": "David C. Lay",
+    "isbn": "97800000000140",
+    "category": 2,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:48.009Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 15,
+  "fields": {
+    "title": "Probability and Statistics for Engineers and Scientists",
+    "author": "Ronald E. Walpole et al.",
+    "isbn": "97800000000150",
+    "category": 2,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:48.018Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 16,
+  "fields": {
+    "title": "Advanced Engineering Mathematics",
+    "author": "K. A. Stroud",
+    "isbn": "97800000000160",
+    "category": 3,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:48.027Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 17,
+  "fields": {
+    "title": "Fundamentals of Electric Circuits",
+    "author": "Charles K. Alexander, Matthew N. O. Sadiku",
+    "isbn": "97800000000170",
+    "category": 3,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:48.036Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 18,
+  "fields": {
+    "title": "Thermodynamics: An Engineering Approach",
+    "author": "Yunus A. Cengel, Michael A. Boles",
+    "isbn": "97800000000180",
+    "category": 3,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:48.047Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 19,
+  "fields": {
+    "title": "Principles of Economics",
+    "author": "N. Gregory Mankiw",
+    "isbn": "97800000000190",
+    "category": 4,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:48.056Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 20,
+  "fields": {
+    "title": "Principles of Marketing",
+    "author": "Philip Kotler, Gary Armstrong",
+    "isbn": "97800000000200",
+    "category": 4,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:48.066Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 21,
+  "fields": {
+    "title": "Financial Accounting",
+    "author": "Jerry J. Weygandt et al.",
+    "isbn": "97800000000210",
+    "category": 4,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:48.073Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 22,
+  "fields": {
+    "title": "Things Fall Apart",
+    "author": "Chinua Achebe",
+    "isbn": "97800000000220",
+    "category": 5,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:48.083Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 23,
+  "fields": {
+    "title": "Half of a Yellow Sun",
+    "author": "Chimamanda Ngozi Adichie",
+    "isbn": "97800000000230",
+    "category": 5,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:48.092Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 24,
+  "fields": {
+    "title": "The Lion and the Jewel",
+    "author": "Wole Soyinka",
+    "isbn": "97800000000240",
+    "category": 5,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:48.099Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 25,
+  "fields": {
+    "title": "Purple Hibiscus",
+    "author": "Chimamanda Ngozi Adichie",
+    "isbn": "97800000000250",
+    "category": 5,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:48.106Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 26,
+  "fields": {
+    "title": "University Physics",
+    "author": "Hugh D. Young, Roger A. Freedman",
+    "isbn": "97800000000260",
+    "category": 6,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:48.115Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 27,
+  "fields": {
+    "title": "Fundamentals of Physics",
+    "author": "David Halliday, Robert Resnick, Jearl Walker",
+    "isbn": "97800000000270",
+    "category": 6,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:48.126Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 28,
+  "fields": {
+    "title": "Chemistry: The Central Science",
+    "author": "Theodore L. Brown et al.",
+    "isbn": "97800000000280",
+    "category": 7,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:48.135Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 29,
+  "fields": {
+    "title": "The Craft of Research",
+    "author": "Wayne C. Booth, Gregory G. Colomb, Joseph M. Williams",
+    "isbn": "97800000000290",
+    "category": 8,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:48.145Z"
+  }
+},
+{
+  "model": "catalogue.book",
+  "pk": 30,
+  "fields": {
+    "title": "How to Read a Book",
+    "author": "Mortimer J. Adler, Charles Van Doren",
+    "isbn": "97800000000300",
+    "category": 8,
+    "cover_image": "",
+    "description": "",
+    "created_at": "2026-10-24T14:18:48.154Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 1,
+  "fields": {
+    "book": 1,
+    "whereabouts": "Main Library, Shelf CS-1",
+    "status": "RESERVED",
+    "date_added": "2026-10-24T14:18:47.882Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 2,
+  "fields": {
+    "book": 1,
+    "whereabouts": "Main Library, Shelf CS-2",
+    "status": "BORROWED",
+    "date_added": "2026-10-24T14:18:47.885Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 3,
+  "fields": {
+    "book": 2,
+    "whereabouts": "Main Library, Shelf CS-3",
+    "status": "BORROWED",
+    "date_added": "2026-10-24T14:18:47.891Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 4,
+  "fields": {
+    "book": 2,
+    "whereabouts": "Main Library, Shelf CS-1",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:47.894Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 5,
+  "fields": {
+    "book": 2,
+    "whereabouts": "Main Library, Shelf CS-2",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:47.896Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 6,
+  "fields": {
+    "book": 3,
+    "whereabouts": "Main Library, Shelf CS-3",
+    "status": "BORROWED",
+    "date_added": "2026-10-24T14:18:47.900Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 7,
+  "fields": {
+    "book": 3,
+    "whereabouts": "Main Library, Shelf CS-1",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:47.902Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 8,
+  "fields": {
+    "book": 3,
+    "whereabouts": "Main Library, Shelf CS-2",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:47.905Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 9,
+  "fields": {
+    "book": 4,
+    "whereabouts": "Main Library, Shelf CS-3",
+    "status": "BORROWED",
+    "date_added": "2026-10-24T14:18:47.910Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 10,
+  "fields": {
+    "book": 4,
+    "whereabouts": "Main Library, Shelf CS-1",
+    "status": "BORROWED",
+    "date_added": "2026-10-24T14:18:47.912Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 11,
+  "fields": {
+    "book": 5,
+    "whereabouts": "Main Library, Shelf CS-2",
+    "status": "BORROWED",
+    "date_added": "2026-10-24T14:18:47.919Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 12,
+  "fields": {
+    "book": 5,
+    "whereabouts": "Main Library, Shelf CS-3",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:47.921Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 13,
+  "fields": {
+    "book": 5,
+    "whereabouts": "Main Library, Shelf CS-1",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:47.923Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 14,
+  "fields": {
+    "book": 6,
+    "whereabouts": "Main Library, Shelf CS-2",
+    "status": "RESERVED",
+    "date_added": "2026-10-24T14:18:47.929Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 15,
+  "fields": {
+    "book": 6,
+    "whereabouts": "Main Library, Shelf CS-3",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:47.932Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 16,
+  "fields": {
+    "book": 7,
+    "whereabouts": "Main Library, Shelf CS-1",
+    "status": "BORROWED",
+    "date_added": "2026-10-24T14:18:47.936Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 17,
+  "fields": {
+    "book": 7,
+    "whereabouts": "Main Library, Shelf CS-2",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:47.939Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 18,
+  "fields": {
+    "book": 8,
+    "whereabouts": "Main Library, Shelf CS-3",
+    "status": "BORROWED",
+    "date_added": "2026-10-24T14:18:47.947Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 19,
+  "fields": {
+    "book": 8,
+    "whereabouts": "Main Library, Shelf CS-1",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:47.949Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 20,
+  "fields": {
+    "book": 8,
+    "whereabouts": "Main Library, Shelf CS-2",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:47.951Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 21,
+  "fields": {
+    "book": 9,
+    "whereabouts": "Main Library, Shelf CS-3",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:47.957Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 22,
+  "fields": {
+    "book": 9,
+    "whereabouts": "Main Library, Shelf CS-1",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:47.959Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 23,
+  "fields": {
+    "book": 10,
+    "whereabouts": "Main Library, Shelf CS-2",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:47.964Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 24,
+  "fields": {
+    "book": 10,
+    "whereabouts": "Main Library, Shelf CS-3",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:47.967Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 25,
+  "fields": {
+    "book": 11,
+    "whereabouts": "Main Library, Shelf CS-1",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:47.974Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 26,
+  "fields": {
+    "book": 11,
+    "whereabouts": "Main Library, Shelf CS-2",
+    "status": "WITHDRAWN",
+    "date_added": "2026-10-24T14:18:47.977Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 27,
+  "fields": {
+    "book": 12,
+    "whereabouts": "Main Library, Shelf MA-1",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:47.982Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 28,
+  "fields": {
+    "book": 12,
+    "whereabouts": "Main Library, Shelf MA-2",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:47.986Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 29,
+  "fields": {
+    "book": 12,
+    "whereabouts": "Main Library, Shelf MA-3",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:47.991Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 30,
+  "fields": {
+    "book": 13,
+    "whereabouts": "Main Library, Shelf MA-1",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:47.997Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 31,
+  "fields": {
+    "book": 13,
+    "whereabouts": "Main Library, Shelf MA-2",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.000Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 32,
+  "fields": {
+    "book": 13,
+    "whereabouts": "Main Library, Shelf MA-3",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.004Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 33,
+  "fields": {
+    "book": 14,
+    "whereabouts": "Main Library, Shelf MA-1",
+    "status": "RESERVED",
+    "date_added": "2026-10-24T14:18:48.012Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 34,
+  "fields": {
+    "book": 14,
+    "whereabouts": "Main Library, Shelf MA-2",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.015Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 35,
+  "fields": {
+    "book": 15,
+    "whereabouts": "Main Library, Shelf MA-3",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.021Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 36,
+  "fields": {
+    "book": 15,
+    "whereabouts": "Main Library, Shelf MA-1",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.024Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 37,
+  "fields": {
+    "book": 16,
+    "whereabouts": "Main Library, Shelf EN-1",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.030Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 38,
+  "fields": {
+    "book": 16,
+    "whereabouts": "Main Library, Shelf EN-2",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.033Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 39,
+  "fields": {
+    "book": 17,
+    "whereabouts": "Main Library, Shelf EN-3",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.040Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 40,
+  "fields": {
+    "book": 17,
+    "whereabouts": "Main Library, Shelf EN-1",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.044Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 41,
+  "fields": {
+    "book": 18,
+    "whereabouts": "Main Library, Shelf EN-2",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.049Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 42,
+  "fields": {
+    "book": 18,
+    "whereabouts": "Main Library, Shelf EN-3",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.052Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 43,
+  "fields": {
+    "book": 19,
+    "whereabouts": "Main Library, Shelf EB-1",
+    "status": "BORROWED",
+    "date_added": "2026-10-24T14:18:48.059Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 44,
+  "fields": {
+    "book": 19,
+    "whereabouts": "Main Library, Shelf EB-2",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.061Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 45,
+  "fields": {
+    "book": 19,
+    "whereabouts": "Main Library, Shelf EB-3",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.064Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 46,
+  "fields": {
+    "book": 20,
+    "whereabouts": "Main Library, Shelf EB-1",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.068Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 47,
+  "fields": {
+    "book": 20,
+    "whereabouts": "Main Library, Shelf EB-2",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.071Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 48,
+  "fields": {
+    "book": 21,
+    "whereabouts": "Main Library, Shelf EB-3",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.077Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 49,
+  "fields": {
+    "book": 21,
+    "whereabouts": "Main Library, Shelf EB-1",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.081Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 50,
+  "fields": {
+    "book": 22,
+    "whereabouts": "Main Library, Shelf LI-1",
+    "status": "BORROWED",
+    "date_added": "2026-10-24T14:18:48.085Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 51,
+  "fields": {
+    "book": 22,
+    "whereabouts": "Main Library, Shelf LI-2",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.087Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 52,
+  "fields": {
+    "book": 22,
+    "whereabouts": "Main Library, Shelf LI-3",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.090Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 53,
+  "fields": {
+    "book": 23,
+    "whereabouts": "Main Library, Shelf LI-1",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.094Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 54,
+  "fields": {
+    "book": 23,
+    "whereabouts": "Main Library, Shelf LI-2",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.096Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 55,
+  "fields": {
+    "book": 24,
+    "whereabouts": "Main Library, Shelf LI-3",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.101Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 56,
+  "fields": {
+    "book": 24,
+    "whereabouts": "Main Library, Shelf LI-1",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.103Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 57,
+  "fields": {
+    "book": 25,
+    "whereabouts": "Main Library, Shelf LI-2",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.109Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 58,
+  "fields": {
+    "book": 25,
+    "whereabouts": "Main Library, Shelf LI-3",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.112Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 59,
+  "fields": {
+    "book": 26,
+    "whereabouts": "Main Library, Shelf PH-1",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.118Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 60,
+  "fields": {
+    "book": 26,
+    "whereabouts": "Main Library, Shelf PH-2",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.121Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 61,
+  "fields": {
+    "book": 27,
+    "whereabouts": "Main Library, Shelf PH-3",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.129Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 62,
+  "fields": {
+    "book": 27,
+    "whereabouts": "Main Library, Shelf PH-1",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.132Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 63,
+  "fields": {
+    "book": 28,
+    "whereabouts": "Main Library, Shelf CH-1",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.138Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 64,
+  "fields": {
+    "book": 28,
+    "whereabouts": "Main Library, Shelf CH-2",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.141Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 65,
+  "fields": {
+    "book": 29,
+    "whereabouts": "Main Library, Shelf GS-1",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.148Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 66,
+  "fields": {
+    "book": 29,
+    "whereabouts": "Main Library, Shelf GS-2",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.151Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 67,
+  "fields": {
+    "book": 30,
+    "whereabouts": "Main Library, Shelf GS-3",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.156Z"
+  }
+},
+{
+  "model": "catalogue.copy",
+  "pk": 68,
+  "fields": {
+    "book": 30,
+    "whereabouts": "Main Library, Shelf GS-1",
+    "status": "AVAILABLE",
+    "date_added": "2026-10-24T14:18:48.160Z"
+  }
+},
+{
+  "model": "reservations.reservation",
+  "pk": 1,
+  "fields": {
+    "student": 11,
+    "book": 1,
+    "copy": null,
+    "reservation_date": "2026-10-16T14:18:31.873Z",
+    "status": "WAITING",
+    "notified_at": null,
+    "expires_at": null
+  }
+},
+{
+  "model": "reservations.reservation",
+  "pk": 2,
+  "fields": {
+    "student": 15,
+    "book": 1,
+    "copy": 1,
+    "reservation_date": "2026-10-19T14:18:31.873Z",
+    "status": "READY",
+    "notified_at": "2026-10-24T14:23:29.311Z",
+    "expires_at": "2026-10-26T14:23:29.311Z"
+  }
+},
+{
+  "model": "reservations.reservation",
+  "pk": 3,
+  "fields": {
+    "student": 14,
+    "book": 1,
+    "copy": null,
+    "reservation_date": "2026-10-22T14:18:31.873Z",
+    "status": "WAITING",
+    "notified_at": null,
+    "expires_at": null
+  }
+},
+{
+  "model": "reservations.reservation",
+  "pk": 4,
+  "fields": {
+    "student": 15,
+    "book": 4,
+    "copy": null,
+    "reservation_date": "2026-10-23T14:18:31.873Z",
+    "status": "WAITING",
+    "notified_at": null,
+    "expires_at": null
+  }
+},
+{
+  "model": "reservations.reservation",
+  "pk": 5,
+  "fields": {
+    "student": 10,
+    "book": 6,
+    "copy": 14,
+    "reservation_date": "2026-10-23T14:18:31.873Z",
+    "status": "READY",
+    "notified_at": "2026-10-23T14:18:31.873Z",
+    "expires_at": "2026-10-25T20:18:31.873Z"
+  }
+},
+{
+  "model": "reservations.reservation",
+  "pk": 6,
+  "fields": {
+    "student": 13,
+    "book": 14,
+    "copy": 33,
+    "reservation_date": "2026-10-23T14:18:31.873Z",
+    "status": "READY",
+    "notified_at": "2026-10-24T09:18:31.873Z",
+    "expires_at": "2026-10-24T17:18:31.873Z"
+  }
+},
+{
+  "model": "reservations.reservation",
+  "pk": 7,
+  "fields": {
+    "student": 4,
+    "book": 22,
+    "copy": 50,
+    "reservation_date": "2026-10-18T14:18:31.873Z",
+    "status": "FULFILLED",
+    "notified_at": "2026-10-19T14:18:31.873Z",
+    "expires_at": "2026-10-21T14:18:31.873Z"
+  }
+},
+{
+  "model": "reservations.reservation",
+  "pk": 8,
+  "fields": {
+    "student": 9,
+    "book": 5,
+    "copy": null,
+    "reservation_date": "2026-10-14T14:18:31.873Z",
+    "status": "CANCELLED",
+    "notified_at": null,
+    "expires_at": null
+  }
+},
+{
+  "model": "reservations.reservation",
+  "pk": 9,
+  "fields": {
+    "student": 6,
+    "book": 11,
+    "copy": null,
+    "reservation_date": "2026-10-12T14:18:31.873Z",
+    "status": "EXPIRED",
+    "notified_at": "2026-10-12T14:18:31.873Z",
+    "expires_at": "2026-10-14T14:18:31.873Z"
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 1,
+  "fields": {
+    "student": 4,
+    "copy": 3,
+    "reservation": null,
+    "issued_by": 2,
+    "borrow_date": "2026-10-20",
+    "due_date": "2026-10-27",
+    "return_date": null,
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 2,
+  "fields": {
+    "student": 4,
+    "copy": 18,
+    "reservation": null,
+    "issued_by": 3,
+    "borrow_date": "2026-10-19",
+    "due_date": "2026-10-26",
+    "return_date": null,
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 3,
+  "fields": {
+    "student": 4,
+    "copy": 50,
+    "reservation": 7,
+    "issued_by": 2,
+    "borrow_date": "2026-10-22",
+    "due_date": "2026-10-29",
+    "return_date": null,
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 4,
+  "fields": {
+    "student": 5,
+    "copy": 1,
+    "reservation": null,
+    "issued_by": 3,
+    "borrow_date": "2026-10-13",
+    "due_date": "2026-10-20",
+    "return_date": "2026-10-24",
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 5,
+  "fields": {
+    "student": 5,
+    "copy": 11,
+    "reservation": null,
+    "issued_by": 2,
+    "borrow_date": "2026-10-21",
+    "due_date": "2026-10-28",
+    "return_date": null,
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 6,
+  "fields": {
+    "student": 6,
+    "copy": 2,
+    "reservation": null,
+    "issued_by": 3,
+    "borrow_date": "2026-10-11",
+    "due_date": "2026-10-18",
+    "return_date": null,
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 7,
+  "fields": {
+    "student": 7,
+    "copy": 6,
+    "reservation": null,
+    "issued_by": 2,
+    "borrow_date": "2026-10-15",
+    "due_date": "2026-10-29",
+    "return_date": null,
+    "renewal_count": 1
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 8,
+  "fields": {
+    "student": 10,
+    "copy": 16,
+    "reservation": null,
+    "issued_by": 3,
+    "borrow_date": "2026-10-21",
+    "due_date": "2026-10-28",
+    "return_date": null,
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 9,
+  "fields": {
+    "student": 13,
+    "copy": 9,
+    "reservation": null,
+    "issued_by": 2,
+    "borrow_date": "2026-10-23",
+    "due_date": "2026-10-30",
+    "return_date": null,
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 10,
+  "fields": {
+    "student": 14,
+    "copy": 10,
+    "reservation": null,
+    "issued_by": 3,
+    "borrow_date": "2026-10-22",
+    "due_date": "2026-10-29",
+    "return_date": null,
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 11,
+  "fields": {
+    "student": 11,
+    "copy": 43,
+    "reservation": null,
+    "issued_by": 2,
+    "borrow_date": "2026-10-01",
+    "due_date": "2026-10-08",
+    "return_date": null,
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 12,
+  "fields": {
+    "student": 5,
+    "copy": 19,
+    "reservation": null,
+    "issued_by": 2,
+    "borrow_date": "2026-09-09",
+    "due_date": "2026-09-16",
+    "return_date": "2026-09-20",
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 13,
+  "fields": {
+    "student": 12,
+    "copy": 30,
+    "reservation": null,
+    "issued_by": 3,
+    "borrow_date": "2026-09-04",
+    "due_date": "2026-09-11",
+    "return_date": "2026-09-17",
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 14,
+  "fields": {
+    "student": 9,
+    "copy": 27,
+    "reservation": null,
+    "issued_by": 2,
+    "borrow_date": "2026-09-10",
+    "due_date": "2026-09-17",
+    "return_date": "2026-09-20",
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 15,
+  "fields": {
+    "student": 8,
+    "copy": 53,
+    "reservation": null,
+    "issued_by": 3,
+    "borrow_date": "2026-09-18",
+    "due_date": "2026-09-25",
+    "return_date": "2026-09-29",
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 16,
+  "fields": {
+    "student": 4,
+    "copy": 17,
+    "reservation": null,
+    "issued_by": 2,
+    "borrow_date": "2026-08-05",
+    "due_date": "2026-08-12",
+    "return_date": "2026-08-10",
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 17,
+  "fields": {
+    "student": 10,
+    "copy": 4,
+    "reservation": null,
+    "issued_by": 3,
+    "borrow_date": "2026-08-10",
+    "due_date": "2026-08-17",
+    "return_date": "2026-08-15",
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 18,
+  "fields": {
+    "student": 7,
+    "copy": 21,
+    "reservation": null,
+    "issued_by": 2,
+    "borrow_date": "2026-08-15",
+    "due_date": "2026-08-22",
+    "return_date": "2026-08-20",
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 19,
+  "fields": {
+    "student": 14,
+    "copy": 28,
+    "reservation": null,
+    "issued_by": 3,
+    "borrow_date": "2026-08-20",
+    "due_date": "2026-08-27",
+    "return_date": "2026-08-25",
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 20,
+  "fields": {
+    "student": 15,
+    "copy": 35,
+    "reservation": null,
+    "issued_by": 2,
+    "borrow_date": "2026-08-25",
+    "due_date": "2026-09-01",
+    "return_date": "2026-08-30",
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 21,
+  "fields": {
+    "student": 13,
+    "copy": 14,
+    "reservation": null,
+    "issued_by": 3,
+    "borrow_date": "2026-08-30",
+    "due_date": "2026-09-06",
+    "return_date": "2026-09-04",
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 22,
+  "fields": {
+    "student": 6,
+    "copy": 44,
+    "reservation": null,
+    "issued_by": 2,
+    "borrow_date": "2026-09-04",
+    "due_date": "2026-09-11",
+    "return_date": "2026-09-09",
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 23,
+  "fields": {
+    "student": 11,
+    "copy": 51,
+    "reservation": null,
+    "issued_by": 3,
+    "borrow_date": "2026-09-09",
+    "due_date": "2026-09-16",
+    "return_date": "2026-09-14",
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 24,
+  "fields": {
+    "student": 9,
+    "copy": 67,
+    "reservation": null,
+    "issued_by": 2,
+    "borrow_date": "2026-09-14",
+    "due_date": "2026-09-21",
+    "return_date": "2026-09-19",
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 25,
+  "fields": {
+    "student": 12,
+    "copy": 57,
+    "reservation": null,
+    "issued_by": 3,
+    "borrow_date": "2026-09-16",
+    "due_date": "2026-09-23",
+    "return_date": "2026-09-21",
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 26,
+  "fields": {
+    "student": 8,
+    "copy": 23,
+    "reservation": null,
+    "issued_by": 2,
+    "borrow_date": "2026-09-19",
+    "due_date": "2026-09-26",
+    "return_date": "2026-09-24",
+    "renewal_count": 0
+  }
+},
+{
+  "model": "circulation.borrowrecord",
+  "pk": 27,
+  "fields": {
+    "student": 15,
+    "copy": 65,
+    "reservation": null,
+    "issued_by": 3,
+    "borrow_date": "2026-09-22",
+    "due_date": "2026-09-29",
+    "return_date": "2026-09-27",
+    "renewal_count": 0
+  }
+},
+{
+  "model": "fines.fine",
+  "pk": 1,
+  "fields": {
+    "borrow_record": 12,
+    "amount": "400.00",
+    "status": "UNPAID",
+    "date_created": "2026-09-20",
+    "date_paid": null,
+    "recorded_by": null,
+    "payment_reference": "",
+    "waiver_reason": ""
+  }
+},
+{
+  "model": "fines.fine",
+  "pk": 2,
+  "fields": {
+    "borrow_record": 13,
+    "amount": "600.00",
+    "status": "UNPAID",
+    "date_created": "2026-09-17",
+    "date_paid": null,
+    "recorded_by": null,
+    "payment_reference": "",
+    "waiver_reason": ""
+  }
+},
+{
+  "model": "fines.fine",
+  "pk": 3,
+  "fields": {
+    "borrow_record": 14,
+    "amount": "300.00",
+    "status": "PAID",
+    "date_created": "2026-09-20",
+    "date_paid": "2026-09-21",
+    "recorded_by": 2,
+    "payment_reference": "RCPT-0001",
+    "waiver_reason": ""
+  }
+},
+{
+  "model": "fines.fine",
+  "pk": 4,
+  "fields": {
+    "borrow_record": 15,
+    "amount": "400.00",
+    "status": "WAIVED",
+    "date_created": "2026-09-29",
+    "date_paid": "2026-09-30",
+    "recorded_by": 3,
+    "payment_reference": "",
+    "waiver_reason": "Book was returned on time but placed in the wrong drop box; verified by the librarian."
+  }
+},
+{
+  "model": "fines.fine",
+  "pk": 5,
+  "fields": {
+    "borrow_record": 4,
+    "amount": "400.00",
+    "status": "UNPAID",
+    "date_created": "2026-10-24",
+    "date_paid": null,
+    "recorded_by": null,
+    "payment_reference": "",
+    "waiver_reason": ""
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 1,
+  "fields": {
+    "user": 10,
+    "borrow_record": null,
+    "reservation": null,
+    "type": "RESERVATION_READY",
+    "channel": "INAPP",
+    "message": "\"Artificial Intelligence: A Modern Approach\" is ready, collect before expiry",
+    "is_read": false,
+    "date_sent": "2026-10-23T14:18:31.873Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 2,
+  "fields": {
+    "user": 10,
+    "borrow_record": null,
+    "reservation": null,
+    "type": "RESERVATION_READY",
+    "channel": "EMAIL",
+    "message": "\"Artificial Intelligence: A Modern Approach\" is ready, collect before expiry",
+    "is_read": false,
+    "date_sent": "2026-10-23T14:18:31.873Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 3,
+  "fields": {
+    "user": 13,
+    "borrow_record": null,
+    "reservation": null,
+    "type": "RESERVATION_READY",
+    "channel": "INAPP",
+    "message": "\"Linear Algebra and Its Applications\" is ready for pickup",
+    "is_read": false,
+    "date_sent": "2026-10-24T14:18:31.873Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 4,
+  "fields": {
+    "user": 13,
+    "borrow_record": null,
+    "reservation": null,
+    "type": "RESERVATION_READY",
+    "channel": "EMAIL",
+    "message": "\"Linear Algebra and Its Applications\" is ready for pickup",
+    "is_read": false,
+    "date_sent": "2026-10-24T14:18:31.873Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 5,
+  "fields": {
+    "user": 4,
+    "borrow_record": null,
+    "reservation": null,
+    "type": "RESERVATION_READY",
+    "channel": "INAPP",
+    "message": "Your hold on \"Things Fall Apart\" is ready for pickup at the circulation desk",
+    "is_read": true,
+    "date_sent": "2026-10-19T14:18:31.873Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 6,
+  "fields": {
+    "user": 4,
+    "borrow_record": null,
+    "reservation": null,
+    "type": "RESERVATION_READY",
+    "channel": "EMAIL",
+    "message": "Your hold on \"Things Fall Apart\" is ready for pickup at the circulation desk",
+    "is_read": true,
+    "date_sent": "2026-10-19T14:18:31.873Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 7,
+  "fields": {
+    "user": 5,
+    "borrow_record": null,
+    "reservation": null,
+    "type": "OVERDUE",
+    "channel": "INAPP",
+    "message": "\"Introduction to Algorithms\" is 3 days overdue. Return to the desk immediately.",
+    "is_read": false,
+    "date_sent": "2026-10-21T14:18:31.873Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 8,
+  "fields": {
+    "user": 5,
+    "borrow_record": null,
+    "reservation": null,
+    "type": "OVERDUE",
+    "channel": "EMAIL",
+    "message": "\"Introduction to Algorithms\" is 3 days overdue. Return to the desk immediately.",
+    "is_read": false,
+    "date_sent": "2026-10-21T14:18:31.873Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 9,
+  "fields": {
+    "user": 11,
+    "borrow_record": null,
+    "reservation": null,
+    "type": "OVERDUE",
+    "channel": "INAPP",
+    "message": "\"Principles of Economics\" overdue notice 1: return book immediately.",
+    "is_read": true,
+    "date_sent": "2026-10-14T14:18:31.873Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 10,
+  "fields": {
+    "user": 11,
+    "borrow_record": null,
+    "reservation": null,
+    "type": "OVERDUE",
+    "channel": "EMAIL",
+    "message": "\"Principles of Economics\" overdue notice 1: return book immediately.",
+    "is_read": true,
+    "date_sent": "2026-10-14T14:18:31.873Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 11,
+  "fields": {
+    "user": 11,
+    "borrow_record": null,
+    "reservation": null,
+    "type": "OVERDUE",
+    "channel": "INAPP",
+    "message": "\"Principles of Economics\" overdue notice 2: overdue fines accruing.",
+    "is_read": false,
+    "date_sent": "2026-10-19T14:18:31.873Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 12,
+  "fields": {
+    "user": 11,
+    "borrow_record": null,
+    "reservation": null,
+    "type": "OVERDUE",
+    "channel": "EMAIL",
+    "message": "\"Principles of Economics\" overdue notice 2: overdue fines accruing.",
+    "is_read": false,
+    "date_sent": "2026-10-19T14:18:31.873Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 13,
+  "fields": {
+    "user": 6,
+    "borrow_record": null,
+    "reservation": null,
+    "type": "RESERVATION_EXPIRED",
+    "channel": "INAPP",
+    "message": "Your reservation for \"Computer Organization and Architecture\" expired uncollected.",
+    "is_read": true,
+    "date_sent": "2026-10-14T14:18:31.873Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 14,
+  "fields": {
+    "user": 15,
+    "borrow_record": null,
+    "reservation": null,
+    "type": "RESERVATION_CONFIRMED",
+    "channel": "INAPP",
+    "message": "You are number 2 in the queue for \"Introduction to Algorithms\".",
+    "is_read": true,
+    "date_sent": "2026-10-19T14:18:31.873Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 15,
+  "fields": {
+    "user": 14,
+    "borrow_record": null,
+    "reservation": null,
+    "type": "RESERVATION_CONFIRMED",
+    "channel": "INAPP",
+    "message": "You are number 3 in the queue for \"Introduction to Algorithms\".",
+    "is_read": false,
+    "date_sent": "2026-10-22T14:18:31.873Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 16,
+  "fields": {
+    "user": 9,
+    "borrow_record": null,
+    "reservation": null,
+    "type": "RESERVATION_CONFIRMED",
+    "channel": "INAPP",
+    "message": "You joined the queue for \"Operating System Concepts\".",
+    "is_read": true,
+    "date_sent": "2026-10-14T14:18:31.873Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 17,
+  "fields": {
+    "user": 11,
+    "borrow_record": null,
+    "reservation": 1,
+    "type": "RESERVATION_BYPASSED",
+    "channel": "INAPP",
+    "message": "A copy of 'Introduction to Algorithms' became available, but your account is currently blocked from borrowing (You have 1 overdue book(s) past the return deadline. Borrowing is blocked until all overdue books are returned.). The copy has automatically been passed to the next eligible student in the queue. Please resolve your account balance to be eligible for future copies.",
+    "is_read": false,
+    "date_sent": "2026-10-24T14:23:29.318Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 18,
+  "fields": {
+    "user": 11,
+    "borrow_record": null,
+    "reservation": 1,
+    "type": "RESERVATION_BYPASSED",
+    "channel": "EMAIL",
+    "message": "A copy of 'Introduction to Algorithms' became available, but your account is currently blocked from borrowing (You have 1 overdue book(s) past the return deadline. Borrowing is blocked until all overdue books are returned.). The copy has automatically been passed to the next eligible student in the queue. Please resolve your account balance to be eligible for future copies.",
+    "is_read": false,
+    "date_sent": "2026-10-24T14:23:29.318Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 19,
+  "fields": {
+    "user": 15,
+    "borrow_record": null,
+    "reservation": 2,
+    "type": "RESERVATION_READY",
+    "channel": "INAPP",
+    "message": "Good news! 'Introduction to Algorithms' is now ready for you. Please collect it before 26 Oct 2026 14:23, or the reservation will expire and pass to the next student.",
+    "is_read": false,
+    "date_sent": "2026-10-24T14:23:33.417Z"
+  }
+},
+{
+  "model": "notifications.notification",
+  "pk": 20,
+  "fields": {
+    "user": 15,
+    "borrow_record": null,
+    "reservation": 2,
+    "type": "RESERVATION_READY",
+    "channel": "EMAIL",
+    "message": "Good news! 'Introduction to Algorithms' is now ready for you. Please collect it before 26 Oct 2026 14:23, or the reservation will expire and pass to the next student.",
+    "is_read": false,
+    "date_sent": "2026-10-24T14:23:33.417Z"
+  }
+},
+{
+  "model": "core.setting",
+  "pk": "fine_block_threshold",
+  "fields": {
+    "setting_value": "500",
+    "description": "Unpaid fines (naira) at or above which a student cannot borrow, reserve or renew"
+  }
+},
+{
+  "model": "core.setting",
+  "pk": "fine_per_day",
+  "fields": {
+    "setting_value": "100",
+    "description": "Fine in naira for each overdue day"
+  }
+},
+{
+  "model": "core.setting",
+  "pk": "loan_period_days",
+  "fields": {
+    "setting_value": "7",
+    "description": "Days a book may be borrowed"
+  }
+},
+{
+  "model": "core.setting",
+  "pk": "max_loans_per_student",
+  "fields": {
+    "setting_value": "3",
+    "description": "Maximum active loans per student"
+  }
+},
+{
+  "model": "core.setting",
+  "pk": "max_overdue_notices",
+  "fields": {
+    "setting_value": "3",
+    "description": "Maximum overdue notices per loan"
+  }
+},
+{
+  "model": "core.setting",
+  "pk": "max_renewals",
+  "fields": {
+    "setting_value": "1",
+    "description": "Maximum renewals per loan"
+  }
+},
+{
+  "model": "core.setting",
+  "pk": "overdue_repeat_days",
+  "fields": {
+    "setting_value": "3",
+    "description": "Minimum days between overdue notices"
+  }
+},
+{
+  "model": "core.setting",
+  "pk": "pickup_window_hours",
+  "fields": {
+    "setting_value": "48",
+    "description": "Hours a reserved copy is held for collection"
+  }
+},
+{
+  "model": "core.setting",
+  "pk": "reminder_days_before_due",
+  "fields": {
+    "setting_value": "2",
+    "description": "Days before the due date to send the reminder"
+  }
+},
+{
+  "model": "core.setting",
+  "pk": "renewal_period_days",
+  "fields": {
+    "setting_value": "7",
+    "description": "Days added to the due date on renewal"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 1,
+  "fields": {
+    "timestamp": "2026-09-24T14:18:31.873Z",
+    "user": 1,
+    "action": "USER_LOGIN",
+    "detail": "Administrator logged into system"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 2,
+  "fields": {
+    "timestamp": "2026-09-25T14:18:31.873Z",
+    "user": 2,
+    "action": "USER_LOGIN",
+    "detail": "Librarian Emmanuel Udoh logged in at circulation desk"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 3,
+  "fields": {
+    "timestamp": "2026-09-27T14:18:31.873Z",
+    "user": 2,
+    "action": "ISSUE",
+    "detail": "Issued Book#8 copy 2 to Chinedu Okafor"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 4,
+  "fields": {
+    "timestamp": "2026-09-27T14:18:31.873Z",
+    "user": 2,
+    "action": "RETURN",
+    "detail": "Processed return of Book#8 copy 2 from Chinedu Okafor (late: fine N200 assessed)"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 5,
+  "fields": {
+    "timestamp": "2026-09-28T14:18:31.873Z",
+    "user": 2,
+    "action": "DAILY_JOB",
+    "detail": "Daily job: expired 0, reminders 1, overdue notices 0, errors 0"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 6,
+  "fields": {
+    "timestamp": "2026-09-29T14:18:31.873Z",
+    "user": 2,
+    "action": "FINE_PAID",
+    "detail": "Payment of N200 recorded for Tunde Bakare. Ref: RCPT-0001"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 7,
+  "fields": {
+    "timestamp": "2026-09-30T14:18:31.873Z",
+    "user": 3,
+    "action": "RETURN",
+    "detail": "Processed return of Book#13 copy 1 from Fatima Yusuf (late: fine N600 assessed)"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 8,
+  "fields": {
+    "timestamp": "2026-10-02T14:18:31.873Z",
+    "user": 3,
+    "action": "USER_LOGIN",
+    "detail": "Librarian Funke Adeyemi logged in"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 9,
+  "fields": {
+    "timestamp": "2026-10-04T14:18:31.873Z",
+    "user": 2,
+    "action": "ISSUE",
+    "detail": "Issued Book#1 copy 1 to Chinedu Okafor"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 10,
+  "fields": {
+    "timestamp": "2026-10-07T14:18:31.873Z",
+    "user": 3,
+    "action": "RETURN",
+    "detail": "Processed return of Book#23 copy 1 from Ngozi Nwosu (late: fine N250 assessed)"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 11,
+  "fields": {
+    "timestamp": "2026-10-08T14:18:31.873Z",
+    "user": 3,
+    "action": "FINE_WAIVED",
+    "detail": "Waived fine of N250 for Ngozi Nwosu. Reason: Book was returned on time in drop box."
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 12,
+  "fields": {
+    "timestamp": "2026-10-09T14:18:31.873Z",
+    "user": 3,
+    "action": "ISSUE",
+    "detail": "Issued Book#1 copy 2 to Blessing Etim"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 13,
+  "fields": {
+    "timestamp": "2026-10-12T14:18:31.873Z",
+    "user": 2,
+    "action": "DAILY_JOB",
+    "detail": "Daily job: expired 1, reminders 2, overdue notices 1, errors 0"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 14,
+  "fields": {
+    "timestamp": "2026-10-14T14:18:31.873Z",
+    "user": 2,
+    "action": "DAILY_JOB",
+    "detail": "Daily job: expired 0, reminders 1, overdue notices 2, errors 0"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 15,
+  "fields": {
+    "timestamp": "2026-10-16T14:18:31.873Z",
+    "user": 1,
+    "action": "SETTINGS_CHANGE",
+    "detail": "Setting 'pickup_window_hours' changed from '48' to '48'"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 16,
+  "fields": {
+    "timestamp": "2026-10-18T14:18:31.873Z",
+    "user": 1,
+    "action": "BACKUP",
+    "detail": "Created database snapshot: library_backup_auto.sql"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 17,
+  "fields": {
+    "timestamp": "2026-10-19T14:18:31.873Z",
+    "user": 2,
+    "action": "ALLOCATE",
+    "detail": "Copy C0014 allocated to Esther Akpan for reservation"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 18,
+  "fields": {
+    "timestamp": "2026-10-19T14:18:31.873Z",
+    "user": 2,
+    "action": "RESERVE",
+    "detail": "Student Victor Eke joined queue for 'Introduction to Algorithms' at position 2"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 19,
+  "fields": {
+    "timestamp": "2026-10-21T14:18:31.873Z",
+    "user": 2,
+    "action": "ISSUE",
+    "detail": "Issued Book#22 copy 1 to Amina Bello for fulfilled hold"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 20,
+  "fields": {
+    "timestamp": "2026-10-22T14:18:31.873Z",
+    "user": 2,
+    "action": "DAILY_JOB",
+    "detail": "Daily job: expired 0, reminders 2, overdue notices 3, errors 0"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 21,
+  "fields": {
+    "timestamp": "2026-10-23T14:18:31.873Z",
+    "user": 3,
+    "action": "USER_LOGIN",
+    "detail": "Librarian Funke Adeyemi desk session started"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 22,
+  "fields": {
+    "timestamp": "2026-10-24T14:18:31.873Z",
+    "user": 1,
+    "action": "USER_LOGIN",
+    "detail": "Administrator Adaeze Okonkwo authenticated"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 23,
+  "fields": {
+    "timestamp": "2026-10-24T14:20:34.695Z",
+    "user": 2,
+    "action": "LOGIN",
+    "detail": "User emmanuel.udoh@uni.edu.ng logged in (LIBRARIAN)"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 24,
+  "fields": {
+    "timestamp": "2026-10-24T14:23:33.404Z",
+    "user": null,
+    "action": "QUEUE_BYPASS",
+    "detail": "Reservation #1 for Samuel Ibe bypassed during copy allocation: You have 1 overdue book(s) past the return deadline. Borrowing is blocked until all overdue books are returned."
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 25,
+  "fields": {
+    "timestamp": "2026-10-24T14:23:37.477Z",
+    "user": null,
+    "action": "ALLOCATE",
+    "detail": "Copy C0001 allocated to Victor Eke for reservation"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 26,
+  "fields": {
+    "timestamp": "2026-10-24T14:23:37.481Z",
+    "user": 2,
+    "action": "RETURN",
+    "detail": "Returned C0001 (Introduction to Algorithms) from Chinedu Okafor. Late by 4 days. Fine of N400 recorded. Copy now held for Victor Eke (next eligible in queue)."
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 27,
+  "fields": {
+    "timestamp": "2026-10-24T14:27:04.834Z",
+    "user": 2,
+    "action": "LOGOUT",
+    "detail": "User emmanuel.udoh@uni.edu.ng logged out"
+  }
+},
+{
+  "model": "core.systemlog",
+  "pk": 28,
+  "fields": {
+    "timestamp": "2026-10-24T14:28:35.666Z",
+    "user": 1,
+    "action": "LOGIN",
+    "detail": "User admin@uni.edu.ng logged in (ADMINISTRATOR)"
+  }
+}
+]

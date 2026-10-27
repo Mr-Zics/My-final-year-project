@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Book Catalogue &middot; UniLibrary{% endblock %}
+
+{% block content %}
+<div class="py-4">
+  <!-- Page Header (Section 9.4 pattern) -->
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <div>
+      <h1 class="h3 fw-bold text-navy mb-1" id="catalogue-title">Library Book Catalogue</h1>
+      <p class="text-muted small mb-0">
+        Search our physical collection, filter by academic department, or check real-time shelf copy availability.
+      </p>
+    </div>
+    {% if user.role == 'LIBRARIAN' %}
+      <a href="{% url 'staff_book_add' %}" class="btn btn-gold btn-sm">
+        <span>+</span> Add New Book
+      </a>
+    {% endif %}
+  </div>
+
+  <!-- Search & Filter Bar Card (Screen 3) -->
+  <div class="card-custom p-3 mb-4 bg-white">
+    <form method="GET" action="{% url 'catalogue_list' %}" class="row g-2 align-items-center" role="search">
+      <!-- Search Input -->
+      <div class="col-lg-5 col-md-12">
+        <div class="input-group">
+          <span class="input-group-text bg-light text-muted border-end-0"><i class="fa-solid fa-magnifying-glass"></i></span>
+          <input
+            type="search"
+            name="q"
+            value="{{ request.GET.q|default:'' }}"
+            class="form-control border-start-0"
+            placeholder="Search by title, author, or ISBN..."
+            aria-label="Search catalogue"
+            id="catalogue-search-q"
+          >
+        </div>
+      </div>
+
+      <!-- Category Filter -->
+      <div class="col-lg-3 col-md-6">
+        <select name="category" class="form-select" aria-label="Filter by category" id="catalogue-filter-category">
+          <option value="">All Subject Categories</option>
+          {% for cat in categories %}
+            <option value="{{ cat.id }}" {% if request.GET.category == cat.id|stringformat:"s" %}selected{% endif %}>
+              {{ cat.category_name }} ({{ cat.num_books }})
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Availability Filter -->
+      <div class="col-lg-2 col-md-6">
+        <select name="availability" class="form-select" aria-label="Filter by availability" id="catalogue-filter-avail">
+          <option value="all" {% if request.GET.availability == 'all' or not request.GET.availability %}selected{% endif %}>All Copies</option>
+          <option value="available" {% if request.GET.availability == 'available' %}selected{% endif %}><i class="fa-solid fa-check"></i> Available Now</option>
+          <option value="on_loan" {% if request.GET.availability == 'on_loan' %}selected{% endif %}>● All on Loan</option>
+        </select>
+      </div>
+
+      <!-- Filter Actions -->
+      <div class="col-lg-2 col-md-12 d-flex gap-2">
+        <button type="submit" class="btn btn-navy flex-grow-1" id="catalogue-filter-submit">
+          Filter
+        </button>
+        {% if request.GET.q or request.GET.category or request.GET.availability and request.GET.availability != 'all' %}
+          <a href="{% url 'catalogue_list' %}" class="btn btn-outline-secondary" title="Reset Filters">
+            <i class="fa-solid fa-xmark"></i>
+          </a>
+        {% endif %}
+      </div>
+    </form>
+  </div>
+
+  <!-- Results Count Bar -->
+  <div class="d-flex justify-content-between align-items-center mb-3 text-muted small">
+    <div>
+      Showing <strong>{{ books|length }}</strong> of <strong>{{ total_results }}</strong> book{{ total_results|pluralize }} in physical collection
+    </div>
+    {% if request.GET.q %}
+      <div>
+        Active search: <span class="badge bg-light text-navy border">"{{ request.GET.q }}"</span>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Book Card Grid (12 per page, matching Screen 3) -->
+  {% if books %}
+    <div class="row g-4" id="bookGrid">
+      {% for book in books %}
+        <div class="col-lg-4 col-md-6">
+          <div class="book-catalogue-card">
+            <!-- Front Cover Image Display (Zero Cropping, Object-fit Contain) -->
+            <div class="book-cover-wrapper">
+              {% if book.get_cover_image_url %}
+                <img
+                  src="{{ book.get_cover_image_url }}"
+                  alt="{{ book.title }} front cover"
+                  loading="lazy"
+                >
+              {% else %}
+                <div class="text-center p-3 text-muted">
+                  <div style="font-size: 2.5rem; opacity: 0.6;"><i class="fa-solid fa-book-open"></i></div>
+                  <small class="fw-bold d-block mt-1">{{ book.category.code|default:"LIB" }}</small>
+                </div>
+              {% endif %}
+            </div>
+
+            <!-- Metadata -->
+            <h3 class="book-card-title text-truncate" title="{{ book.title }}">
+              {{ book.title }}
+            </h3>
+            <p class="book-card-author text-truncate" title="{{ book.author }}">
+              by {{ book.author }}
+            </p>
+
+            <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-1">
+              <span class="badge-category" style="font-size: 0.76rem;">
+                {{ book.category.category_name }}
+              </span>
+              <span class="badge-status {{ book.availability_badge.css }}" style="font-size: 0.76rem;">
+                {{ book.availability_badge.symbol }} {{ book.availability_badge.text }}
+              </span>
+            </div>
+
+            <!-- Footer Action -->
+            <div class="book-card-footer">
+              <span class="isbn-label text-muted fw-semibold">
+                ISBN:&nbsp;<span class="font-monospace text-dark fw-bold">{{ book.isbn }}</span>
+              </span>
+              <a href="{% url 'book_detail' book.id %}" class="btn btn-sm btn-gold px-3 text-nowrap">
+                View Details &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination Controls (Section 7) -->
+    {% if is_paginated %}
+      <nav class="d-flex justify-content-center my-4" aria-label="Catalogue pagination">
+        <ul class="pagination pagination-sm">
+          {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link text-navy" href="?page={{ page_obj.previous_page_number }}{% if query_string %}&{{ query_string }}{% endif %}">
+                &laquo; Previous
+              </a>
+            </li>
+          {% else %}
+            <li class="page-item disabled"><span class="page-link">&laquo; Previous</span></li>
+          {% endif %}
+
+          {% for num in paginator.page_range %}
+            {% if page_obj.number == num %}
+              <li class="page-item active" aria-current="page">
+                <span class="page-link bg-navy border-navy text-white">{{ num }}</span>
+              </li>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+              <li class="page-item">
+                <a class="page-link text-navy" href="?page={{ num }}{% if query_string %}&{{ query_string }}{% endif %}">{{ num }}</a>
+              </li>
+            {% endif %}
+          {% endfor %}
+
+          {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link text-navy" href="?page={{ page_obj.next_page_number }}{% if query_string %}&{{ query_string }}{% endif %}">
+                Next &raquo;
+              </a>
+            </li>
+          {% else %}
+            <li class="page-item disabled"><span class="page-link">Next &raquo;</span></li>
+          {% endif %}
+        </ul>
+      </nav>
+    {% endif %}
+
+  {% else %}
+    <!-- Empty State -->
+    <div class="card-custom text-center py-5 my-4 bg-white">
+      <div style="font-size: 3.5rem; opacity: 0.4;" class="mb-2"><i class="fa-solid fa-magnifying-glass"></i></div>
+      <h2 class="h5 fw-bold text-navy">No Books Found</h2>
+      <p class="text-muted small mx-auto mb-3" style="max-width: 440px;">
+        We could not find any books matching your search criteria. Try using different keywords, checking author names, or clearing subject filters.
+      </p>
+      <div>
+        <a href="{% url 'catalogue_list' %}" class="btn btn-outline-secondary btn-sm">
+          Clear Filters &amp; View All Books
+        </a>
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

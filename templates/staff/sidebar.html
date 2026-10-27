@@ -1,0 +1,60 @@
+{% load static %}
+<div class="card-custom p-3 bg-white" id="staffSidebar">
+  <div class="d-flex align-items-center gap-2 pb-3 mb-3 border-bottom">
+    <img src="{% static 'img/logo.svg' %}" alt="Logo" width="28" height="28">
+    <div>
+      <h2 class="h6 mb-0 fw-bold text-navy">Circulation Desk</h2>
+      <small class="text-muted">{% if user.role == 'ADMINISTRATOR' %}Administrator (Read-Only Desk){% else %}Staff Management{% endif %}</small>
+    </div>
+  </div>
+
+  <nav class="d-flex flex-column gap-1" aria-label="Staff Navigation">
+    <small class="text-muted text-uppercase fw-bold px-2 pt-1" style="font-size: 0.7rem; letter-spacing: 0.05em;">Overview</small>
+    <a href="{% url 'staff_dashboard' %}" class="btn btn-sm text-start {% if active_nav == 'dashboard' %}btn-navy active{% else %}btn-secondary-custom border-0{% endif %}" {% if active_nav == 'dashboard' %}style="border-left: 4px solid var(--gold);"{% endif %}>
+      <i class="fa-solid fa-chart-line"></i> Overview Dashboard
+    </a>
+
+    <small class="text-muted text-uppercase fw-bold px-2 pt-2" style="font-size: 0.7rem; letter-spacing: 0.05em;">Catalogue</small>
+    <a href="{% url 'staff_book_list' %}" class="btn btn-sm text-start {% if active_nav == 'books' %}btn-navy active{% else %}btn-secondary-custom border-0{% endif %}" {% if active_nav == 'books' %}style="border-left: 4px solid var(--gold);"{% endif %}>
+      <i class="fa-solid fa-book"></i> Manage Books
+    </a>
+    <a href="{% url 'staff_category_list' %}" class="btn btn-sm text-start {% if active_nav == 'categories' %}btn-navy active{% else %}btn-secondary-custom border-0{% endif %}" {% if active_nav == 'categories' %}style="border-left: 4px solid var(--gold);"{% endif %}>
+      <i class="fa-solid fa-folder-open"></i> Subject Categories
+    </a>
+
+    <small class="text-muted text-uppercase fw-bold px-2 pt-2" style="font-size: 0.7rem; letter-spacing: 0.05em;">Circulation</small>
+    <a href="{% url 'staff_issue' %}" class="btn btn-sm text-start {% if active_nav == 'issue' %}btn-navy active{% else %}btn-secondary-custom border-0{% endif %}" {% if active_nav == 'issue' %}style="border-left: 4px solid var(--gold);"{% endif %}>
+      <i class="fa-solid fa-arrow-up-from-bracket"></i> Issue Book
+    </a>
+    <a href="{% url 'staff_return' %}" class="btn btn-sm text-start {% if active_nav == 'return' %}btn-navy active{% else %}btn-secondary-custom border-0{% endif %}" {% if active_nav == 'return' %}style="border-left: 4px solid var(--gold);"{% endif %}>
+      <i class="fa-solid fa-inbox"></i> Return Book
+    </a>
+    <a href="{% url 'staff_loans' %}" class="btn btn-sm text-start {% if active_nav == 'loans' %}btn-navy active{% else %}btn-secondary-custom border-0{% endif %}" {% if active_nav == 'loans' %}style="border-left: 4px solid var(--gold);"{% endif %}>
+      <i class="fa-solid fa-book-open"></i> Active Loans
+    </a>
+    <a href="{% url 'staff_overdue' %}" class="btn btn-sm text-start {% if active_nav == 'overdue' %}btn-navy active{% else %}btn-secondary-custom border-0{% endif %}" {% if active_nav == 'overdue' %}style="border-left: 4px solid var(--gold);"{% endif %}>
+      <i class="fa-solid fa-clock"></i> Overdue Books
+    </a>
+    <a href="{% url 'staff_reservation_queue' %}" class="btn btn-sm text-start {% if active_nav == 'queue' %}btn-navy active{% else %}btn-secondary-custom border-0{% endif %}" {% if active_nav == 'queue' %}style="border-left: 4px solid var(--gold);"{% endif %}>
+      <i class="fa-solid fa-hourglass-half"></i> Reservation Queue
+    </a>
+
+    <small class="text-muted text-uppercase fw-bold px-2 pt-2" style="font-size: 0.7rem; letter-spacing: 0.05em;">Fines &amp; Reports</small>
+    <a href="{% url 'staff_fines' %}" class="btn btn-sm text-start {% if active_nav == 'fines' %}btn-navy active{% else %}btn-secondary-custom border-0{% endif %}" {% if active_nav == 'fines' %}style="border-left: 4px solid var(--gold);"{% endif %}>
+      <i class="fa-solid fa-money-bill-wave"></i> Fine Records
+    </a>
+    <a href="{% url 'staff_student_list' %}" class="btn btn-sm text-start {% if active_nav == 'students' %}btn-navy active{% else %}btn-secondary-custom border-0{% endif %}" {% if active_nav == 'students' %}style="border-left: 4px solid var(--gold);"{% endif %}>
+      <i class="fa-solid fa-users"></i> Student Directory
+    </a>
+    <a href="{% url 'reports_hub' %}" class="btn btn-sm text-start {% if active_nav == 'reports' %}btn-navy active{% else %}btn-secondary-custom border-0{% endif %}" {% if active_nav == 'reports' %}style="border-left: 4px solid var(--gold);"{% endif %}>
+      <i class="fa-solid fa-chart-line"></i> Reports Hub
+    </a>
+
+    {% if user.role == 'ADMINISTRATOR' %}
+      <hr class="my-2">
+      <a href="{% url 'admin_dashboard' %}" class="btn btn-sm btn-outline-dark text-start">
+        <i class="fa-solid fa-gear"></i> Back to Admin Portal
+      </a>
+    {% endif %}
+  </nav>
+</div>

@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Confirm Copy Withdrawal &middot; UniLibrary{% endblock %}
+
+{% block content %}
+<div class="row g-4 py-4 justify-content-center">
+  <div class="col-lg-3">
+    {% include "staff/sidebar.html" with active_nav="books" %}
+  </div>
+
+  <div class="col-lg-8">
+    <div class="card-custom bg-white p-4">
+      <div class="pb-3 mb-3 border-bottom">
+        <h1 class="h4 fw-bold text-navy mb-1">Confirm Inventory Copy Withdrawal</h1>
+        <p class="text-muted small mb-0">
+          Decommissioning a physical book copy removes it from active circulation (Section 4.4).
+        </p>
+      </div>
+
+      <!-- Copy Details Summary -->
+      <div class="p-3 rounded bg-light border mb-4">
+        <div class="row g-2">
+          <div class="col-sm-6">
+            <span class="text-muted small d-block">Accession Number:</span>
+            <strong class="font-monospace text-navy fs-5">{{ copy.accession_number }}</strong>
+          </div>
+          <div class="col-sm-6">
+            <span class="text-muted small d-block">Current Status:</span>
+            <span class="badge-status {{ copy.badge_symbol_and_css.1 }}">
+              {{ copy.badge_symbol_and_css.0 }} {{ copy.get_status_display }}
+            </span>
+          </div>
+          <div class="col-sm-6">
+            <span class="text-muted small d-block">Book Title:</span>
+            <span class="text-dark fw-semibold">{{ copy.book.title }}</span>
+          </div>
+          <div class="col-sm-6">
+            <span class="text-muted small d-block">Shelf Location:</span>
+            <span class="text-dark">{{ copy.whereabouts }}</span>
+          </div>
+        </div>
+      </div>
+
+      {% if not can_withdraw %}
+        <!-- Withdrawal Blocked Guard (Section 4.4 & Acceptance Test T29) -->
+        <div class="alert alert-danger d-flex align-items-start gap-3" role="alert">
+          <div class="fs-3"><i class="fa-solid fa-xmark"></i></div>
+          <div>
+            <h2 class="h6 fw-bold mb-1">Withdrawal Blocked by Library Policy</h2>
+            <p class="mb-2">{{ reason }}</p>
+            <small class="text-muted d-block">
+              Per university circulation rules, a copy cannot be marked as withdrawn while it is actively borrowed by a student or held for an approved reservation.
+            </small>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-top d-flex justify-content-end">
+          <a href="{% url 'staff_book_copies' copy.book.id %}" class="btn btn-navy">
+            &larr; Back to Copies List
+          </a>
+        </div>
+
+      {% else %}
+        <!-- Safe to Withdraw Form -->
+        <div class="alert alert-warning" role="alert">
+          <h2 class="h6 fw-bold mb-1"><i class="fa-solid fa-triangle-exclamation"></i> Please Confirm Decommissioning</h2>
+          <p class="mb-0 small">
+            Withdrawing copy <strong>{{ copy.accession_number }}</strong> will permanently remove it from available circulation.
+            This action is audited in the System Log.
+          </p>
+        </div>
+
+        <form method="POST">
+          {% csrf_token %}
+          <div class="mt-4 pt-3 border-top d-flex gap-2 justify-content-end">
+            <a href="{% url 'staff_book_copies' copy.book.id %}" class="btn btn-outline-secondary">
+              Cancel
+            </a>
+            <button type="submit" class="btn btn-danger px-4">
+              Confirm Withdrawal
+            </button>
+          </div>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Subject Categories &middot; UniLibrary Circulation Desk{% endblock %}
+
+{% block content %}
+<div class="row g-4 py-4">
+  <!-- Left Staff Sidebar -->
+  <div class="col-lg-3">
+    {% include "staff/sidebar.html" with active_nav="categories" %}
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="col-lg-9">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+      <div>
+        <h1 class="h3 fw-bold text-navy mb-1" id="categories-heading">Subject Categories</h1>
+        <p class="text-muted small mb-0">
+          Manage academic subject classifications and shelf location codes (Section 7.3 &amp; 11.2).
+        </p>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <!-- Add New Category Form (Section 7.3 - Librarian Only) -->
+      {% if user.role == 'LIBRARIAN' %}
+        <div class="col-md-5">
+          <div class="card-custom bg-white p-4">
+            <h2 class="h6 fw-bold text-navy mb-3">Add Subject Category</h2>
+            <form method="POST" action="{% url 'staff_category_list' %}">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="id_category_name" class="form-label small fw-semibold text-navy">Category Name <span class="text-danger">*</span></label>
+                {{ form.category_name }}
+              </div>
+              <div class="mb-3">
+                <label for="id_code" class="form-label small fw-semibold text-navy">Shelf Code (e.g. CS, MA, LI)</label>
+                {{ form.code }}
+                <small class="text-muted d-block mt-1">Used on physical copy shelf markers.</small>
+              </div>
+              <button type="submit" class="btn btn-navy w-100">
+                + Create Category
+              </button>
+            </form>
+          </div>
+        </div>
+      {% endif %}
+
+      <!-- Categories List Table -->
+      <div class="{% if user.role == 'LIBRARIAN' %}col-md-7{% else %}col-md-12{% endif %}">
+        <div class="card-custom bg-white p-0 overflow-hidden mb-4">
+          <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
+            <h2 class="h6 fw-bold text-navy mb-0">Existing Categories</h2>
+            <span class="small text-muted">{{ categories|length }} department{{ categories|length|pluralize }}</span>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" style="font-size: 0.92rem;">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col">Department Name</th>
+                  <th scope="col" style="width: 90px;">Code</th>
+                  <th scope="col" class="text-center" style="width: 110px;">Books</th>
+                  {% if user.role == 'LIBRARIAN' %}
+                    <th scope="col" class="text-end" style="width: 160px;">Actions</th>
+                  {% endif %}
+                </tr>
+              </thead>
+              <tbody>
+                {% for cat in categories %}
+                  <tr>
+                    <td>
+                      <strong class="text-navy">{{ cat.category_name }}</strong>
+                    </td>
+                    <td>
+                      <span class="badge bg-light text-navy font-monospace border">
+                        {{ cat.code|default:"--" }}
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span class="badge bg-light text-dark border fw-semibold">
+                        {{ cat.num_books }}
+                      </span>
+                    </td>
+                    {% if user.role == 'LIBRARIAN' %}
+                      <td class="text-end">
+                        <div class="d-inline-flex gap-1">
+                          <!-- Quick Edit Modal Trigger / Collapse -->
+                          <button
+                            class="btn btn-sm btn-outline-secondary py-1 px-2"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#editCat{{ cat.id }}"
+                            aria-expanded="false"
+                            title="Rename"
+                          >
+                            <i class="fa-solid fa-pen-to-square"></i>
+                          </button>
+
+                          <!-- Delete Form (Blocked if books exist) -->
+                          {% if cat.num_books == 0 %}
+                            <form method="POST" action="{% url 'staff_category_delete' cat.id %}" class="d-inline" onsubmit="return confirm('Delete category {{ cat.category_name }}?');">
+                              {% csrf_token %}
+                              <button type="submit" class="btn btn-sm btn-outline-danger py-1 px-2" title="Delete Category">
+                                <i class="fa-solid fa-trash"></i>
+                              </button>
+                            </form>
+                          {% else %}
+                            <button
+                              class="btn btn-sm btn-outline-secondary py-1 px-2 disabled"
+                              title="Cannot delete: {{ cat.num_books }} books currently assigned"
+                              style="opacity: 0.4;"
+                              disabled
+                            >
+                              <i class="fa-solid fa-trash"></i>
+                            </button>
+                          {% endif %}
+                        </div>
+
+                        <!-- Collapse Edit Form -->
+                        <div class="collapse mt-2 text-start" id="editCat{{ cat.id }}">
+                          <form method="POST" action="{% url 'staff_category_edit' cat.id %}" class="p-2 border rounded bg-light">
+                            {% csrf_token %}
+                            <div class="mb-2">
+                              <label class="small text-muted">Rename:</label>
+                              <input type="text" name="category_name" value="{{ cat.category_name }}" class="form-control form-control-sm" required>
+                            </div>
+                            <div class="mb-2">
+                              <label class="small text-muted">Shelf Code:</label>
+                              <input type="text" name="code" value="{{ cat.code }}" class="form-control form-control-sm">
+                            </div>
+                            <button type="submit" class="btn btn-sm btn-navy w-100">Save</button>
+                          </form>
+                        </div>
+                      </td>
+                    {% endif %}
+                  </tr>
+                {% empty %}
+                  <tr>
+                    <td colspan="4" class="text-center py-4 text-muted">
+                      No categories created yet.
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

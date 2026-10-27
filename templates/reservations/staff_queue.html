@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Reservation Queue &middot; Circulation Desk{% endblock %}
+
+{% block content %}
+<div class="row g-4 py-4">
+  <div class="col-lg-3">
+    {% include "staff/sidebar.html" with active_nav="queue" %}
+  </div>
+
+  <div class="col-lg-9">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+      <div>
+        <h1 class="h3 fw-bold text-navy mb-1">Reservation Queue &amp; Holds</h1>
+        <p class="text-muted small mb-0">Automated First-Come, First-Served queue management for books with demand.</p>
+      </div>
+      <div>
+        <a href="{% url 'staff_issue' %}" class="btn btn-gold btn-sm"><i class="fa-solid fa-arrow-up-from-bracket"></i> Issue Held Copy</a>
+      </div>
+    </div>
+
+    <!-- Filter Form -->
+    <div class="card-custom mb-4">
+      <form method="GET" action="{% url 'staff_reservation_queue' %}" class="row g-2 align-items-center">
+        <div class="col-md-6">
+          <input type="text" name="q" class="form-control" placeholder="Search book title, student name or matric..." value="{{ search_query }}">
+        </div>
+        <div class="col-md-4">
+          <select name="status" class="form-select">
+            <option value="">Active Queues (Waiting &amp; Ready)</option>
+            <option value="WAITING" {% if current_status == 'WAITING' %}selected{% endif %}># Waiting Only</option>
+            <option value="READY" {% if current_status == 'READY' %}selected{% endif %}><i class="fa-solid fa-star"></i> Ready for Pickup</option>
+            <option value="FULFILLED" {% if current_status == 'FULFILLED' %}selected{% endif %}><i class="fa-solid fa-check"></i> Fulfilled</option>
+            <option value="CANCELLED" {% if current_status == 'CANCELLED' %}selected{% endif %}>– Cancelled</option>
+            <option value="EXPIRED" {% if current_status == 'EXPIRED' %}selected{% endif %}><i class="fa-solid fa-xmark"></i> Expired</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-navy w-100">Filter</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Queue Table -->
+    <div class="card-custom">
+      <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+        <h2 class="h5 mb-0 fw-bold text-navy">Reservations Registry</h2>
+        <span class="badge-status badge-info">FCFS Priority Queue</span>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Book Title</th>
+              <th>Student Borrower</th>
+              <th>Reserved On</th>
+              <th>Status</th>
+              <th>Queue Position / Expiry</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for res in reservations %}
+              <tr>
+                <td>
+                  <div class="fw-bold">{{ res.book.title }}</div>
+                  <small class="text-muted">{{ res.book.author }}</small>
+                </td>
+                <td>
+                  <div class="fw-semibold">{{ res.student.full_name }}</div>
+                  <small class="text-muted">Matric: {{ res.student.matric_number|default:res.student.email }}</small>
+                </td>
+                <td>{{ res.reservation_date|date:"d M Y H:i" }}</td>
+                <td>
+                  {% if res.status == 'READY' %}
+                    <span class="badge-status badge-info"><i class="fa-solid fa-star"></i> Ready</span>
+                  {% elif res.status == 'WAITING' %}
+                    <span class="badge-status badge-warning"># Waiting</span>
+                  {% elif res.status == 'FULFILLED' %}
+                    <span class="badge-status badge-success"><i class="fa-solid fa-check"></i> Fulfilled</span>
+                  {% elif res.status == 'CANCELLED' %}
+                    <span class="badge-status badge-grey">– Cancelled</span>
+                  {% elif res.status == 'EXPIRED' %}
+                    <span class="badge-status badge-danger"><i class="fa-solid fa-xmark"></i> Expired</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if res.status == 'READY' %}
+                    <div>
+                      <span class="badge-accession">{{ res.copy.accession_number }}</span>
+                      <small class="d-block text-danger fw-bold">Expires: {{ res.expires_at|date:"d M H:i" }}</small>
+                    </div>
+                  {% elif res.status == 'WAITING' %}
+                    <span class="badge bg-secondary">Queue #{{ res.queue_position }}</span>
+                  {% else %}
+                    <span class="text-muted">&mdash;</span>
+                  {% endif %}
+                </td>
+                <td class="text-end">
+                  {% if res.status in 'WAITING,READY' %}
+                    {% if user.role == 'LIBRARIAN' %}
+                      <form method="POST" action="{% url 'staff_cancel_reservation' res.id %}" class="d-inline" onsubmit="return confirm('Cancel this reservation? Held copies will be reallocated.');">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Cancel</button>
+                      </form>
+                    {% else %}
+                      <span class="text-muted small">Read-Only</span>
+                    {% endif %}
+                  {% else %}
+                    <span class="text-muted small">&mdash;</span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="6" class="text-center py-5 text-muted">
+                  <div class="fs-1 mb-2"><i class="fa-solid fa-hourglass-half"></i></div>
+                  <p class="mb-0">No reservations found matching filter criteria.</p>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      {% if is_paginated %}
+        <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-3">
+          <small class="text-muted">Showing page {{ page_obj.number }} of {{ paginator.num_pages }}</small>
+          <div class="btn-group btn-group-sm">
+            {% if page_obj.has_previous %}
+              <a href="?page={{ page_obj.previous_page_number }}&q={{ search_query }}&status={{ current_status }}" class="btn btn-outline-secondary">&laquo; Prev</a>
+            {% endif %}
+            {% if page_obj.has_next %}
+              <a href="?page={{ page_obj.next_page_number }}&q={{ search_query }}&status={{ current_status }}" class="btn btn-outline-secondary">Next &raquo;</a>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Accession Copies &middot; {{ book.title }} &middot; UniLibrary{% endblock %}
+
+{% block content %}
+<div class="row g-4 py-4">
+  <!-- Left Staff Sidebar -->
+  <div class="col-lg-3">
+    {% include "staff/sidebar.html" with active_nav="books" %}
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="col-lg-9">
+    <!-- Header with Book Information -->
+    <div class="card-custom bg-white p-4 mb-4">
+      <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3">
+        <div>
+          <nav aria-label="breadcrumb" class="mb-2">
+            <ol class="breadcrumb small mb-0">
+              <li class="breadcrumb-item"><a href="{% url 'staff_book_list' %}">Books</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Accession Copies</li>
+            </ol>
+          </nav>
+          <h1 class="h3 fw-bold text-navy mb-1">{{ book.title }}</h1>
+          <p class="text-muted small mb-0">
+            By {{ book.author }} &middot; ISBN: <span class="font-monospace text-dark">{{ book.isbn }}</span> &middot; Category: <span class="badge-category">{{ book.category.category_name }}</span>
+          </p>
+        </div>
+        <div class="d-flex gap-2">
+          <a href="{% url 'book_detail' book.id %}" class="btn btn-outline-secondary btn-sm" target="_blank">
+            <i class="fa-solid fa-eye"></i> Public View
+          </a>
+          {% if user.role == 'LIBRARIAN' %}
+            <a href="{% url 'staff_book_edit' book.id %}" class="btn btn-outline-secondary btn-sm">
+              <i class="fa-solid fa-pen-to-square"></i> Edit Book
+            </a>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Quick Summary Stats -->
+      <div class="row g-2 pt-2 border-top">
+        <div class="col-sm-4">
+          <div class="p-2 rounded bg-light text-center">
+            <small class="text-muted d-block">Total Inventory</small>
+            <strong class="fs-5 text-navy">{{ copies|length }}</strong> copy(ies)
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="p-2 rounded bg-light text-center">
+            <small class="text-muted d-block">Available on Shelf</small>
+            <strong class="fs-5 text-success">{{ book.available_copies_count }}</strong> copy(ies)
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="p-2 rounded bg-light text-center">
+            <small class="text-muted d-block">Queue Demand</small>
+            <strong class="fs-5 text-warning">{{ book.waiting_count }}</strong> waiting
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Extra Copies Form (Section 7.3 - Librarian Only) -->
+    {% if user.role == 'LIBRARIAN' %}
+      <div class="card-custom bg-white p-4 mb-4">
+        <h2 class="h6 fw-bold text-navy mb-3">Add Physical Accession Copies</h2>
+        <form method="POST" class="row g-3 align-items-end">
+          {% csrf_token %}
+          <div class="col-md-3">
+            <label for="id_quantity" class="form-label small fw-semibold text-navy">Quantity to Add</label>
+            {{ add_form.quantity }}
+          </div>
+          <div class="col-md-6">
+            <label for="id_location" class="form-label small fw-semibold text-navy">Shelf Location</label>
+            {{ add_form.location }}
+          </div>
+          <div class="col-md-3">
+            <button type="submit" class="btn btn-navy w-100">
+              + Generate Copies
+            </button>
+          </div>
+        </form>
+      </div>
+    {% endif %}
+
+    <!-- Copies Inventory Table (Section 7.3 & Screen 13) -->
+    <div class="card-custom bg-white p-0 overflow-hidden mb-4">
+      <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
+        <h2 class="h6 fw-bold text-navy mb-0">Registered Accession Copies</h2>
+        <span class="small text-muted">Formatted zero-padded accession numbers (Section 4.4)</span>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0" style="font-size: 0.92rem;">
+          <thead class="table-light">
+            <tr>
+              <th scope="col" style="width: 140px;">Accession No.</th>
+              <th scope="col">Physical Shelf Location</th>
+              <th scope="col" style="width: 150px;">Status</th>
+              <th scope="col" style="width: 130px;">Date Added</th>
+              {% if user.role == 'LIBRARIAN' %}
+                <th scope="col" class="text-end" style="width: 220px;">Actions</th>
+              {% endif %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for copy in copies %}
+              <tr>
+                <td>
+                  <span class="badge-accession">
+                    {{ copy.accession_number }}
+                  </span>
+                </td>
+                <td>
+                  {% if user.role == 'LIBRARIAN' and copy.status != 'WITHDRAWN' %}
+                    <!-- Quick Relocate Form -->
+                    <form method="POST" action="{% url 'staff_copy_relocate' copy.id %}" class="d-flex gap-1 align-items-center">
+                      {% csrf_token %}
+                      <input
+                        type="text"
+                        name="location"
+                        value="{{ copy.whereabouts }}"
+                        class="form-control form-control-sm"
+                        style="max-width: 260px;"
+                        required
+                        aria-label="Edit location"
+                      >
+                      <button type="submit" class="btn btn-sm btn-outline-secondary py-1 px-2" title="Update Shelf Location">
+                        Save
+                      </button>
+                    </form>
+                  {% else %}
+                    <span class="text-dark">{{ copy.whereabouts }}</span>
+                  {% endif %}
+                </td>
+                <td>
+                  <span class="badge-status {{ copy.badge_symbol_and_css.1 }}">
+                    {{ copy.badge_symbol_and_css.0 }} {{ copy.get_status_display }}
+                  </span>
+                </td>
+                <td class="small text-muted">
+                  {{ copy.date_added|date:"d M Y" }}
+                </td>
+                {% if user.role == 'LIBRARIAN' %}
+                  <td class="text-end">
+                    {% if copy.status == 'WITHDRAWN' %}
+                      <span class="badge bg-light text-muted border">Permanently Withdrawn</span>
+                    {% else %}
+                      <a href="{% url 'staff_copy_withdraw' copy.id %}" class="btn btn-sm btn-outline-danger py-1 px-2">
+                        <i class="fa-solid fa-xmark"></i> Withdraw Copy
+                      </a>
+                    {% endif %}
+                  </td>
+                {% endif %}
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="5" class="text-center py-4 text-muted">
+                  No accession copies have been created for this book.
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

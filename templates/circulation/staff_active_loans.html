@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Active Loans &middot; Circulation Desk{% endblock %}
+
+{% block content %}
+<div class="row g-4 py-4">
+  <div class="col-lg-3">
+    {% include "staff/sidebar.html" with active_nav="loans" %}
+  </div>
+
+  <div class="col-lg-9">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+      <div>
+        <h1 class="h3 fw-bold text-navy mb-1">Active Loans Inventory</h1>
+        <p class="text-muted small mb-0">Overview of all physical copies currently issued to student borrowers.</p>
+      </div>
+      <div class="d-flex gap-2">
+        <a href="{% url 'staff_issue' %}" class="btn btn-gold btn-sm"><i class="fa-solid fa-arrow-up-from-bracket"></i> Issue Book</a>
+        <a href="{% url 'staff_return' %}" class="btn btn-navy btn-sm"><i class="fa-solid fa-inbox"></i> Return Book</a>
+      </div>
+    </div>
+
+    <!-- Filter and Search Bar -->
+    <div class="card-custom mb-4">
+      <form method="GET" action="{% url 'staff_loans' %}" class="row g-2 align-items-center">
+        <div class="col-md-6">
+          <input type="text" name="q" class="form-control" placeholder="Search student name, matric, or book title..." value="{{ request.GET.q }}">
+        </div>
+        <div class="col-md-4">
+          <select name="status" class="form-select">
+            <option value="">All Active Loans</option>
+            <option value="due_soon" {% if request.GET.status == 'due_soon' %}selected{% endif %}><i class="fa-solid fa-clock"></i> Due Soon (≤ 2 days)</option>
+            <option value="overdue" {% if request.GET.status == 'overdue' %}selected{% endif %}>! Overdue</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-navy w-100">Filter</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Active Loans Table -->
+    <div class="card-custom">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Accession</th>
+              <th>Book Title</th>
+              <th>Student Borrower</th>
+              <th>Borrowed</th>
+              <th>Due Date</th>
+              <th>Status</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for loan in loans %}
+              <tr>
+                <td><strong class="text-navy">{{ loan.copy.accession_number }}</strong></td>
+                <td>
+                  <div class="fw-bold">{{ loan.copy.book.title }}</div>
+                  <small class="text-muted">{{ loan.copy.book.author }}</small>
+                </td>
+                <td>
+                  <div class="fw-semibold">{{ loan.student.full_name }}</div>
+                  <small class="text-muted">{{ loan.student.matric_number|default:loan.student.email }}</small>
+                </td>
+                <td>{{ loan.borrow_date|date:"d M Y" }}</td>
+                <td>
+                  <span class="{% if loan.is_overdue %}text-danger fw-bold{% endif %}">
+                    {{ loan.due_date|date:"d M Y" }}
+                  </span>
+                  {% if loan.is_overdue %}
+                    <small class="d-block text-danger">({{ loan.days_overdue }}d overdue)</small>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if loan.is_overdue %}
+                    <span class="badge-status badge-danger">! Overdue</span>
+                  {% elif loan.days_remaining <= 2 %}
+                    <span class="badge-status badge-warning"><i class="fa-solid fa-clock"></i> Due soon</span>
+                  {% else %}
+                    <span class="badge-status badge-success"><i class="fa-solid fa-check"></i> On time</span>
+                  {% endif %}
+                </td>
+                <td class="text-end">
+                  <a href="{% url 'staff_return' %}?accession={{ loan.copy.accession_number }}" class="btn btn-sm btn-outline-navy">
+                    <i class="fa-solid fa-inbox"></i> Return
+                  </a>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="7" class="text-center py-5 text-muted">
+                  <div class="fs-1 mb-2"><i class="fa-solid fa-book-open"></i></div>
+                  <p class="mb-0">No active loans found matching criteria.</p>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      {% if is_paginated %}
+        <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-3">
+          <small class="text-muted">Showing page {{ page_obj.number }} of {{ paginator.num_pages }}</small>
+          <div class="btn-group btn-group-sm">
+            {% if page_obj.has_previous %}
+              <a href="?page={{ page_obj.previous_page_number }}&q={{ request.GET.q }}&status={{ request.GET.status }}" class="btn btn-outline-secondary">&laquo; Prev</a>
+            {% endif %}
+            {% if page_obj.has_next %}
+              <a href="?page={{ page_obj.next_page_number }}&q={{ request.GET.q }}&status={{ request.GET.status }}" class="btn btn-outline-secondary">Next &raquo;</a>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

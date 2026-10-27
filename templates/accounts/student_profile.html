@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}My Profile &middot; UniLibrary{% endblock %}
+
+{% block content %}
+<div class="py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <div>
+      <h1 class="h3 fw-bold text-navy mb-1">Student Account Profile</h1>
+      <p class="text-muted small mb-0">View registered academic particulars and update your account security credentials.</p>
+    </div>
+    <div>
+      <a href="{% url 'student_dashboard' %}" class="btn btn-secondary-custom btn-sm"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <!-- Read-Only Particulars (Left Col per Section 7.2) -->
+    <div class="col-md-5">
+      <div class="card-custom p-4 h-100">
+        <h2 class="h5 mb-3 fw-bold text-navy pb-2 border-bottom">Registered Particulars</h2>
+        
+        <div class="mb-3">
+          <label class="form-label small text-muted mb-0">Full Name</label>
+          <div class="fs-6 fw-bold text-navy">{{ user.full_name }}</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small text-muted mb-0">Matriculation Number</label>
+          <div class="fs-6 fw-bold text-navy">{{ user.matric_number|default:"N/A" }}</div>
+          <small class="text-muted">Assigned university student identifier</small>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small text-muted mb-0">Primary Email (Login Username)</label>
+          <div class="fs-6 fw-bold text-navy">{{ user.email }}</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small text-muted mb-0">Account Role &amp; Status</label>
+          <div>
+            <span class="badge bg-light text-dark border me-1">{{ user.get_role_display }}</span>
+            {% if user.is_active %}
+              <span class="badge-status badge-success"><i class="fa-solid fa-check"></i> Active</span>
+            {% else %}
+              <span class="badge-status badge-danger"><i class="fa-solid fa-xmark"></i> Inactive</span>
+            {% endif %}
+          </div>
+        </div>
+
+        <div>
+          <label class="form-label small text-muted mb-0">Member Since</label>
+          <div class="small text-muted">{{ user.date_registered|date:"d F Y" }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Password Change Form (Right Col per Section 7.2) -->
+    <div class="col-md-7">
+      <div class="card-custom p-4 h-100">
+        <h2 class="h5 mb-3 fw-bold text-navy pb-2 border-bottom">Update Account Password</h2>
+        <p class="small text-muted mb-3">Ensure your new password contains at least 8 characters and is not too common.</p>
+
+        <form method="POST" action="{% url 'student_profile' %}">
+          {% csrf_token %}
+
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger small">
+              {{ form.non_field_errors }}
+            </div>
+          {% endif %}
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold small text-navy">Current Password <span class="text-danger">*</span></label>
+            <input type="password" name="old_password" class="form-control" required autocomplete="current-password">
+            {% if form.old_password.errors %}
+              <div class="text-danger small mt-1">{{ form.old_password.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold small text-navy">New Password <span class="text-danger">*</span></label>
+            <input type="password" name="new_password1" class="form-control" required autocomplete="new-password">
+            {% if form.new_password1.errors %}
+              <div class="text-danger small mt-1">{{ form.new_password1.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label fw-semibold small text-navy">Confirm New Password <span class="text-danger">*</span></label>
+            <input type="password" name="new_password2" class="form-control" required autocomplete="new-password">
+            {% if form.new_password2.errors %}
+              <div class="text-danger small mt-1">{{ form.new_password2.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <button type="submit" class="btn btn-navy" id="btnChangePassword">
+            Update Password
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

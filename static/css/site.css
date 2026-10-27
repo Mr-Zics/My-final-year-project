@@ -1,0 +1,870 @@
+/* ==========================================================================
+   UniLibrary - Design System & Component Library
+   Matches Official UI Reference Specifications (Section 9)
+   Palette: Navy (#1E3A5F) | Gold (#D99A2B) | Green (#2F855A) | 
+            Amber (#B7791F) | Blue (#2B6CB0) | Red (#C53030) | Bg (#F7F5F0)
+   ========================================================================== */
+
+:root {
+  --navy: #1E3A5F;
+  --navy-dark: #142840;
+  --gold: #D99A2B;
+  --gold-hover: #C28722;
+  --gold-light: #FEF3C7;
+  --bg: #F7F5F0;
+  --surface: #FFFFFF;
+  --surface-glass: rgba(255, 255, 255, 0.94);
+  --text: #1F2933;
+  --muted: #6B7280;
+  --border: #D9D5CC;
+  --border-light: #E5E7EB;
+  --success: #2F855A;
+  --warning: #B7791F;
+  --danger: #C53030;
+  --info: #2B6CB0;
+
+  --font-heading: Georgia, "Times New Roman", serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --radius: 8px;
+  --radius-sm: 4px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(20, 40, 64, 0.10);
+  --shadow-lg: 0 12px 28px rgba(20, 40, 64, 0.18);
+  --transition-smooth: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Base Styles with Vibrant Noticeable Library Background */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  background-color: var(--bg);
+  /* Noticeable, atmospheric academic library background */
+  background-image: 
+    linear-gradient(rgba(247, 245, 240, 0.76), rgba(247, 245, 240, 0.82)),
+    url('../img/library_bg.jpg');
+  background-attachment: fixed;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--navy);
+  font-weight: 700;
+  margin-top: 0;
+}
+
+h1 { font-size: 26px; line-height: 1.25; }
+h2 { font-size: 20px; line-height: 1.3; }
+h3 { font-size: 17px; line-height: 1.35; }
+
+a, a:hover, a:focus, a:active {
+  text-decoration: none !important;
+}
+
+a {
+  color: var(--navy);
+  text-decoration: none !important;
+  transition: var(--transition-smooth);
+}
+a:hover, a:focus {
+  color: var(--navy-dark);
+  text-decoration: none !important;
+}
+
+/* Page Layout Container */
+.page-wrapper {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-container {
+  width: 100%;
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+/* Top Navigation Bar */
+.navbar-library {
+  background-color: var(--navy);
+  color: #FFFFFF;
+  border-bottom: 2px solid var(--gold);
+  padding: 0.65rem 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-brand-library {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #FFFFFF !important;
+  display: flex;
+  align-items: center;
+  text-decoration: none !important;
+  transition: var(--transition-smooth);
+}
+
+.navbar-brand-library:hover {
+  opacity: 0.95;
+}
+
+.brand-text {
+  letter-spacing: -0.02em;
+}
+
+.nav-link-library {
+  color: #FFFFFF !important;
+  font-size: 0.92rem;
+  font-weight: 500;
+  padding: 0.45rem 0.75rem !important;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-smooth);
+}
+
+.nav-link-library:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: var(--gold) !important;
+}
+
+.nav-link-library.active {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--gold) !important;
+  border-bottom: 2px solid var(--gold);
+  border-radius: 4px 4px 0 0;
+}
+
+/* User Avatar Pill in Top Bar */
+.user-avatar-pill {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  padding: 0.25rem 0.65rem 0.25rem 0.35rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.user-avatar-pill:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.avatar-initials {
+  width: 26px;
+  height: 26px;
+  background-color: var(--gold);
+  color: var(--navy-dark);
+  font-weight: 700;
+  font-size: 0.75rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-name-label {
+  font-size: 0.85rem;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+.nav-icon-link {
+  color: #FFFFFF;
+  padding: 0.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: var(--transition-smooth);
+}
+
+.nav-icon-link:hover {
+  color: var(--gold);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Buttons (Matching Reference UI) */
+.btn-gold {
+  background-color: var(--gold);
+  border: 1px solid var(--gold);
+  color: #FFFFFF !important;
+  font-weight: 600;
+  min-height: 40px;
+  border-radius: 6px;
+  padding: 0.5rem 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: var(--transition-smooth);
+}
+
+.btn-gold:hover, .btn-gold:focus {
+  background-color: var(--gold-hover);
+  border-color: var(--gold-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(217, 154, 43, 0.35);
+  color: #FFFFFF !important;
+}
+
+.btn-navy {
+  background-color: var(--navy);
+  color: #FFFFFF !important;
+  border: 1px solid var(--navy);
+  font-weight: 600;
+  min-height: 40px;
+  border-radius: 6px;
+  padding: 0.5rem 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: var(--transition-smooth);
+}
+
+.btn-navy:hover, .btn-navy:focus {
+  background-color: var(--navy-dark) !important;
+  border-color: var(--navy-dark) !important;
+  color: #FFFFFF !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(20, 40, 64, 0.25);
+}
+
+.btn-navy.active,
+.btn-navy:active,
+.btn-navy.active:hover,
+.btn-navy.active:focus {
+  background-color: var(--navy) !important;
+  border-color: var(--navy) !important;
+  color: #FFFFFF !important;
+  box-shadow: none !important;
+}
+
+.btn-outline-light-custom {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+  min-height: 40px;
+  border-radius: 6px;
+  padding: 0.5rem 1.15rem;
+  backdrop-filter: blur(4px);
+  transition: var(--transition-smooth);
+}
+
+.btn-outline-light-custom:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #FFFFFF;
+}
+
+.btn-secondary-custom {
+  background-color: var(--surface);
+  color: var(--navy) !important;
+  border: 1px solid var(--border);
+  font-weight: 500;
+  min-height: 40px;
+  border-radius: 6px;
+  padding: 0.5rem 1.15rem;
+  transition: var(--transition-smooth);
+}
+
+.btn-secondary-custom:hover {
+  background-color: #F8FAFC;
+  border-color: var(--navy);
+  color: var(--navy-dark) !important;
+}
+
+/* Staff Sidebar Navigation Buttons */
+#staffSidebar .btn {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  width: 100% !important;
+  min-height: 38px !important;
+  padding: 0.45rem 0.85rem !important;
+  border-radius: 6px !important;
+  font-size: 0.88rem !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+}
+
+#staffSidebar .btn-navy.active {
+  background-color: var(--navy) !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 6px rgba(20, 40, 64, 0.2) !important;
+}
+
+#staffSidebar .btn-navy.active i {
+  color: var(--gold) !important;
+}
+
+#staffSidebar .btn-secondary-custom {
+  background-color: transparent !important;
+  color: var(--navy) !important;
+  border: 1px solid transparent !important;
+}
+
+#staffSidebar .btn-secondary-custom:hover {
+  background-color: rgba(30, 58, 95, 0.08) !important;
+  color: var(--navy-dark) !important;
+}
+
+/* Cards (Semi-Glassmorphic crisp white cards with elegant shadows) */
+.card-custom {
+  background: var(--surface-glass);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(217, 213, 204, 0.9);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: var(--transition-smooth);
+}
+
+.card-custom:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* KPI Stat Cards (High-Contrast Solid White against Library Background) */
+.stat-card {
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 14px rgba(20, 40, 64, 0.08);
+  padding: 1.25rem 1.25rem 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: var(--transition-smooth);
+  position: relative;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(20, 40, 64, 0.14);
+}
+
+.stat-card .stat-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #1E293B; /* Sharp deep slate navy */
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.stat-card .stat-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 0.25rem;
+  font-family: var(--font-body);
+}
+
+.stat-card .small,
+.stat-card .text-muted,
+.stat-card small {
+  color: #334155 !important; /* High contrast sharp text, never faint */
+  font-weight: 500;
+}
+
+.stat-card .stat-link {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-top: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-decoration: none !important;
+  transition: var(--transition-smooth);
+}
+
+.stat-card .stat-link:hover {
+  color: var(--gold);
+  transform: translateX(3px);
+}
+
+/* High-Contrast Color Utility Overrides for Maximum Readability on White */
+.text-navy {
+  color: #142840 !important;
+}
+
+.text-warning {
+  color: #B45309 !important; /* Dark warm amber, WCAG compliant */
+}
+
+.text-info {
+  color: #1D4ED8 !important; /* Deep vibrant cobalt blue */
+}
+
+.text-success {
+  color: #15803D !important; /* Deep emerald green */
+}
+
+.text-danger {
+  color: #B91C1C !important; /* Bold crimson red */
+}
+
+/* Watermark Container for Thematic Background Images on Cards */
+.watermark-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-glass);
+  backdrop-filter: blur(8px);
+}
+
+.watermark-card .card-watermark {
+  position: absolute;
+  right: -5px;
+  bottom: -15px;
+  font-size: 5.5rem;
+  opacity: 0.16; /* Clearly noticeable, artistic and non-intrusive */
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.watermark-card:hover .card-watermark {
+  transform: scale(1.1) rotate(4deg);
+  opacity: 0.24;
+}
+
+/* Hero Banner with Rich Faded Library Depth */
+.hero-banner {
+  background: 
+    linear-gradient(135deg, rgba(14, 28, 48, 0.80) 0%, rgba(24, 46, 75, 0.84) 100%),
+    url('../img/library_bg.jpg') center center / cover no-repeat;
+  color: #FFFFFF;
+  padding: 3.75rem 1.5rem;
+  border-radius: var(--radius-lg);
+  margin-top: 1.5rem;
+  margin-bottom: 2.25rem;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(217, 154, 43, 0.45);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-banner::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 0);
+  background-size: 20px 20px;
+  pointer-events: none;
+}
+
+.hero-banner h1 {
+  color: #FFFFFF;
+  font-size: 2.4rem;
+  margin-bottom: 0.85rem;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.hero-banner p {
+  color: #F0F4F8;
+  font-size: 1.15rem;
+  max-width: 680px;
+  margin-bottom: 1.75rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Search Box */
+.search-wrapper {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 0.3rem 0.4rem;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+  max-width: 720px;
+  transition: var(--transition-smooth);
+}
+
+.search-wrapper:focus-within {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(217, 154, 43, 0.3);
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  font-size: 1.02rem;
+  color: var(--text);
+  background: transparent;
+}
+
+/* Quick Search Tags */
+.quick-tags {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.quick-tag-chip {
+  background: rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  text-decoration: none !important;
+  backdrop-filter: blur(4px);
+  transition: var(--transition-smooth);
+}
+
+.quick-tag-chip:hover {
+  background: var(--gold);
+  color: #FFFFFF;
+  border-color: var(--gold);
+  transform: translateY(-1px);
+}
+
+/* Utility Colors */
+.text-navy {
+  color: var(--navy) !important;
+}
+
+.text-gold {
+  color: var(--gold) !important;
+}
+
+.bg-navy {
+  background-color: var(--navy) !important;
+  color: #FFFFFF !important;
+}
+
+.bg-gold {
+  background-color: var(--gold) !important;
+  color: #FFFFFF !important;
+}
+
+/* Badges */
+.badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.badge-success {
+  background-color: #DEF7EC;
+  color: var(--success);
+  border: 1px solid #BCF0DA;
+}
+
+.badge-warning {
+  background-color: #FEF3C7;
+  color: var(--warning);
+  border: 1px solid #FDE68A;
+}
+
+.badge-danger {
+  background-color: #FDE8E8;
+  color: var(--danger);
+  border: 1px solid #FBD5D5;
+}
+
+.badge-info {
+  background-color: #EBF4FF;
+  color: #1E3A5F !important;
+  border: 1px solid #BFDBFE;
+  font-weight: 600;
+}
+
+.badge-grey {
+  background-color: #F1F5F9;
+  color: #334155 !important;
+  border: 1px solid #CBD5E1;
+  font-weight: 600;
+}
+
+/* Category Badge (Crisp, High Contrast Academic Styling) */
+.badge-category {
+  display: inline-flex;
+  align-items: center;
+  background-color: #EBF4FF;
+  color: #1E3A5F !important;
+  border: 1.5px solid #93C5FD;
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+}
+
+/* Accession Number Badge (High Contrast, Monospace, Sharp) */
+.badge-accession {
+  display: inline-flex;
+  align-items: center;
+  background-color: #1E3A5F;
+  color: #FFFFFF !important;
+  border: 1px solid #142840;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  box-shadow: 0 1px 2px rgba(20, 40, 64, 0.18);
+}
+
+.badge-accession-light {
+  display: inline-flex;
+  align-items: center;
+  background-color: #F1F5F9;
+  color: #0F172A !important;
+  border: 1.5px solid #94A3B8;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+}
+
+/* Fallback for Bootstrap .badge classes used in templates */
+.badge.text-navy,
+.badge.bg-light.text-navy,
+.badge.bg-light {
+  color: #1E3A5F !important;
+  background-color: #EBF4FF !important;
+  border: 1.5px solid #93C5FD !important;
+  font-weight: 700;
+}
+
+
+/* Feature Highlight Cards */
+.feature-card {
+  border: 1px solid rgba(217, 213, 204, 0.9);
+  border-radius: var(--radius);
+  padding: 1.75rem 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-glass);
+  backdrop-filter: blur(8px);
+}
+
+.feature-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background-color: transparent;
+  transition: background-color 0.25s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.feature-card:hover::before {
+  background-color: var(--gold);
+}
+
+.feature-icon {
+  font-size: 2.1rem;
+  margin-bottom: 0.75rem;
+}
+
+.feature-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.feature-card p {
+  color: var(--muted);
+  font-size: 0.92rem;
+  flex-grow: 1;
+}
+
+/* Book Cards (Screen 3: Catalogue Card Grid) */
+.book-catalogue-card {
+  background: var(--surface-glass);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(217, 213, 204, 0.9);
+  border-radius: var(--radius);
+  padding: 1.15rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition-smooth);
+}
+
+.book-catalogue-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--gold);
+}
+
+/* Book Cover Wrapper: Shows 100% of the book cover with ZERO cropping */
+.book-cover-wrapper {
+  width: 100%;
+  height: 260px; /* Generous portrait display height */
+  background: linear-gradient(180deg, #F8FAFC 0%, #E2E8F0 100%);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem;
+  margin-bottom: 0.85rem;
+  border: 1px solid var(--border-light);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.book-cover-wrapper img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  /* object-fit: contain ensures full cover, title, author, and artwork are 100% visible */
+  object-fit: contain;
+  object-position: center;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.book-catalogue-card:hover .book-cover-wrapper img {
+  transform: scale(1.05) translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.24);
+}
+
+.book-card-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--navy);
+  margin-bottom: 0.25rem;
+  line-height: 1.3;
+}
+
+.book-card-author {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 0.65rem;
+}
+
+.book-card-footer {
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.book-card-footer .isbn-label {
+  white-space: nowrap !important;
+  font-size: 0.82rem;
+  line-height: 1.3;
+}
+
+/* Policy & Desk Cards */
+.info-box-card {
+  background: var(--surface-glass);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(217, 213, 204, 0.9);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.info-box-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--gold);
+}
+
+/* Footer */
+.site-footer {
+  flex-shrink: 0;
+  background-color: var(--navy-dark);
+  color: #E2E8F0;
+  padding: 2.25rem 1rem 1.75rem 1rem;
+  margin-top: 4rem;
+  border-top: 3px solid var(--gold);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  h1 { font-size: 22px; }
+  .hero-banner {
+    padding: 2.25rem 1rem;
+  }
+  .hero-banner h1 {
+    font-size: 1.65rem;
+  }
+  .search-wrapper {
+    flex-direction: column;
+    padding: 0.5rem;
+  }
+  .search-wrapper .btn-gold {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+  .book-cover-wrapper {
+    height: 200px;
+  }
+}
+
+/* Nav Pills and Tabs Styling */
+.nav-pills .nav-link {
+  cursor: pointer;
+  border-radius: 6px;
+  color: var(--navy);
+  transition: all 0.2s ease-in-out;
+}
+.nav-pills .nav-link:hover {
+  background-color: rgba(30, 58, 95, 0.08);
+  color: var(--navy);
+}
+.nav-pills .nav-link.active {
+  background-color: var(--navy) !important;
+  color: #FFFFFF !important;
+}
+

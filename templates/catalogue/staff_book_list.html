@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Books Management &middot; UniLibrary Circulation Desk{% endblock %}
+
+{% block content %}
+<div class="row g-4 py-4">
+  <!-- Left Staff Sidebar -->
+  <div class="col-lg-3">
+    {% include "staff/sidebar.html" with active_nav="books" %}
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="col-lg-9">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+      <div>
+        <h1 class="h3 fw-bold text-navy mb-1" id="staff-books-heading">Books Management</h1>
+        <p class="text-muted small mb-0">
+          Search, register, and update titles in the physical collection.
+          {% if user.role == 'ADMINISTRATOR' %}
+            <span class="badge bg-secondary ms-1">Read-Only View</span>
+          {% endif %}
+        </p>
+      </div>
+      {% if user.role == 'LIBRARIAN' %}
+        <a href="{% url 'staff_book_add' %}" class="btn btn-gold btn-sm">
+          <span>+</span> Add New Book
+        </a>
+      {% endif %}
+    </div>
+
+    <!-- Quick Stats Cards -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-4">
+        <div class="card-custom bg-white p-3 text-center mb-0">
+          <span class="text-muted small">Total Distinct Titles</span>
+          <div class="fs-4 fw-bold text-navy">{{ total_books }}</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card-custom bg-white p-3 text-center mb-0">
+          <span class="text-muted small">Total Accession Copies</span>
+          <div class="fs-4 fw-bold text-navy">{{ total_copies }}</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card-custom bg-white p-3 text-center mb-0">
+          <span class="text-muted small">Currently on Shelves</span>
+          <div class="fs-4 fw-bold text-success">{{ available_copies }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="card-custom p-3 bg-white mb-4">
+      <form method="GET" action="{% url 'staff_book_list' %}" class="row g-2 align-items-center">
+        <div class="col-md-6">
+          <input
+            type="search"
+            name="q"
+            value="{{ search_query }}"
+            class="form-control"
+            placeholder="Search by title, author, or ISBN..."
+            aria-label="Search books"
+          >
+        </div>
+        <div class="col-md-4">
+          <select name="category" class="form-select" aria-label="Filter by category">
+            <option value="">All Categories</option>
+            {% for cat in categories %}
+              <option value="{{ cat.id }}" {% if selected_category == cat.id|stringformat:"s" %}selected{% endif %}>
+                {{ cat.category_name }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-2 d-flex gap-2">
+          <button type="submit" class="btn btn-navy flex-grow-1">Filter</button>
+          {% if search_query or selected_category %}
+            <a href="{% url 'staff_book_list' %}" class="btn btn-outline-secondary" title="Reset"><i class="fa-solid fa-xmark"></i></a>
+          {% endif %}
+        </div>
+      </form>
+    </div>
+
+    <!-- Books Table -->
+    <div class="card-custom bg-white p-0 overflow-hidden mb-4">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0" style="font-size: 0.92rem;">
+          <thead class="table-light">
+            <tr>
+              <th scope="col" style="width: 50px;">#</th>
+              <th scope="col">Book Title &amp; Author</th>
+              <th scope="col">Category</th>
+              <th scope="col" class="text-center">Total Copies</th>
+              <th scope="col" class="text-center">Available</th>
+              <th scope="col" class="text-end" style="width: 200px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for book in books %}
+              <tr>
+                <td class="text-muted small">{{ forloop.counter }}</td>
+                <td>
+                  <strong class="text-navy d-block">{{ book.title }}</strong>
+                  <small class="text-muted">by {{ book.author }} &middot; ISBN: {{ book.isbn }}</small>
+                </td>
+                <td>
+                  <span class="badge-category">{{ book.category.category_name }}</span>
+                </td>
+                <td class="text-center fw-semibold">
+                  {{ book.total_copies_count }}
+                </td>
+                <td class="text-center">
+                  {% if book.available_copies_count > 0 %}
+                    <span class="badge-status badge-success"><i class="fa-solid fa-check"></i> {{ book.available_copies_count }}</span>
+                  {% else %}
+                    <span class="badge-status badge-warning">● 0</span>
+                  {% endif %}
+                </td>
+                <td class="text-end">
+                  <div class="btn-group btn-group-sm">
+                    <a href="{% url 'staff_book_copies' book.id %}" class="btn btn-outline-primary" title="Manage physical copies">
+                      <i class="fa-solid fa-tag"></i> Copies ({{ book.copies.count }})
+                    </a>
+                    {% if user.role == 'LIBRARIAN' %}
+                      <a href="{% url 'staff_book_edit' book.id %}" class="btn btn-outline-secondary" title="Edit book details">
+                        <i class="fa-solid fa-pen-to-square"></i> Edit
+                      </a>
+                    {% endif %}
+                  </div>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="6" class="text-center py-4 text-muted">
+                  No books found in the collection.
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+      <nav class="d-flex justify-content-center" aria-label="Book list pagination">
+        <ul class="pagination pagination-sm">
+          {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link text-navy" href="?page={{ page_obj.previous_page_number }}{% if query_string %}&{{ query_string }}{% endif %}">&laquo; Previous</a>
+            </li>
+          {% else %}
+            <li class="page-item disabled"><span class="page-link">&laquo; Previous</span></li>
+          {% endif %}
+
+          {% for num in paginator.page_range %}
+            {% if page_obj.number == num %}
+              <li class="page-item active"><span class="page-link bg-navy border-navy text-white">{{ num }}</span></li>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+              <li class="page-item"><a class="page-link text-navy" href="?page={{ num }}{% if query_string %}&{{ query_string }}{% endif %}">{{ num }}</a></li>
+            {% endif %}
+          {% endfor %}
+
+          {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link text-navy" href="?page={{ page_obj.next_page_number }}{% if query_string %}&{{ query_string }}{% endif %}">Next &raquo;</a>
+            </li>
+          {% else %}
+            <li class="page-item disabled"><span class="page-link">Next &raquo;</span></li>
+          {% endif %}
+        </ul>
+      </nav>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Student Dashboard &middot; UniLibrary{% endblock %}
+
+{% block content %}
+<div class="py-4">
+  <!-- Greeting Header Banner -->
+  <div class="card-custom p-4 mb-4" style="background: linear-gradient(135deg, rgba(30, 58, 95, 0.95) 0%, rgba(20, 40, 64, 0.98) 100%); color: #FFFFFF; border-left: 5px solid var(--gold);">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+      <div>
+        <div class="d-flex align-items-center gap-2 mb-1">
+          <span class="badge bg-warning text-dark fw-bold">Student Portal</span>
+          <span class="text-light small">Matriculation: <strong>{{ user.matric_number|default:"N/A" }}</strong></span>
+        </div>
+        <h1 class="h2 fw-bold text-white mb-1">Welcome, {{ user.full_name }}!</h1>
+        <p class="text-light opacity-75 small mb-0">Manage your active borrowed library books and reservation queues.</p>
+      </div>
+      <div class="d-flex gap-2 align-items-center">
+        <span class="badge bg-success fs-6 px-3 py-2"><i class="fa-solid fa-check"></i> Active Student Account</span>
+        <a href="{% url 'catalogue_list' %}" class="btn btn-gold btn-sm px-3">
+          <i class="fa-solid fa-magnifying-glass"></i> Search Catalogue
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 Dynamic KPI Stat Cards (Section 7.2) -->
+  <div class="row g-3 mb-4">
+    <!-- Stat 1: Active Loans Quota -->
+    <div class="col-md-3 col-sm-6">
+      <div class="stat-card h-100" style="border-left: 4px solid var(--navy);">
+        <span class="stat-label">Active Loans Quota</span>
+        <div class="stat-value text-navy">
+          {{ active_loans_count }} <span class="fs-6 text-muted fw-normal">/ {{ max_loans }} books</span>
+        </div>
+        <div class="progress my-2" style="height: 6px;">
+          <div class="progress-bar {% if active_loans_count >= max_loans %}bg-danger{% else %}bg-primary{% endif %}" style="width: {% widthratio active_loans_count max_loans 100 %}%;"></div>
+        </div>
+        <a href="{% url 'student_loans' %}" class="stat-link">Manage loans &rarr;</a>
+      </div>
+    </div>
+
+    <!-- Stat 2: Due Soon & Overdue -->
+    <div class="col-md-3 col-sm-6">
+      <div class="stat-card h-100" style="border-left: 4px solid {% if overdue_loans_count > 0 %}var(--danger){% elif due_soon_count > 0 %}var(--warning){% else %}var(--success){% endif %};">
+        <span class="stat-label">Urgent Due Dates</span>
+        <div class="stat-value {% if overdue_loans_count > 0 %}text-danger{% elif due_soon_count > 0 %}text-warning{% else %}text-success{% endif %}">
+          {% if overdue_loans_count > 0 %}
+            {{ overdue_loans_count }} <span class="fs-6 fw-normal">Overdue!</span>
+          {% elif due_soon_count > 0 %}
+            {{ due_soon_count }} <span class="fs-6 fw-normal">Due soon</span>
+          {% else %}
+            0 <span class="fs-6 fw-normal text-muted">All on time</span>
+          {% endif %}
+        </div>
+        <span class="small text-muted d-block mt-1">{% if overdue_loans_count > 0 %}Return books immediately{% else %}Automatic daily reminders{% endif %}</span>
+        <a href="{% url 'student_loans' %}" class="stat-link">Check deadlines &rarr;</a>
+      </div>
+    </div>
+
+    <!-- Stat 3: Active Reservations -->
+    <div class="col-md-3 col-sm-6">
+      <div class="stat-card h-100" style="border-left: 4px solid var(--info);">
+        <span class="stat-label">Active Reservations</span>
+        <div class="stat-value text-info">{{ active_reservations_count }}</div>
+        <span class="small text-muted d-block mt-1">First-come, first-served queue</span>
+        <a href="{% url 'student_reservations' %}" class="stat-link">View queue positions &rarr;</a>
+      </div>
+    </div>
+
+    <!-- Stat 4: Outstanding Fines -->
+    <div class="col-md-3 col-sm-6">
+      <div class="stat-card h-100" style="border-left: 4px solid {% if unpaid_fines > 0 %}var(--danger){% else %}var(--success){% endif %};">
+        <span class="stat-label">Outstanding Fines</span>
+        <div class="stat-value {% if unpaid_fines > 0 %}text-danger{% else %}text-success{% endif %}">
+          ₦{{ unpaid_fines|intcomma }}
+        </div>
+        <span class="small text-muted d-block mt-1">{% if unpaid_fines > 0 %}Pay at circulation desk{% else %}Zero balance due{% endif %}</span>
+        <a href="{% url 'student_fines' %}" class="stat-link">View fine ledger &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="row g-4">
+    <!-- Left Main Column (Active Loans & Reservations) -->
+    <div class="col-lg-8">
+      <!-- Active Loans Panel -->
+      <div class="card-custom mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+          <div class="d-flex align-items-center gap-2">
+            <h2 class="h5 mb-0 fw-bold text-navy"><i class="fa-solid fa-book-open"></i> Your Active Loans</h2>
+            <span class="badge bg-light text-dark border">{{ active_loans_count }} book(s)</span>
+          </div>
+          <a href="{% url 'student_loans' %}" class="btn btn-sm btn-outline-navy">View All &amp; History</a>
+        </div>
+
+        {% if active_loans %}
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Book Title</th>
+                  <th>Accession</th>
+                  <th>Due Date</th>
+                  <th>Status</th>
+                  <th class="text-end">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for loan in active_loans %}
+                  <tr>
+                    <td>
+                      <div class="fw-bold">
+                        <a href="{% url 'book_detail' loan.copy.book.id %}">{{ loan.copy.book.title }}</a>
+                      </div>
+                      <small class="text-muted">{{ loan.copy.book.author }}</small>
+                    </td>
+                    <td><span class="badge-accession">{{ loan.copy.accession_number }}</span></td>
+                    <td>
+                      <span class="{% if loan.is_overdue %}text-danger fw-bold{% else %}text-navy{% endif %}">
+                        {{ loan.due_date|date:"d M Y" }}
+                      </span>
+                    </td>
+                    <td>
+                      {% if loan.is_overdue %}
+                        <span class="badge-status badge-danger">! Overdue</span>
+                      {% elif loan.days_remaining <= 2 %}
+                        <span class="badge-status badge-warning"><i class="fa-solid fa-clock"></i> Due soon</span>
+                      {% else %}
+                        <span class="badge-status badge-success"><i class="fa-solid fa-check"></i> On time</span>
+                      {% endif %}
+                    </td>
+                    <td class="text-end">
+                      <a href="{% url 'student_loans' %}" class="btn btn-sm btn-outline-secondary">Details</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% else %}
+          <div class="text-center py-4 text-muted">
+            <div class="fs-1 mb-2"><i class="fa-solid fa-book"></i></div>
+            <p class="mb-2">You currently have no borrowed books from the library.</p>
+            <a href="{% url 'catalogue_list' %}" class="btn btn-gold btn-sm">Browse Books to Borrow</a>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Active Reservations Panel -->
+      <div class="card-custom">
+        <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+          <div class="d-flex align-items-center gap-2">
+            <h2 class="h5 mb-0 fw-bold text-navy"><i class="fa-solid fa-hourglass-half"></i> Your Active Reservations</h2>
+            <span class="badge bg-light text-dark border">{{ active_reservations_count }} active</span>
+          </div>
+          <a href="{% url 'student_reservations' %}" class="btn btn-sm btn-outline-navy">View All</a>
+        </div>
+
+        {% if active_reservations %}
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Book Title</th>
+                  <th>Accession</th>
+                  <th>Status</th>
+                  <th>Priority / Expiry</th>
+                  <th class="text-end">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for res in active_reservations %}
+                  <tr>
+                    <td>
+                      <div class="fw-bold">
+                        <a href="{% url 'book_detail' res.book.id %}">{{ res.book.title }}</a>
+                      </div>
+                      <small class="text-muted">{{ res.book.author }}</small>
+                    </td>
+                    <td>
+                      {% if res.copy %}
+                        <span class="badge-accession">{{ res.copy.accession_number }}</span>
+                      {% else %}
+                        <span class="text-muted small">&mdash;</span>
+                      {% endif %}
+                    </td>
+                    <td>
+                      {% if res.status == 'READY' %}
+                        <span class="badge-status badge-info"><i class="fa-solid fa-star"></i> Ready</span>
+                      {% else %}
+                        <span class="badge-status badge-warning"># Waiting</span>
+                      {% endif %}
+                    </td>
+                    <td>
+                      {% if res.status == 'READY' %}
+                        <span class="text-danger fw-bold small">Collect before: {{ res.expires_at|date:"D, d M H:i" }}</span>
+                      {% else %}
+                        <span class="badge bg-secondary">Queue #{{ res.queue_position }}</span>
+                      {% endif %}
+                    </td>
+                    <td class="text-end">
+                      <form method="POST" action="{% url 'student_cancel_reservation' res.id %}" class="d-inline" onsubmit="return confirm('Cancel this reservation?');">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Cancel</button>
+                      </form>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% else %}
+          <div class="text-center py-4 text-muted">
+            <p class="mb-0">You have no active reservations in queue.</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Right Sidebar Column (Quick Search, Notifications, Quick Actions) -->
+    <div class="col-lg-4">
+      <!-- Quick Catalogue Search Box -->
+      <div class="card-custom mb-4 p-3 bg-white">
+        <h3 class="h6 fw-bold text-navy mb-2"><i class="fa-solid fa-magnifying-glass"></i> Instant Catalogue Search</h3>
+        <form method="GET" action="{% url 'catalogue_list' %}">
+          <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search title, author, or ISBN..." required>
+            <button type="submit" class="btn btn-navy">Search</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Recent Notifications Card -->
+      <div class="card-custom mb-4 p-3 bg-white">
+        <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+          <h3 class="h6 fw-bold text-navy mb-0"><i class="fa-solid fa-bell"></i> Notifications</h3>
+          {% if unread_notifs_count > 0 %}
+            <span class="badge bg-danger">{{ unread_notifs_count }} New</span>
+          {% endif %}
+        </div>
+
+        {% if recent_notifications %}
+          <div class="d-flex flex-column gap-2 mb-3">
+            {% for n in recent_notifications %}
+              <div class="p-2 rounded border small {% if not n.is_read %}bg-light border-navy{% else %}bg-white{% endif %}">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <strong class="text-navy">{{ n.get_type_display }}</strong>
+                  <span class="text-muted" style="font-size: 0.75rem;">{{ n.date_sent|naturaltime }}</span>
+                </div>
+                <p class="mb-0 text-muted" style="font-size: 0.82rem;">{{ n.message|truncatechars:85 }}</p>
+              </div>
+            {% endfor %}
+          </div>
+          <a href="{% url 'student_notifications' %}" class="btn btn-secondary-custom btn-sm w-100 text-center">
+            View All Notifications &rarr;
+          </a>
+        {% else %}
+          <p class="text-muted small mb-0 text-center py-3">No notifications received yet.</p>
+        {% endif %}
+      </div>
+
+      <!-- Quick Links Card -->
+      <div class="card-custom p-3 bg-white">
+        <h3 class="h6 fw-bold text-navy mb-3 pb-2 border-bottom"><i class="fa-solid fa-bolt"></i> Quick Access</h3>
+        <div class="d-flex flex-column gap-2">
+          <a href="{% url 'catalogue_list' %}" class="btn btn-secondary-custom justify-content-start text-start py-2">
+            <span><i class="fa-solid fa-book"></i></span> Browse Full Catalogue
+          </a>
+          <a href="{% url 'student_loans' %}" class="btn btn-secondary-custom justify-content-start text-start py-2">
+            <span><i class="fa-solid fa-book-open"></i></span> My Loans
+          </a>
+          <a href="{% url 'student_reservations' %}" class="btn btn-secondary-custom justify-content-start text-start py-2">
+            <span><i class="fa-solid fa-hourglass-half"></i></span> My Reservation Queue
+          </a>
+          <a href="{% url 'student_fines' %}" class="btn btn-secondary-custom justify-content-start text-start py-2">
+            <span><i class="fa-solid fa-money-bill-wave"></i></span> My Fines &amp; Penalties
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

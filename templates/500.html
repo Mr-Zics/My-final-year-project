@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}500 Server Error &middot; UniLibrary{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center py-5 text-center">
+  <div class="col-md-7 col-lg-6">
+    <div class="card-custom p-5">
+      <div class="display-1 text-danger fw-bold mb-2">500</div>
+      <h1 class="h3 fw-bold text-navy mb-2">Internal Server Error</h1>
+      <p class="text-muted mb-4">
+        A system error occurred while processing this library request. The issue has been logged to the system audit records.
+      </p>
+      <div class="d-flex justify-content-center gap-2">
+        <a href="{% url 'home' %}" class="btn btn-navy">
+          &larr; Back to Home
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

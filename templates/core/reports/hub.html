@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Accountability Reports &middot; UniLibrary{% endblock %}
+
+{% block content %}
+<div class="row g-4 py-4">
+  <div class="col-lg-3">
+    {% if user.role == 'ADMINISTRATOR' %}
+      {% include "core/admin_sidebar.html" with active_nav="reports" %}
+    {% else %}
+      {% include "staff/sidebar.html" with active_nav="reports" %}
+    {% endif %}
+  </div>
+
+  <div class="col-lg-9">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+      <div>
+        <h1 class="h3 fw-bold text-navy mb-1">Library Accountability Reports</h1>
+        <p class="text-muted small mb-0">Official statistical reports with on-screen inspection, clean print view, and CSV spreadsheet export.</p>
+      </div>
+    </div>
+
+    <!-- 2 Official Report Cards Grid -->
+    <div class="row g-4">
+      <!-- Report 1: Overdue Books -->
+      <div class="col-md-6">
+        <div class="card-custom h-100 p-4 border-2">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="fs-4 text-danger"><i class="fa-solid fa-clock"></i></span>
+            <h2 class="h5 mb-0 fw-bold text-navy">1. Overdue Books Report</h2>
+          </div>
+          <p class="small text-muted mb-3">
+            Lists all active loans that have exceeded return due dates, showing days late, estimated fines (₦50/day), and borrower matric numbers.
+          </p>
+          <div class="d-flex gap-2">
+            <a href="{% url 'report_overdue' %}" class="btn btn-navy btn-sm">View Report</a>
+            <a href="{% url 'report_overdue' %}?export=csv" class="btn btn-outline-secondary btn-sm">Export CSV</a>
+            <a href="{% url 'report_overdue' %}?print=1" target="_blank" class="btn btn-outline-secondary btn-sm">Print</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Report 2: Borrowing Activity -->
+      <div class="col-md-6">
+        <div class="card-custom h-100 p-4 border-2">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="fs-4 text-navy"><i class="fa-solid fa-book-open"></i></span>
+            <h2 class="h5 mb-0 fw-bold text-navy">2. Borrowing Activity Report</h2>
+          </div>
+          <p class="small text-muted mb-3">
+            Comprehensive circulation volume report between selectable dates, including total issuances, returns, and Top 10 most borrowed books.
+          </p>
+          <div class="d-flex gap-2">
+            <a href="{% url 'report_activity' %}" class="btn btn-navy btn-sm">View Report</a>
+            <a href="{% url 'report_activity' %}?export=csv" class="btn btn-outline-secondary btn-sm">Export CSV</a>
+            <a href="{% url 'report_activity' %}?print=1" target="_blank" class="btn btn-outline-secondary btn-sm">Print</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

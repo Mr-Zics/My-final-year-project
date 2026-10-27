@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Librarian Dashboard &middot; Circulation Desk{% endblock %}
+
+{% block content %}
+<div class="row g-4 py-4">
+  <!-- Left Staff Sidebar -->
+  <div class="col-lg-3">
+    {% include "staff/sidebar.html" with active_nav="dashboard" %}
+  </div>
+
+  <!-- Main Circulation Dashboard -->
+  <div class="col-lg-9">
+    <!-- Header Greeting & Quick Actions -->
+    <div class="card-custom p-4 mb-4" style="background: linear-gradient(135deg, rgba(30, 58, 95, 0.95) 0%, rgba(20, 40, 64, 0.98) 100%); color: #FFFFFF; border-left: 5px solid var(--gold);">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div>
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge bg-gold text-dark fw-bold">Circulation Desk</span>
+            <span class="text-light small">Officer: <strong>{{ user.full_name }}</strong></span>
+          </div>
+          <h1 class="h2 fw-bold text-white mb-1">Physical Circulation Hub</h1>
+          <p class="text-light opacity-75 small mb-0">Manage daily book issuances, returns, overdue penalties, and reservation shelf holds.</p>
+        </div>
+        <div class="d-flex gap-2">
+          <a href="{% url 'staff_issue' %}" class="btn btn-gold px-3">
+            <i class="fa-solid fa-arrow-up-from-bracket"></i> Issue Book
+          </a>
+          <a href="{% url 'staff_return' %}" class="btn btn-light px-3 text-navy fw-bold">
+            <i class="fa-solid fa-inbox"></i> Return Book
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 Operational KPI Stat Cards (Section 7.3) -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-4 col-sm-6">
+        <div class="stat-card h-100" style="border-left: 4px solid var(--info);">
+          <span class="stat-label">Books Out</span>
+          <div class="stat-value text-info">{{ books_out_count }}</div>
+          <span class="small text-muted d-block">Active student loans</span>
+          <a href="{% url 'staff_loans' %}" class="stat-link">View active loans &rarr;</a>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="stat-card h-100" style="border-left: 4px solid var(--danger);">
+          <span class="stat-label">Overdue Loans</span>
+          <div class="stat-value text-danger">{{ overdue_loans_count }}</div>
+          <span class="small text-muted d-block">Past return deadlines</span>
+          <a href="{% url 'staff_overdue' %}" class="stat-link">Process overdue &rarr;</a>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="stat-card h-100" style="border-left: 4px solid var(--warning);">
+          <span class="stat-label">Waiting in Queue</span>
+          <div class="stat-value text-warning">{{ waiting_reservations_count }}</div>
+          <span class="small text-muted d-block">Awaiting returned copies</span>
+          <a href="{% url 'staff_reservation_queue' %}?status=WAITING" class="stat-link">Inspect queue &rarr;</a>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="stat-card h-100" style="border-left: 4px solid #10B981;">
+          <span class="stat-label">Ready (Shelf Holds)</span>
+          <div class="stat-value" style="color: #10B981;">{{ ready_holds_count }}</div>
+          <span class="small text-muted d-block">48-hour pickup window</span>
+          <a href="{% url 'staff_reservation_queue' %}?status=READY" class="stat-link">View held copies &rarr;</a>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="stat-card h-100" style="border-left: 4px solid var(--danger);">
+          <span class="stat-label">Unpaid Fines Total</span>
+          <div class="stat-value text-danger">₦{{ unpaid_fines_total|intcomma }}</div>
+          <span class="small text-muted d-block">Assessed late fees</span>
+          <a href="{% url 'staff_fines' %}" class="stat-link">Cash desk ledger &rarr;</a>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="stat-card h-100" style="border-left: 4px solid var(--success);">
+          <span class="stat-label">Available Copies</span>
+          <div class="stat-value text-success">{{ available_copies_count }}</div>
+          <span class="small text-muted d-block">On open shelves (of {{ total_copies_count }} total)</span>
+          <a href="{% url 'staff_book_list' %}" class="stat-link">Browse collection &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Physical Copies Inventory Reconciliation Bar -->
+    <div class="card-custom p-3 mb-4 bg-light">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div class="d-flex align-items-center gap-2">
+          <i class="fa-solid fa-layer-group text-navy fs-5"></i>
+          <div>
+            <span class="fw-bold text-navy small d-block">Total Inventory Reconciliation: <strong>{{ total_copies_count }} Physical Copies</strong></span>
+            <span class="text-muted" style="font-size: 0.8rem;">Every physical copy in the collection is accounted for:</span>
+          </div>
+        </div>
+        <div class="d-flex align-items-center gap-2 flex-wrap font-monospace small">
+          <a href="{% url 'staff_book_list' %}" class="badge bg-success py-1 px-2 text-decoration-none shadow-sm" title="View available collection on open shelves">
+            <i class="fa-solid fa-book me-1"></i> {{ available_copies_count }} Available
+          </a>
+          <span class="text-muted fw-bold">+</span>
+          <a href="{% url 'staff_loans' %}" class="badge bg-info text-dark py-1 px-2 text-decoration-none shadow-sm" title="View all active student loans">
+            <i class="fa-solid fa-arrow-up-from-bracket me-1"></i> {{ books_out_count }} Out
+          </a>
+          <span class="text-muted fw-bold">+</span>
+          <a href="{% url 'staff_reservation_queue' %}?status=READY" class="badge bg-warning text-dark py-1 px-2 text-decoration-none shadow-sm" title="View ready shelf holds awaiting pickup">
+            <i class="fa-solid fa-clock me-1"></i> {{ reserved_copies_count }} Reserved
+          </a>
+          <span class="text-muted fw-bold">+</span>
+          <button type="button" class="badge bg-secondary py-1 px-2 border-0 text-white shadow-sm" data-bs-toggle="modal" data-bs-target="#withdrawnCopiesModal" style="cursor: pointer;" title="Click to view details of withdrawn/decommissioned copies">
+            <i class="fa-solid fa-box-archive me-1"></i> {{ withdrawn_copies_count }} Withdrawn <i class="fa-solid fa-circle-info ms-1" style="font-size: 0.75rem;"></i>
+          </button>
+          <span class="text-muted fw-bold">=</span>
+          <span class="badge bg-navy text-white py-1 px-2 fw-bold shadow-sm">
+            {{ total_copies_count }} Total
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Operational Lists (Section 7.3: Collect Soon & Most Overdue) -->
+    <div class="row g-4">
+      <!-- 1. Ready Holds Nearest Expiry (Collect Soon) -->
+      <div class="col-md-6">
+        <div class="card-custom h-100">
+          <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+            <h2 class="h6 mb-0 fw-bold text-navy"><i class="fa-solid fa-star"></i> Collect Soon (Ready Holds)</h2>
+            <a href="{% url 'staff_reservation_queue' %}?status=READY" class="small text-muted">View all</a>
+          </div>
+
+          {% if collect_soon %}
+            <div class="d-flex flex-column gap-2">
+              {% for res in collect_soon %}
+                <div class="p-2 rounded border bg-light d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong class="d-block text-navy">{{ res.book.title|truncatechars:35 }}</strong>
+                    <div class="small text-muted">
+                      For: <strong>{{ res.student.full_name }}</strong> &middot; <span class="badge-accession">{{ res.copy.accession_number }}</span>
+                    </div>
+                    <div class="small text-danger fw-bold">
+                      Expires: {{ res.expires_at|date:"D, d M H:i" }}
+                    </div>
+                  </div>
+                  <div>
+                    <a href="{% url 'staff_issue' %}?matric={{ res.student.matric_number|default:res.student.email }}" class="btn btn-sm btn-success">
+                      Issue
+                    </a>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="text-center py-4 text-muted">
+              <p class="mb-0 small">No ready holds currently waiting on shelf.</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- 2. Top Delinquent Loans (Most Overdue) -->
+      <div class="col-md-6">
+        <div class="card-custom h-100">
+          <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+            <h2 class="h6 mb-0 fw-bold text-navy">! Most Overdue Loans</h2>
+            <a href="{% url 'staff_overdue' %}" class="small text-muted">View all</a>
+          </div>
+
+          {% if most_overdue %}
+            <div class="d-flex flex-column gap-2">
+              {% for loan in most_overdue %}
+                <div class="p-2 rounded border bg-light d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong class="d-block text-navy">{{ loan.copy.book.title|truncatechars:35 }}</strong>
+                    <div class="small text-muted">
+                      Borrower: <strong>{{ loan.student.full_name }}</strong> &middot; <span class="badge-accession">{{ loan.copy.accession_number }}</span>
+                    </div>
+                    <div class="small text-danger fw-bold">
+                      {{ loan.days_overdue }} days late &middot; Est. ₦{{ loan.estimated_fine|intcomma }}
+                    </div>
+                  </div>
+                  <div>
+                    <a href="{% url 'staff_return' %}?accession={{ loan.copy.accession_number }}" class="btn btn-sm btn-navy">
+                      Return
+                    </a>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="text-center py-4 text-muted">
+              <p class="mb-0 small">No overdue loans currently on record.</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Withdrawn Copies Audit Modal -->
+<div class="modal fade" id="withdrawnCopiesModal" tabindex="-1" aria-labelledby="withdrawnCopiesModalLabel" aria-hidden="true" style="z-index: 1060;">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content shadow-lg border-0">
+      <div class="modal-header bg-navy text-white">
+        <h5 class="modal-title fw-bold" id="withdrawnCopiesModalLabel">
+          <i class="fa-solid fa-box-archive text-gold me-2"></i> Withdrawn / Decommissioned Copies ({{ withdrawn_copies_count }})
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <div class="alert alert-secondary small mb-3">
+          <i class="fa-solid fa-circle-info me-1"></i> Withdrawn copies are physical copies permanently retired from active student circulation (e.g. damaged, worn out, or decommissioned) but retained in the catalog for archival and historical audit records.
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Accession #</th>
+                <th>Book Title</th>
+                <th>Category</th>
+                <th>Shelf / Storage Location</th>
+                <th>Status</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for c in withdrawn_copies %}
+                <tr>
+                  <td><span class="badge-accession">{{ c.accession_number }}</span></td>
+                  <td>
+                    <strong class="text-navy">{{ c.book.title }}</strong>
+                    <div class="small text-muted">{{ c.book.author }}</div>
+                  </td>
+                  <td><span class="badge bg-light text-dark border">{{ c.book.category.category_name }}</span></td>
+                  <td><small class="text-muted">{{ c.whereabouts }}</small></td>
+                  <td><span class="badge bg-secondary text-white">✕ Withdrawn</span></td>
+                  <td class="text-end">
+                    <a href="{% url 'staff_book_copies' c.book.id %}" class="btn btn-sm btn-outline-navy py-1 px-2">
+                      <i class="fa-solid fa-folder-open me-1"></i> Manage Book Copies &rarr;
+                    </a>
+                  </td>
+                </tr>
+              {% empty %}
+                <tr>
+                  <td colspan="6" class="text-center py-4 text-muted">No copies currently withdrawn.</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer bg-light">
+        <a href="{% url 'staff_book_list' %}" class="btn btn-outline-secondary me-auto">
+          <i class="fa-solid fa-book"></i> Open Catalog Management
+        </a>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

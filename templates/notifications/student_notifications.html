@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Notifications &middot; UniLibrary{% endblock %}
+
+{% block content %}
+<div class="py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <div>
+      <h1 class="h3 fw-bold text-navy mb-1">Notifications &amp; Alerts</h1>
+      <p class="text-muted small mb-0">Due-date reminders, hold readiness alerts, and automated account messages.</p>
+    </div>
+    {% if unread_count > 0 %}
+      <div>
+        <form method="POST" action="{% url 'notification_mark_all_read' %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-navy btn-sm" id="btnMarkAllRead">
+            <i class="fa-solid fa-check"></i> Mark All as Read ({{ unread_count }})
+          </button>
+        </form>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="card-custom">
+    <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+      <h2 class="h5 mb-0 fw-bold text-navy">Activity Feed</h2>
+      <span class="badge-status {% if unread_count > 0 %}badge-danger{% else %}badge-success{% endif %}">
+        {% if unread_count > 0 %}! {{ unread_count }} Unread{% else %}<i class="fa-solid fa-check"></i> All Read{% endif %}
+      </span>
+    </div>
+
+    {% if notifications %}
+      <div class="d-flex flex-column gap-2">
+        {% for notif in notifications %}
+          <div class="p-3 rounded border d-flex justify-content-between align-items-center flex-wrap gap-2 {% if not notif.is_read %}bg-light border-navy shadow-sm{% else %}bg-white{% endif %}">
+            <div class="d-flex align-items-start gap-3">
+              <span class="fs-4">
+                {% if notif.type == 'RESERVATION_READY' %}<i class="fa-solid fa-star"></i>
+                {% elif notif.type == 'RESERVATION_CONFIRMED' %}#
+                {% elif notif.type == 'DUE_SOON' %}<i class="fa-solid fa-clock"></i>
+                {% elif notif.type == 'OVERDUE' %}!
+                {% elif notif.type == 'RESERVATION_EXPIRED' %}<i class="fa-solid fa-xmark"></i>
+                {% else %}<i class="fa-solid fa-bell"></i>{% endif %}
+              </span>
+              <div>
+                <div class="d-flex align-items-center gap-2 mb-1">
+                  <strong class="{% if not notif.is_read %}text-navy fw-bold{% else %}text-secondary{% endif %}">
+                    {{ notif.get_type_display }}
+                  </strong>
+                  {% if not notif.is_read %}
+                    <span class="badge bg-danger">New</span>
+                  {% endif %}
+                  <span class="small text-muted">&middot; {{ notif.date_sent|naturaltime }} ({{ notif.date_sent|date:"d M Y H:i" }})</span>
+                </div>
+                <p class="mb-0 {% if not notif.is_read %}fw-semibold text-dark{% else %}text-muted{% endif %}">
+                  {{ notif.message }}
+                </p>
+              </div>
+            </div>
+
+            {% if not notif.is_read %}
+              <div>
+                <form method="POST" action="{% url 'notification_mark_read' notif.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-outline-secondary" id="btnMarkRead-{{ notif.id }}">
+                    Mark as read
+                  </button>
+                </form>
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+
+      {% if is_paginated %}
+        <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-3">
+          <small class="text-muted">Showing page {{ page_obj.number }} of {{ paginator.num_pages }}</small>
+          <div class="btn-group btn-group-sm">
+            {% if page_obj.has_previous %}
+              <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-secondary">&laquo; Prev</a>
+            {% endif %}
+            {% if page_obj.has_next %}
+              <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-secondary">Next &raquo;</a>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="text-center py-5 text-muted">
+        <div class="fs-1 mb-2"><i class="fa-solid fa-bell"></i></div>
+        <h3 class="h5 text-navy">No Notifications Yet</h3>
+        <p class="mb-0">You have no active alerts or messages on your account.</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

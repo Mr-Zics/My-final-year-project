@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Daily Scheduled Job &middot; UniLibrary Admin{% endblock %}
+
+{% block content %}
+<div class="row g-4 py-4">
+  <div class="col-lg-3">
+    {% include "core/admin_sidebar.html" with active_nav="job" %}
+  </div>
+
+  <div class="col-lg-9">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+      <div>
+        <h1 class="h3 fw-bold text-navy mb-1">Daily Automation Scheduler</h1>
+        <p class="text-muted small mb-0">Automated job for expiring uncollected holds, sending due date reminders, and overdue notices.</p>
+      </div>
+    </div>
+
+    <!-- Interactive Execution Trigger Card -->
+    <div class="card-custom mb-4 p-4 border-2 border-navy">
+      <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom flex-wrap gap-2">
+        <div>
+          <h2 class="h5 mb-1 fw-bold text-navy"><i class="fa-solid fa-stopwatch"></i> Execute Daily Automation Job</h2>
+          <small class="text-muted">Runs the Django management command <code>run_daily_job</code> on demand for demonstrations or maintenance.</small>
+        </div>
+        <span class="badge-status badge-success">Idempotent Safe</span>
+      </div>
+
+      <form method="POST" action="{% url 'admin_daily_job' %}" class="row g-3 align-items-center">
+        {% csrf_token %}
+        <div class="col-md-7">
+          <label class="form-label fw-semibold small text-navy">Simulate Run on Specific Date (Optional for Examiner Demos)</label>
+          <input type="date" name="simulation_date" class="form-control" placeholder="YYYY-MM-DD" value="{{ today|date:'Y-m-d' }}">
+          <small class="text-muted">Leave as today or pick a past/future date to test notifications and hold expiration.</small>
+        </div>
+        <div class="col-md-5 d-flex align-items-end">
+          <button type="submit" class="btn btn-gold w-100 py-2 fw-bold" id="btnRunDailyJob">
+            <i class="fa-solid fa-rocket"></i> Run Daily Job Now
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Execution History Feed -->
+    <div class="card-custom mb-4">
+      <h2 class="h5 mb-3 fw-bold text-navy pb-2 border-bottom">Past Execution Run History (Last 10 Logs)</h2>
+      {% if history %}
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th style="width: 170px;">Timestamp</th>
+                <th>Run Summary &amp; Counts</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for h in history %}
+                <tr>
+                  <td class="font-monospace small text-muted">{{ h.timestamp|date:"Y-m-d H:i:s" }}</td>
+                  <td>
+                    <span class="badge bg-light text-dark border me-2">DAILY_JOB</span>
+                    <strong class="text-navy">{{ h.detail }}</strong>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="text-center py-4 text-muted">
+          <p class="mb-0">No daily job execution logs recorded yet.</p>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Windows Task Scheduler & Cron Instructions (Section 7.4) -->
+    <div class="card-custom p-4 bg-light">
+      <h3 class="h6 fw-bold text-navy mb-2"><i class="fa-solid fa-laptop"></i> Automated Scheduling Instructions</h3>
+      <p class="small text-muted mb-3">
+        In physical library deployment, this job runs automatically once daily at 00:05 WAT.
+      </p>
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="p-3 bg-white rounded border">
+            <strong class="text-navy small d-block mb-1">Windows Task Scheduler (Local System)</strong>
+            <p class="small text-muted mb-2">Schedule the provided batch file to execute daily:</p>
+            <pre class="bg-light p-2 rounded small mb-0 border font-monospace">tools\run_daily_job.bat</pre>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="p-3 bg-white rounded border">
+            <strong class="text-navy small d-block mb-1">Linux / Ubuntu Cron Entry</strong>
+            <p class="small text-muted mb-2">Add the following line to the crontab:</p>
+            <pre class="bg-light p-2 rounded small mb-0 border font-monospace">5 0 * * * /path/to/venv/bin/python /path/to/manage.py run_daily_job</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

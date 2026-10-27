@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}My Fines &middot; UniLibrary{% endblock %}
+
+{% block content %}
+<div class="py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <div>
+      <h1 class="h3 fw-bold text-navy mb-1">My Overdue Fines &amp; Penalties</h1>
+      <p class="text-muted small mb-0">Record of late return penalties assessed against your library account.</p>
+    </div>
+    <div>
+      <a href="{% url 'student_loans' %}" class="btn btn-secondary-custom btn-sm"><i class="fa-solid fa-book-open"></i> View My Loans</a>
+    </div>
+  </div>
+
+  <!-- Outstanding Balance & Payment Info Card -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-6">
+      <div class="card-custom p-4 border-2 {% if unpaid_total > 0 %}border-warning{% else %}border-success{% endif %}">
+        <span class="stat-label">Total Outstanding Unpaid Fines</span>
+        <div class="stat-value {% if unpaid_total > 0 %}text-danger{% else %}text-success{% endif %} mb-2">
+          ₦{{ unpaid_total|intcomma }}
+        </div>
+        <p class="small text-muted mb-0">
+          Overdue fines are charged at ₦50 per day after a book is returned late.
+        </p>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card-custom p-4 border-2 border-success bg-success-subtle">
+        <span class="stat-label">Fine Settlement Policy</span>
+        <div class="d-flex align-items-center gap-2 my-2">
+          <span class="fs-3"><i class="fa-solid fa-check text-success"></i></span>
+          <div>
+            <strong class="text-success fs-5 d-block">Physical Desk Payment</strong>
+            <small class="text-muted">Fine payments are received in person at the central circulation desk.</small>
+          </div>
+        </div>
+        <div class="small fw-semibold mt-2 pt-2 border-top border-secondary-subtle">
+          <i class="fa-solid fa-receipt"></i> A physical receipt is issued by the librarian and recorded against your account.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fines Ledger Table -->
+  <div class="card-custom">
+    <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+      <h2 class="h5 mb-0 fw-bold text-navy">Fine History Ledger</h2>
+      <span class="badge-status badge-info">Unpaid &amp; Paid</span>
+    </div>
+
+    {% if fines %}
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Date Assessed</th>
+              <th>Book Title &amp; Accession</th>
+              <th>Days Late</th>
+              <th>Fine Amount</th>
+              <th>Status</th>
+              <th>Payment Receipt</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for fine in fines %}
+              <tr>
+                <td>{{ fine.date_created|date:"d M Y" }}</td>
+                <td>
+                  <div class="fw-bold">{{ fine.borrow_record.copy.book.title }}</div>
+                  <span class="badge-accession">{{ fine.borrow_record.copy.accession_number }}</span>
+                </td>
+                <td>
+                  <span class="badge bg-light text-dark border">{{ fine.borrow_record.days_overdue }} days</span>
+                </td>
+                <td>
+                  <strong class="{% if fine.status == 'UNPAID' %}text-danger{% else %}text-success{% endif %}">
+                    ₦{{ fine.amount|intcomma }}
+                  </strong>
+                </td>
+                <td>
+                  {% if fine.status == 'UNPAID' %}
+                    <span class="badge-status badge-danger">! Unpaid</span>
+                  {% else %}
+                    <span class="badge-status badge-success"><i class="fa-solid fa-check"></i> Paid</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if fine.status == 'PAID' %}
+                    <small class="text-muted">Paid {{ fine.date_paid|date:"d M Y" }} &middot; Ref: <strong>{{ fine.payment_reference }}</strong></small>
+                  {% else %}
+                    <small class="text-danger fw-semibold">Pay at circulation desk</small>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="text-center py-5 text-muted">
+        <div class="fs-1 mb-2"><i class="fa-solid fa-gift"></i></div>
+        <h3 class="h5 text-navy">No Fines on Record</h3>
+        <p class="mb-0">You have no overdue penalties or unpaid library charges.</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+# Git ignore for University Library Management System
+.env
+venv/
+*.pyc
+__pycache__/
+*.sqlite3
+backups/*.sql
+media/
+.idea/
+.vscode/

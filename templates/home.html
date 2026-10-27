@@ -1,0 +1,255 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}UniLibrary &middot; Academic Physical Library Management System{% endblock %}
+
+{% block content %}
+<!-- Hero Banner with Atmospheric Faded Library Background -->
+<section class="hero-banner text-center" aria-labelledby="banner-heading">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="d-inline-flex align-items-center gap-2 px-3 py-1 mb-3 rounded-pill" style="background: rgba(217, 154, 43, 0.22); border: 1px solid var(--gold); color: #F4DEB3; font-size: 0.85rem; font-weight: 500; backdrop-filter: blur(4px);">
+        <img src="{% static 'img/logo.svg' %}" alt="Icon" width="16" height="16">
+        <span>UniLibrary &middot; Physical University Circulation Desk</span>
+      </div>
+      <h1 id="banner-heading">Search, Reserve &amp; Borrow Library Books</h1>
+      <p class="mx-auto">
+        Search our physical academic collection, join the automated reservation queue when copies are out, and receive timely email &amp; in-app return reminders.
+      </p>
+
+      <!-- Large Search Box with Gold Submit Button (Matching Screen 3) -->
+      <form action="{% url 'catalogue_list' %}" method="GET" class="search-wrapper mx-auto mb-2" role="search">
+        <span class="ps-3 pe-2 text-muted" aria-hidden="true" style="font-size: 1.1rem;"><i class="fa-solid fa-magnifying-glass"></i></span>
+        <input
+          type="search"
+          name="q"
+          class="search-input"
+          placeholder="Search by title, author, ISBN, or category..."
+          aria-label="Search the catalogue"
+          id="home-search-input"
+        >
+        <button type="submit" class="btn btn-gold px-4" id="home-search-submit">
+          Search
+        </button>
+      </form>
+
+      <!-- Quick Search Chips -->
+      <div class="quick-tags">
+        <span class="text-white-50 small me-1">Popular:</span>
+        <a href="{% url 'catalogue_list' %}?q=Clean+Code" class="quick-tag-chip">Clean Code</a>
+        <a href="{% url 'catalogue_list' %}?q=Algorithms" class="quick-tag-chip">Algorithms</a>
+        <a href="{% url 'catalogue_list' %}?q=Database" class="quick-tag-chip">Database Concepts</a>
+        <a href="{% url 'catalogue_list' %}?q=Things+Fall+Apart" class="quick-tag-chip">Chinua Achebe</a>
+        <a href="{% url 'catalogue_list' %}?q=Discrete" class="quick-tag-chip">Discrete Maths</a>
+      </div>
+
+      <!-- Guest Action Buttons (Matching Screen 1) -->
+      <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+        <a href="{% url 'login' %}" class="btn btn-outline-light-custom" id="hero-btn-login">
+          <span><i class="fa-solid fa-key"></i></span> Student / Staff Sign In
+        </a>
+        <a href="{% url 'register' %}" class="btn btn-gold" id="hero-btn-register">
+          <span><i class="fa-solid fa-pen-to-square"></i></span> Register Matric Account
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Three Feature Highlights with Subtle Faded Watermarks -->
+<section class="my-5" aria-labelledby="features-heading">
+  <div class="text-center mb-4">
+    <h2 id="features-heading">Automated Library Services</h2>
+    <p class="text-muted">Designed for physical library circulation desks with weak connection resilience.</p>
+  </div>
+
+  <div class="row g-4">
+    <!-- Feature 1: Search -->
+    <div class="col-md-4">
+      <div class="feature-card watermark-card">
+        <span class="card-watermark" aria-hidden="true"><i class="fa-solid fa-book-open"></i></span>
+        <div class="feature-icon" aria-hidden="true"><i class="fa-solid fa-book-open"></i></div>
+        <h3>1. Search the Catalogue</h3>
+        <p>Live search across all book titles, authors, categories, shelf accession numbers, and available physical copies.</p>
+        <span class="badge-status badge-success mt-auto"><i class="fa-solid fa-check"></i> Real-time status</span>
+      </div>
+    </div>
+
+    <!-- Feature 2: Reserve -->
+    <div class="col-md-4">
+      <div class="feature-card watermark-card">
+        <span class="card-watermark" aria-hidden="true"><i class="fa-solid fa-hourglass-half"></i></span>
+        <div class="feature-icon" aria-hidden="true"><i class="fa-solid fa-hourglass-half"></i></div>
+        <h3>2. First-Come Queue Reservation</h3>
+        <p>When all copies are borrowed, join the automated queue. Returned copies are held for 48 hours for collection.</p>
+        <span class="badge-status badge-info mt-auto"><i class="fa-solid fa-star"></i> 48h hold window</span>
+      </div>
+    </div>
+
+    <!-- Feature 3: Reminders -->
+    <div class="col-md-4">
+      <div class="feature-card watermark-card">
+        <span class="card-watermark" aria-hidden="true"><i class="fa-solid fa-bell"></i></span>
+        <div class="feature-icon" aria-hidden="true"><i class="fa-solid fa-clock"></i></div>
+        <h3>3. Due Reminders &amp; Overdue Notices</h3>
+        <p>Automatic alerts before due dates and daily notices for late loans with transparent fine tracking (₦100/day).</p>
+        <span class="badge-status badge-warning mt-auto">! Automated notices</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Newly Added Books Grid (Full-Width Balanced Presentation, Screen 3 Style) -->
+<section class="my-5" aria-labelledby="new-books-heading">
+  <div class="card-custom">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom flex-wrap gap-2">
+      <div>
+        <h2 class="h4 mb-0" id="new-books-heading">Newly Added Books</h2>
+        <span class="text-muted small">Available for checkout or reservation at the physical circulation desk</span>
+      </div>
+      <a href="{% url 'catalogue_list' %}" class="small fw-bold text-decoration-none" style="color: var(--navy);">Browse Full Catalogue (30 Books) &rarr;</a>
+    </div>
+
+    <div class="row g-4">
+      {% if latest_books %}
+        {% for book in latest_books %}
+          <div class="col-lg-4 col-md-6">
+            <div class="book-catalogue-card">
+              <div class="book-cover-wrapper">
+                {% if book.get_cover_image_url %}
+                  <img src="{{ book.get_cover_image_url }}" alt="{{ book.title }} front cover" loading="lazy">
+                {% else %}
+                  <div class="text-center p-3 text-muted">
+                    <div style="font-size: 2.5rem; opacity: 0.6;"><i class="fa-solid fa-book-open"></i></div>
+                    <small class="fw-bold d-block mt-1">{{ book.category.code|default:"LIB" }}</small>
+                  </div>
+                {% endif %}
+              </div>
+              <h3 class="book-card-title text-truncate" title="{{ book.title }}">{{ book.title }}</h3>
+              <p class="book-card-author text-truncate" title="{{ book.author }}">{{ book.author }}</p>
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <span class="badge-status badge-info" style="font-size: 0.75rem;">{{ book.category.category_name }}</span>
+                <span class="badge-status {{ book.availability_badge.css }}" style="font-size: 0.75rem;">{{ book.availability_badge.symbol }} {{ book.availability_badge.text }}</span>
+              </div>
+              <div class="book-card-footer d-flex align-items-center justify-content-between">
+                <span class="small text-muted fw-semibold">Shelf {{ book.category.code|default:"GEN" }}-1</span>
+                <a href="{% url 'book_detail' book.id %}" class="btn btn-sm btn-gold px-3">View Details &rarr;</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <!-- Fallback Curated Books -->
+        <div class="col-lg-4 col-md-6">
+          <div class="book-catalogue-card">
+            <div class="book-cover-wrapper">
+              <img src="{% static 'img/books/clean_code.jpg' %}" alt="Clean Code Book Cover" loading="lazy">
+            </div>
+            <h3 class="book-card-title" title="Clean Code">Clean Code</h3>
+            <p class="book-card-author" title="Robert C. Martin">Robert C. Martin</p>
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <span class="badge-status badge-info" style="font-size: 0.75rem;">Computer Science</span>
+              <span class="badge-status badge-success" style="font-size: 0.75rem;"><i class="fa-solid fa-check"></i> Available</span>
+            </div>
+            <div class="book-card-footer d-flex align-items-center justify-content-between">
+              <span class="small text-muted fw-semibold">Shelf CS-3</span>
+              <a href="{% url 'catalogue_list' %}" class="btn btn-sm btn-gold px-3">Details &rarr;</a>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- Balanced Circulation & Desk Information (Equal 3-Card Grid with Faded Thematic Watermarks) -->
+<section class="my-5" aria-labelledby="circulation-hub-heading">
+  <div class="text-center mb-4">
+    <h2 id="circulation-hub-heading">Circulation Desk &amp; Policies</h2>
+    <p class="text-muted">Key guidelines, physical collection hours, and borrowing rules.</p>
+  </div>
+
+  <div class="row g-4">
+    <!-- Card 1: Hours & Physical Desk Location -->
+    <div class="col-md-4">
+      <div class="info-box-card watermark-card">
+        <span class="card-watermark" aria-hidden="true"><i class="fa-solid fa-clock"></i></span>
+        <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
+          <span class="fs-4"><i class="fa-solid fa-clock"></i></span>
+          <h3 class="h5 mb-0">Hours &amp; Location</h3>
+        </div>
+        <ul class="list-unstyled mb-3">
+          <li class="d-flex justify-content-between py-1 border-bottom">
+            <span>Monday &ndash; Friday</span>
+            <strong>8:00 AM &ndash; 6:00 PM</strong>
+          </li>
+          <li class="d-flex justify-content-between py-1 border-bottom">
+            <span>Saturday</span>
+            <strong>9:00 AM &ndash; 3:00 PM</strong>
+          </li>
+          <li class="d-flex justify-content-between py-1 text-muted">
+            <span>Sunday &amp; Holidays</span>
+            <em>Closed</em>
+          </li>
+        </ul>
+        <div class="mt-auto pt-2 border-top small text-muted">
+          <span><i class="fa-solid fa-location-dot"></i> <strong>Location:</strong> Ground Floor, Wing B</span><br>
+          <span><i class="fa-solid fa-user"></i> <strong>Librarians:</strong> Emmanuel Udoh &amp; Funke Adeyemi</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: 48-Hour Pickup Window -->
+    <div class="col-md-4">
+      <div class="info-box-card watermark-card">
+        <span class="card-watermark" aria-hidden="true"><i class="fa-solid fa-star"></i></span>
+        <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
+          <span class="fs-4 text-primary"><i class="fa-solid fa-star"></i></span>
+          <h3 class="h5 mb-0">48-Hour Pickup Hold</h3>
+        </div>
+        <p class="small text-muted mb-3">
+          When a reserved book is returned by another student, the system automatically marks it <strong><i class="fa-solid fa-star"></i> Ready</strong> and holds the physical copy at the circulation desk.
+        </p>
+        <div class="p-2 rounded bg-light border mb-3 small">
+          <strong><i class="fa-solid fa-stopwatch"></i> Collection Deadline:</strong> Exactly 48 hours from the timestamp of return.
+        </div>
+        <div class="mt-auto pt-2 border-top small text-muted">
+          <span><i class="fa-solid fa-bell"></i> If uncollected, hold expires and passes to next student in queue.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: Circulation Rules & Fines -->
+    <div class="col-md-4">
+      <div class="info-box-card watermark-card">
+        <span class="card-watermark" aria-hidden="true"><i class="fa-solid fa-scroll"></i></span>
+        <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
+          <span class="fs-4 text-warning"><i class="fa-solid fa-scroll"></i></span>
+          <h3 class="h5 mb-0">Circulation Rules</h3>
+        </div>
+        <ul class="list-unstyled small mb-3">
+          <li class="py-1 border-bottom d-flex justify-content-between">
+            <span>Loan Period</span>
+            <strong>7 Days</strong>
+          </li>
+          <li class="py-1 border-bottom d-flex justify-content-between">
+            <span>Maximum Borrowed</span>
+            <strong>3 Books</strong>
+          </li>
+          <li class="py-1 border-bottom d-flex justify-content-between">
+            <span>Overdue Rate</span>
+            <strong>₦100 / Day</strong>
+          </li>
+          <li class="py-1 text-danger d-flex justify-content-between">
+            <span>Borrowing Block</span>
+            <strong>At ₦500 Unpaid</strong>
+          </li>
+        </ul>
+        <div class="mt-auto pt-2 border-top small text-muted">
+          <span><i class="fa-solid fa-credit-card"></i> Fines are paid in full at the circulation desk.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

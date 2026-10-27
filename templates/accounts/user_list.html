@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}User Management &middot; UniLibrary Admin{% endblock %}
+
+{% block content %}
+<div class="row g-4 py-4">
+  <!-- Left Admin Sidebar -->
+  <div class="col-lg-3">
+    {% include "core/admin_sidebar.html" with active_nav="users" %}
+  </div>
+
+  <!-- User Management Table Area -->
+  <div class="col-lg-9">
+    <div class="card-custom">
+      <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom flex-wrap gap-2">
+        <div>
+          <h1 class="h4 mb-0 fw-bold text-navy">User &amp; Role Management</h1>
+          <span class="text-muted small">Manage student borrowers, circulation librarians, and administrators</span>
+        </div>
+        <a href="{% url 'admin_user_add' %}" class="btn btn-gold btn-sm" id="btn-add-user">
+          <span><i class="fa-solid fa-plus"></i></span> Add New User
+        </a>
+      </div>
+
+      <!-- Search & Filters Form -->
+      <form method="GET" class="row g-2 mb-4" role="search">
+        <div class="col-md-5">
+          <input 
+            type="search" 
+            name="q" 
+            value="{{ q }}" 
+            class="form-control form-control-sm" 
+            placeholder="Search by name, email, or matric number..."
+            id="user-search-input"
+          >
+        </div>
+        <div class="col-md-3">
+          <select name="role" class="form-select form-select-sm" id="user-role-filter">
+            <option value="">All Roles</option>
+            {% for r_val, r_label in roles %}
+              <option value="{{ r_val }}" {% if selected_role == r_val %}selected{% endif %}>{{ r_label }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-2">
+          <select name="status" class="form-select form-select-sm" id="user-status-filter">
+            <option value="">All Statuses</option>
+            <option value="active" {% if selected_status == 'active' %}selected{% endif %}>Active</option>
+            <option value="inactive" {% if selected_status == 'inactive' %}selected{% endif %}>Deactivated</option>
+          </select>
+        </div>
+        <div class="col-md-2 d-flex gap-1">
+          <button type="submit" class="btn btn-navy btn-sm w-100">Filter</button>
+          {% if q or selected_role or selected_status %}
+            <a href="{% url 'admin_user_list' %}" class="btn btn-secondary-custom btn-sm" title="Clear Filters"><i class="fa-solid fa-xmark"></i></a>
+          {% endif %}
+        </div>
+      </form>
+
+      <!-- Users Table -->
+      <div class="table-responsive">
+        <table class="table-custom" id="users-table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Matric No.</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Registered</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for u in users %}
+              <tr>
+                <td>
+                  <strong>{{ u.full_name }}</strong><br>
+                  <span class="small text-muted">{{ u.email }}</span>
+                </td>
+                <td>
+                  {% if u.matric_number %}
+                    <code>{{ u.matric_number }}</code>
+                  {% else %}
+                    <span class="text-muted small">&mdash;</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if u.role == 'ADMINISTRATOR' %}
+                    <span class="badge-status badge-info">Administrator</span>
+                  {% elif u.role == 'LIBRARIAN' %}
+                    <span class="badge-status badge-warning">Librarian</span>
+                  {% else %}
+                    <span class="badge-status badge-success">Student</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if u.is_active %}
+                    <span class="badge-status badge-success"><i class="fa-solid fa-check"></i> Active</span>
+                  {% else %}
+                    <span class="badge-status badge-danger"><i class="fa-solid fa-xmark"></i> Deactivated</span>
+                  {% endif %}
+                </td>
+                <td class="small text-muted">
+                  {{ u.date_registered|date:"d M Y" }}
+                </td>
+                <td class="text-end">
+                  <div class="d-inline-flex gap-1">
+                    <a href="{% url 'admin_user_edit' u.pk %}" class="btn btn-sm btn-secondary-custom py-1 px-2" title="Edit User">
+                      <i class="fa-solid fa-pen-to-square"></i> Edit
+                    </a>
+                    <a href="{% url 'admin_user_reset_password' u.pk %}" class="btn btn-sm btn-secondary-custom py-1 px-2" title="Reset Password">
+                      <i class="fa-solid fa-key"></i> Reset
+                    </a>
+                    {% if u.pk != request.user.pk %}
+                      <form method="POST" action="{% url 'admin_user_toggle_status' u.pk %}" class="d-inline" onsubmit="return confirm('Are you sure you want to {% if u.is_active %}deactivate{% else %}activate{% endif %} this user?');">
+                        {% csrf_token %}
+                        {% if u.is_active %}
+                          <button type="submit" class="btn btn-sm btn-danger py-1 px-2" title="Deactivate Account">Deactivate</button>
+                        {% else %}
+                          <button type="submit" class="btn btn-sm btn-success py-1 px-2" title="Activate Account">Activate</button>
+                        {% endif %}
+                      </form>
+                    {% endif %}
+                  </div>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="6" class="text-center py-4 text-muted">
+                  No users found matching your search query.
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      {% if is_paginated %}
+        <nav class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
+          <small class="text-muted">Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</small>
+          <ul class="pagination pagination-sm mb-0">
+            {% if page_obj.has_previous %}
+              <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ q }}&role={{ selected_role }}&status={{ selected_status }}">&laquo; Prev</a></li>
+            {% endif %}
+            <li class="page-item active"><span class="page-link">{{ page_obj.number }}</span></li>
+            {% if page_obj.has_next %}
+              <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ q }}&role={{ selected_role }}&status={{ selected_status }}">Next &raquo;</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

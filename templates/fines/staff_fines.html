@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Fine Management &middot; UniLibrary{% endblock %}
+
+{% block content %}
+<div class="row g-4 py-4">
+  <div class="col-lg-3">
+    {% include "staff/sidebar.html" with active_nav="fines" %}
+  </div>
+
+  <div class="col-lg-9">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+      <div>
+        <h1 class="h3 fw-bold text-navy mb-1">Fine Management &amp; Cash Desk</h1>
+        <p class="text-muted small mb-0">Record physical cash and receipt payments for overdue fines.</p>
+      </div>
+      <div>
+        <a href="{% url 'staff_loans' %}" class="btn btn-secondary-custom btn-sm"><i class="fa-solid fa-book-open"></i> Active Loans</a>
+      </div>
+    </div>
+
+    <!-- Guidance Alert: Fines Ledger vs Overdue Books -->
+    <div class="alert alert-info border-info-subtle shadow-sm mb-4 d-flex align-items-start gap-3">
+      <i class="fa-solid fa-circle-info fs-4 text-info mt-1"></i>
+      <div>
+        <strong class="d-block text-navy mb-1">About Fine Records vs. Overdue Books:</strong>
+        <p class="small mb-1 text-dark">
+          <strong>Fine Records (This Ledger):</strong> Official debts assessed when overdue books are received back at the desk. Fines are charged at ₦50 per overdue day and are payable at the circulation desk.
+        </p>
+        <p class="small mb-0 text-muted">
+          <strong>Overdue Books:</strong> Books currently on loan past return deadlines. Fines on those books are <em>accruing estimates</em> and only post to this ledger upon return. View active delinquencies in <a href="{% url 'staff_overdue' %}" class="fw-bold text-navy">Overdue Books &rarr;</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Summary KPI Header Banner -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-6">
+        <div class="stat-card" style="border-left: 4px solid var(--danger);">
+          <span class="stat-label">Total Outstanding Unpaid Fines</span>
+          <div class="stat-value text-danger">₦{{ total_unpaid|intcomma }}</div>
+          <span class="small text-muted">Assessed overdue penalties pending collection</span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="stat-card" style="border-left: 4px solid var(--success);">
+          <span class="stat-label">Total Revenue Collected (Paid)</span>
+          <div class="stat-value text-success">₦{{ total_collected|intcomma }}</div>
+          <span class="small text-muted">Offline university cashier desk receipts</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter and Tabs -->
+    <div class="card-custom mb-4">
+      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2 border-bottom pb-2">
+        <!-- Tabs -->
+        <ul class="nav nav-pills" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link {% if current_tab == 'unpaid' %}active fw-bold{% endif %}" href="?tab=unpaid&q={{ search_query }}">
+              ! Unpaid Fines
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if current_tab == 'paid' %}active fw-bold{% endif %}" href="?tab=paid&q={{ search_query }}">
+              <i class="fa-solid fa-check"></i> Paid
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if current_tab == 'all' %}active fw-bold{% endif %}" href="?tab=all&q={{ search_query }}">
+              All Records
+            </a>
+          </li>
+        </ul>
+
+        <!-- Search Form -->
+        <form method="GET" action="{% url 'staff_fines' %}" class="d-flex gap-2">
+          <input type="hidden" name="tab" value="{{ current_tab }}">
+          <input type="text" name="q" class="form-control form-control-sm" placeholder="Search student, matric, book..." value="{{ search_query }}" style="width: 220px;">
+          <button type="submit" class="btn btn-navy btn-sm">Search</button>
+        </form>
+      </div>
+
+      <!-- Fines Table -->
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Student Borrower</th>
+              <th>Book Title &amp; Accession</th>
+              <th>Date Created</th>
+              <th>Fine Amount</th>
+              <th>Status</th>
+              <th>Payment Receipt</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for fine in fines %}
+              <tr>
+                <td>
+                  <div class="fw-bold">{{ fine.borrow_record.student.full_name }}</div>
+                  <small class="text-muted">Matric: {{ fine.borrow_record.student.matric_number|default:fine.borrow_record.student.email }}</small>
+                </td>
+                <td>
+                  <div class="fw-semibold">{{ fine.borrow_record.copy.book.title }}</div>
+                  <span class="badge-accession">{{ fine.borrow_record.copy.accession_number }}</span>
+                </td>
+                <td>
+                  <div class="fw-semibold text-dark">{{ fine.date_created|date:"d M Y" }}</div>
+                  {% if fine.borrow_record.return_date and fine.borrow_record.due_date and fine.borrow_record.return_date > fine.borrow_record.due_date %}
+                    <small class="text-danger d-block">
+                      <i class="fa-solid fa-clock-rotate-left me-1"></i> Overdue Return
+                    </small>
+                    <small class="badge bg-danger-subtle text-danger border border-danger-subtle font-monospace">
+                      Due {{ fine.borrow_record.due_date|date:"d M" }} &rarr; Ret {{ fine.borrow_record.return_date|date:"d M" }}
+                    </small>
+                  {% else %}
+                    <small class="text-muted d-block">Late return fee</small>
+                  {% endif %}
+                </td>
+                <td>
+                  <strong class="{% if fine.status == 'UNPAID' %}text-danger{% else %}text-success{% endif %} fs-6">
+                    ₦{{ fine.amount|intcomma }}
+                  </strong>
+                </td>
+                <td>
+                  {% if fine.status == 'UNPAID' %}
+                    <span class="badge-status badge-danger">! Unpaid</span>
+                  {% else %}
+                    <span class="badge-status badge-success"><i class="fa-solid fa-check"></i> Paid</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if fine.status == 'PAID' %}
+                    <small class="text-success fw-bold d-block">Ref: {{ fine.payment_reference }}</small>
+                    <small class="text-muted">By {{ fine.recorded_by.full_name }} on {{ fine.date_paid|date:"d M Y" }}</small>
+                  {% else %}
+                    <span class="text-danger small">Awaiting Cashier / Desk Payment</span>
+                  {% endif %}
+                </td>
+                <td class="text-end">
+                  {% if fine.status == 'UNPAID' %}
+                    {% if user.role == 'LIBRARIAN' %}
+                      <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#payModal-{{ fine.id }}">
+                        <i class="fa-solid fa-money-bill-wave"></i> Pay
+                      </button>
+                    {% else %}
+                      <span class="text-muted small">Read-Only</span>
+                    {% endif %}
+                  {% else %}
+                    <span class="text-muted small">&mdash;</span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="7" class="text-center py-5 text-muted">
+                  <div class="fs-1 mb-2"><i class="fa-solid fa-money-bill-wave"></i></div>
+                  <p class="mb-0">No fine records found matching selected filter.</p>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      {% if is_paginated %}
+        <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-3">
+          <small class="text-muted">Showing page {{ page_obj.number }} of {{ paginator.num_pages }}</small>
+          <div class="btn-group btn-group-sm">
+            {% if page_obj.has_previous %}
+              <a href="?page={{ page_obj.previous_page_number }}&tab={{ current_tab }}&q={{ search_query }}" class="btn btn-outline-secondary">&laquo; Prev</a>
+            {% endif %}
+            {% if page_obj.has_next %}
+              <a href="?page={{ page_obj.next_page_number }}&tab={{ current_tab }}&q={{ search_query }}" class="btn btn-outline-secondary">Next &raquo;</a>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Payment Modals -->
+{% for fine in fines %}
+  {% if fine.status == 'UNPAID' and user.role == 'LIBRARIAN' %}
+    <div class="modal fade" id="payModal-{{ fine.id }}" tabindex="-1" aria-labelledby="payModalLabel-{{ fine.id }}" aria-hidden="true" style="z-index: 1060;">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0">
+          <form method="POST" action="{% url 'staff_fine_pay' fine.id %}">
+            {% csrf_token %}
+            <div class="modal-header bg-navy text-white">
+              <h5 class="modal-title fw-bold" id="payModalLabel-{{ fine.id }}">
+                <i class="fa-solid fa-money-bill-wave text-gold me-2"></i> Record Fine Payment
+              </h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+              <div class="p-3 bg-light rounded border mb-3">
+                <div class="row g-2">
+                  <div class="col-6">
+                    <small class="text-muted d-block">Student Borrower</small>
+                    <strong class="text-navy">{{ fine.borrow_record.student.full_name }}</strong>
+                    <div class="small text-muted font-monospace">{{ fine.borrow_record.student.matric_number|default:fine.borrow_record.student.email }}</div>
+                  </div>
+                  <div class="col-6">
+                    <small class="text-muted d-block">Book Copy</small>
+                    <strong class="text-navy">{{ fine.borrow_record.copy.book.title }}</strong>
+                    <div><span class="badge-accession">{{ fine.borrow_record.copy.accession_number }}</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alert alert-success fs-5 fw-bold text-center mb-3">
+                Amount to Collect: ₦{{ fine.amount|intcomma }} (Full Payment Only)
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold">Payment Receipt / Reference Number <span class="text-danger">*</span></label>
+                <input type="text" name="reference" class="form-control form-control-lg" placeholder="e.g. RCPT-2026-081" required autofocus>
+                <small class="text-muted">Enter the official university treasury receipt number.</small>
+              </div>
+            </div>
+            <div class="modal-footer bg-light">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-success px-4 fw-bold">
+                <i class="fa-solid fa-check"></i> Confirm Payment
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endfor %}
+{% endblock %}

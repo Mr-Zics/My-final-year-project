@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}My Loans &middot; UniLibrary{% endblock %}
+
+{% block content %}
+<div class="py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <div>
+      <h1 class="h3 fw-bold text-navy mb-1">My Borrowed Books</h1>
+      <p class="text-muted small mb-0">Track active library loans and your past borrowing history.</p>
+    </div>
+    <div>
+      <a href="{% url 'catalogue_list' %}" class="btn btn-gold btn-sm"><i class="fa-solid fa-magnifying-glass"></i> Browse Catalogue</a>
+    </div>
+  </div>
+
+  <!-- Nav Tabs: Active Loans vs Borrowing History -->
+  <ul class="nav nav-pills mb-4" id="loansTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active fw-bold" id="active-tab" data-bs-toggle="pill" data-bs-target="#activeLoansPane" type="button" role="tab">
+        <i class="fa-solid fa-book-open"></i> Active Loans ({{ current_loans|length }}/{{ max_loans }})
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link fw-bold" id="history-tab" data-bs-toggle="pill" data-bs-target="#historyPane" type="button" role="tab">
+        <i class="fa-solid fa-scroll"></i> Loan History ({{ loan_history|length }})
+      </button>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="loansTabContent">
+    <!-- Tab 1: Active Loans -->
+    <div class="tab-pane fade show active" id="activeLoansPane" role="tabpanel">
+      {% if current_loans %}
+        <div class="d-flex flex-column gap-3">
+          {% for loan in current_loans %}
+            <div class="card-custom p-3 border-2 {% if loan.is_overdue %}border-danger{% elif loan.days_remaining <= 2 %}border-warning{% else %}border-light{% endif %}">
+              <div class="row align-items-center g-3">
+                <!-- Book Cover Thumbnail -->
+                <div class="col-auto">
+                  <img src="{{ loan.copy.book.get_cover_image_url }}" alt="{{ loan.copy.book.title }}" style="width: 65px; height: 95px; object-fit: contain; background: #FFF; border-radius: 4px; border: 1px solid var(--border);" onerror="this.onerror=null;this.src='{% static 'img/books/placeholder.png' %}';">
+                </div>
+
+                <!-- Book Information -->
+                <div class="col">
+                  <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+                    <span class="badge-accession">{{ loan.copy.accession_number }}</span>
+                    {% if loan.is_overdue %}
+                      <span class="badge-status badge-danger">! Overdue ({{ loan.days_overdue }} days late)</span>
+                    {% elif loan.days_remaining <= 2 %}
+                      <span class="badge-status badge-warning"><i class="fa-solid fa-clock"></i> Due Soon ({{ loan.days_remaining }}d left)</span>
+                    {% else %}
+                      <span class="badge-status badge-success"><i class="fa-solid fa-check"></i> On Time</span>
+                    {% endif %}
+                  </div>
+
+                  <h2 class="h5 mb-1 fw-bold text-navy">
+                    <a href="{% url 'book_detail' loan.copy.book.id %}">{{ loan.copy.book.title }}</a>
+                  </h2>
+                  <div class="small text-muted mb-2">Author: {{ loan.copy.book.author }} &middot; Shelf: {{ loan.copy.whereabouts }}</div>
+
+                  <div class="d-flex gap-4 small text-muted flex-wrap">
+                    <div>Borrowed: <strong class="text-dark">{{ loan.borrow_date|date:"d M Y" }}</strong></div>
+                    <div>Due Date: <strong class="{% if loan.is_overdue %}text-danger fw-bold{% else %}text-navy{% endif %}">{{ loan.due_date|date:"d M Y" }}</strong></div>
+                    {% if loan.is_overdue %}
+                      <div class="text-danger">Estimated Fine: <strong>₦{{ loan.estimated_fine|intcomma }}</strong></div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="card-custom text-center py-5 text-muted">
+          <div class="fs-1 mb-2"><i class="fa-solid fa-book"></i></div>
+          <h2 class="h5 text-navy">No Active Loans</h2>
+          <p class="mb-3">You currently do not have any borrowed books from the library.</p>
+          <a href="{% url 'catalogue_list' %}" class="btn btn-gold btn-sm">Browse Collection to Borrow</a>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Tab 2: Loan History -->
+    <div class="tab-pane fade" id="historyPane" role="tabpanel">
+      <div class="card-custom">
+        <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+          <h2 class="h5 mb-0 fw-bold text-navy">Past Borrowing Records</h2>
+          <span class="badge-status badge-success">Returned Books</span>
+        </div>
+
+        {% if loan_history %}
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Book Title</th>
+                  <th>Accession</th>
+                  <th>Borrowed</th>
+                  <th>Due Date</th>
+                  <th>Returned</th>
+                  <th>Overdue / Fines</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for past in loan_history %}
+                  <tr>
+                    <td>
+                      <div class="fw-bold">{{ past.copy.book.title }}</div>
+                      <small class="text-muted">{{ past.copy.book.author }}</small>
+                    </td>
+                    <td><span class="badge-accession">{{ past.copy.accession_number }}</span></td>
+                    <td>{{ past.borrow_date|date:"d M Y" }}</td>
+                    <td>{{ past.due_date|date:"d M Y" }}</td>
+                    <td><strong class="text-success">{{ past.return_date|date:"d M Y" }}</strong></td>
+                    <td>
+                      {% if past.fines.all %}
+                        {% for f in past.fines.all %}
+                          <div><strong class="{% if f.status == 'UNPAID' %}text-danger{% else %}text-success{% endif %}">₦{{ f.amount|intcomma }}</strong> ({{ f.get_status_display }})</div>
+                        {% endfor %}
+                      {% else %}
+                        <span class="text-muted">None (On Time)</span>
+                      {% endif %}
+                    </td>
+                    <td>
+                      <span class="badge-status badge-success"><i class="fa-solid fa-check"></i> Returned</span>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% else %}
+          <div class="text-center py-5 text-muted">
+            <p class="mb-0">No past borrowing history recorded yet.</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

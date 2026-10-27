@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Overdue Books &middot; Circulation Desk{% endblock %}
+
+{% block content %}
+<div class="row g-4 py-4">
+  <div class="col-lg-3">
+    {% include "staff/sidebar.html" with active_nav="overdue" %}
+  </div>
+
+  <div class="col-lg-9">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+      <div>
+        <h1 class="h3 fw-bold text-navy mb-1">Overdue Books Roster</h1>
+        <p class="text-muted small mb-0">Active loans that have passed their required return due dates.</p>
+      </div>
+      <div>
+        <a href="{% url 'staff_loans' %}" class="btn btn-secondary-custom btn-sm"><i class="fa-solid fa-book-open"></i> All Active Loans</a>
+      </div>
+    </div>
+
+    <!-- Guidance Alert: Overdue Books vs Fine Records -->
+    <div class="alert alert-warning border-warning-subtle shadow-sm mb-4 d-flex align-items-start gap-3">
+      <i class="fa-solid fa-triangle-exclamation fs-4 text-warning mt-1"></i>
+      <div>
+        <strong class="d-block text-navy mb-1">About Overdue Books vs. Fine Records:</strong>
+        <p class="small mb-1 text-dark">
+          <strong>Overdue Books (This Roster):</strong> Physical books currently checked out by students past their return dates. The estimated fines shown here accrue daily at ₦100/day while the copy remains unreturned.
+        </p>
+        <p class="small mb-0 text-muted">
+          Once the student brings the book to the <a href="{% url 'staff_return' %}" class="fw-bold text-navy">Return Desk</a>, the final overdue penalty is assessed and recorded on the <a href="{% url 'staff_fines' %}" class="fw-bold text-navy">Fine Records Ledger &rarr;</a> where cash receipts are entered.
+        </p>
+      </div>
+    </div>
+
+    <!-- Summary KPI Header Banner -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-6">
+        <div class="stat-card" style="border-left: 4px solid var(--danger);">
+          <span class="stat-label">Total Overdue Loans</span>
+          <div class="stat-value text-danger">{{ overdue_count }}</div>
+          <span class="small text-muted">Books requiring immediate return notices</span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="stat-card" style="border-left: 4px solid var(--warning);">
+          <span class="stat-label">Total Estimated Overdue Fines</span>
+          <div class="stat-value text-warning">₦{{ total_estimated|intcomma }}</div>
+          <span class="small text-muted">Dynamically accrued at ₦100/day (charged on return)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overdue Table -->
+    <div class="card-custom">
+      <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+        <h2 class="h5 mb-0 fw-bold text-navy">Overdue Loans (Prioritized by Days Delinquent)</h2>
+        <span class="badge-status badge-danger">! Delinquent Loans</span>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Borrower (Student)</th>
+              <th>Book Title &amp; Accession</th>
+              <th>Due Date</th>
+              <th>Days Late</th>
+              <th>Estimated Fine</th>
+              <th class="text-end">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for loan in loans %}
+              <tr>
+                <td>
+                  <div class="fw-bold">{{ loan.student.full_name }}</div>
+                  <small class="text-muted">Matric: {{ loan.student.matric_number|default:loan.student.email }}</small>
+                </td>
+                <td>
+                  <div class="fw-semibold">{{ loan.copy.book.title }}</div>
+                  <span class="badge-accession">{{ loan.copy.accession_number }}</span>
+                </td>
+                <td class="text-danger fw-bold">
+                  {{ loan.due_date|date:"d M Y" }}
+                </td>
+                <td>
+                  <span class="badge bg-danger text-white px-2 py-1">
+                    ! {{ loan.days_overdue }} days
+                  </span>
+                </td>
+                <td>
+                  <strong class="text-danger">₦{{ loan.estimated_fine|intcomma }}</strong>
+                </td>
+                <td class="text-end">
+                  <a href="{% url 'staff_return' %}?accession={{ loan.copy.accession_number }}" class="btn btn-sm btn-navy">
+                    <i class="fa-solid fa-inbox"></i> Process Return
+                  </a>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="6" class="text-center py-5 text-muted">
+                  <div class="fs-1 mb-2"><i class="fa-solid fa-gift"></i></div>
+                  <p class="mb-0">Excellent! There are no overdue books in the library at this time.</p>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      {% if is_paginated %}
+        <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-3">
+          <small class="text-muted">Showing page {{ page_obj.number }} of {{ paginator.num_pages }}</small>
+          <div class="btn-group btn-group-sm">
+            {% if page_obj.has_previous %}
+              <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-secondary">&laquo; Prev</a>
+            {% endif %}
+            {% if page_obj.has_next %}
+              <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-secondary">Next &raquo;</a>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

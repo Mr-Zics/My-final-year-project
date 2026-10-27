@@ -1,0 +1,235 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}UniLibrary &middot; University Library Management System{% endblock %}</title>
+  <meta name="description" content="UniLibrary - University Library Management System with automated book reservations and overdue notices.">
+
+  <!-- Local Vendored Bootstrap CSS (Offline, No CDN) -->
+  <link rel="stylesheet" href="{% static 'vendor/bootstrap.min.css' %}">
+
+  <!-- Local Vendored Font Awesome 6 (Offline, No CDN) -->
+  <link rel="stylesheet" href="{% static 'vendor/fontawesome/css/all.min.css' %}">
+
+  <!-- Design System CSS (Aligned with UniLibrary Design Reference) -->
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
+
+  <!-- Print and Greyscale Stylesheet -->
+  <link rel="stylesheet" href="{% static 'css/print.css' %}" media="print">
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <div class="page-wrapper">
+    <!-- Top Navigation Bar (UniLibrary Public & Student Navigation) -->
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-library" aria-label="Main Navigation">
+        <div class="site-container d-flex justify-content-between align-items-center">
+          <a class="navbar-brand-library" href="{% url 'home' %}" id="nav-brand-logo">
+            <img src="{% static 'img/logo.svg' %}" alt="UniLibrary Book Icon" width="28" height="28" class="me-2">
+            <span class="brand-text">UniLibrary</span>
+          </a>
+
+          <!-- Mobile Menu Toggle Button -->
+          <button class="navbar-toggler text-white border-light d-lg-none" type="button" id="mobileMenuBtn" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars fs-5"></i>
+          </button>
+
+          <!-- Desktop Nav Items -->
+          <div class="d-none d-lg-flex align-items-center gap-3" id="navLinksContainer">
+            <a href="{% url 'home' %}" class="nav-link-library {% if request.resolver_match.url_name == 'home' %}active{% endif %}" id="nav-link-home">Home</a>
+            <a href="{% url 'catalogue_list' %}" class="nav-link-library {% if 'catalogue' in request.path %}active{% endif %}" id="nav-link-catalogue">Catalogue</a>
+
+            {% if user.is_authenticated %}
+              {% if user.role == 'STUDENT' %}
+                <a href="{% url 'student_loans' %}" class="nav-link-library {% if 'student/loans' in request.path %}active{% endif %}" id="nav-link-loans">My Loans</a>
+                <a href="{% url 'student_reservations' %}" class="nav-link-library {% if 'student/reservations' in request.path %}active{% endif %}" id="nav-link-reservations">My Reservations</a>
+                <a href="{% url 'student_fines' %}" class="nav-link-library {% if 'student/fines' in request.path %}active{% endif %}" id="nav-link-fines">My Fines</a>
+                <a href="{% url 'student_dashboard' %}" class="nav-link-library {% if request.resolver_match.url_name == 'student_dashboard' %}active{% endif %}" id="nav-link-student">Dashboard</a>
+
+                <!-- Notification Bell -->
+                <a href="{% url 'student_notifications' %}" class="nav-icon-link position-relative ms-1" id="nav-bell" aria-label="Notifications" title="Notifications">
+                  <i class="fa-solid fa-bell fs-5"></i>
+                </a>
+              {% elif user.role == 'LIBRARIAN' %}
+                <a href="{% url 'staff_dashboard' %}" class="nav-link-library" id="nav-link-staff">Circulation Desk</a>
+              {% elif user.role == 'ADMINISTRATOR' %}
+                <a href="{% url 'admin_dashboard' %}" class="nav-link-library" id="nav-link-admin">Admin Portal</a>
+              {% endif %}
+
+              <!-- User Avatar Pill -->
+              <a href="{% if user.role == 'STUDENT' %}{% url 'student_profile' %}{% elif user.role == 'LIBRARIAN' %}{% url 'staff_dashboard' %}{% else %}{% url 'admin_dashboard' %}{% endif %}" class="user-avatar-pill ms-1 text-decoration-none" id="nav-user-menu" title="User Profile">
+                <span class="avatar-initials">{{ user.initials }}</span>
+                <span class="user-name-label">{{ user.full_name|default:user.email|truncatechars:18 }}</span>
+              </a>
+
+              <!-- POST Logout Form per Section 3 -->
+              <form method="POST" action="{% url 'logout' %}" class="d-inline ms-1">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-outline-light-custom py-1 px-2" id="nav-btn-logout">
+                  Logout
+                </button>
+              </form>
+            {% else %}
+              <div class="d-flex align-items-center gap-2 ms-2">
+                <a href="{% url 'login' %}" class="btn btn-sm btn-outline-light-custom" id="nav-btn-login">Login</a>
+                <a href="{% url 'register' %}" class="btn btn-sm btn-gold" id="nav-btn-register">Register</a>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Collapsible Mobile Menu Drawer -->
+        <div class="d-lg-none mt-2 pt-2 border-top border-secondary w-100 d-none" id="mobileMenuCollapse">
+          <div class="site-container d-flex flex-column gap-2 py-2">
+            <a href="{% url 'home' %}" class="nav-link-library" id="m-nav-home">Home</a>
+            <a href="{% url 'catalogue_list' %}" class="nav-link-library" id="m-nav-catalogue">Catalogue</a>
+            {% if user.is_authenticated %}
+              {% if user.role == 'STUDENT' %}
+                <a href="{% url 'student_dashboard' %}" class="nav-link-library">Dashboard</a>
+                <a href="{% url 'student_loans' %}" class="nav-link-library" id="m-nav-loans">My Loans</a>
+                <a href="{% url 'student_reservations' %}" class="nav-link-library" id="m-nav-reservations">My Reservations</a>
+                <a href="{% url 'student_fines' %}" class="nav-link-library">My Fines</a>
+                <a href="{% url 'student_notifications' %}" class="nav-link-library">Notifications</a>
+                <a href="{% url 'student_profile' %}" class="nav-link-library">My Profile</a>
+              {% elif user.role == 'LIBRARIAN' %}
+                <a href="{% url 'staff_dashboard' %}" class="nav-link-library">Librarian Desk</a>
+              {% elif user.role == 'ADMINISTRATOR' %}
+                <a href="{% url 'admin_dashboard' %}" class="nav-link-library">Admin Portal</a>
+              {% endif %}
+              <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-secondary-custom text-start w-100" id="m-nav-logout">Log out</button>
+              </form>
+            {% else %}
+              <a href="{% url 'login' %}" class="btn btn-sm btn-outline-light-custom text-center" id="m-nav-login">Login</a>
+              <a href="{% url 'register' %}" class="btn btn-sm btn-gold text-center" id="m-nav-register">Register</a>
+            {% endif %}
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Notification Messages -->
+    {% if messages %}
+      <div class="site-container mt-3">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- Main Content Area -->
+    <main class="site-container flex-grow-1" id="main-content">
+      {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="site-container">
+        <div class="d-flex justify-content-center align-items-center gap-2 mb-1">
+          <img src="{% static 'img/logo.svg' %}" alt="UniLibrary" width="20" height="20">
+          <strong class="text-white fs-6">UniLibrary</strong>
+        </div>
+        <p class="text-white-50 small mb-1">University Library Management System &middot; Learn &middot; Research &middot; Grow</p>
+        <p class="small text-muted">&copy; {% now "Y" %} Academic University Physical Library Circulation Desk &middot; Final-year project</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Local Vendored Bootstrap Bundle JS (Offline, No CDN) -->
+  <script src="{% static 'vendor/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- Vanilla JavaScript for Mobile Menu, Password Visibility, & Tab Switching -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile Navigation Drawer Toggle
+      var mobileBtn = document.getElementById('mobileMenuBtn');
+      var mobileMenu = document.getElementById('mobileMenuCollapse');
+      if (mobileBtn && mobileMenu) {
+        mobileBtn.addEventListener('click', function() {
+          mobileMenu.classList.toggle('d-none');
+        });
+      }
+
+      // Universal Password Visibility Toggle
+      document.querySelectorAll('.toggle-password-btn').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          var targetId = this.getAttribute('data-target');
+          var input = document.getElementById(targetId);
+          var icon = this.querySelector('.password-eye-icon');
+          if (input) {
+            if (input.type === 'password') {
+              input.type = 'text';
+              if (icon) icon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+              this.setAttribute('title', 'Hide password');
+            } else {
+              input.type = 'password';
+              if (icon) icon.innerHTML = '<i class="fa-solid fa-eye"></i>';
+              this.setAttribute('title', 'Show password');
+            }
+          }
+        });
+      });
+
+      // Universal Tab & Pill Switching
+      function activateTab(tabBtn) {
+        var targetSelector = tabBtn.getAttribute('data-bs-target') || tabBtn.getAttribute('href');
+        if (!targetSelector) return;
+        var targetPane = document.querySelector(targetSelector);
+        if (!targetPane) return;
+
+        // Deactivate other tabs in the same nav container
+        var navContainer = tabBtn.closest('.nav');
+        if (navContainer) {
+          navContainer.querySelectorAll('.nav-link').forEach(function(btn) {
+            btn.classList.remove('active');
+            btn.setAttribute('aria-selected', 'false');
+          });
+        }
+        tabBtn.classList.add('active');
+        tabBtn.setAttribute('aria-selected', 'true');
+
+        // Deactivate other tab-panes in the same tab-content container
+        var contentContainer = targetPane.closest('.tab-content');
+        if (contentContainer) {
+          contentContainer.querySelectorAll('.tab-pane').forEach(function(pane) {
+            pane.classList.remove('show', 'active');
+          });
+        }
+        targetPane.classList.add('show', 'active');
+      }
+
+      document.querySelectorAll('[data-bs-toggle="pill"], [data-bs-toggle="tab"]').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          activateTab(this);
+          var target = this.getAttribute('data-bs-target') || this.getAttribute('href');
+          if (target && target.startsWith('#') && history.replaceState) {
+            history.replaceState(null, null, target);
+          }
+        });
+      });
+
+      // Activate tab based on URL hash or ?tab= query parameter on load
+      if (window.location.hash) {
+        var matchingTab = document.querySelector('[data-bs-target="' + window.location.hash + '"], [href="' + window.location.hash + '"]');
+        if (matchingTab) activateTab(matchingTab);
+      }
+      var urlParams = new URLSearchParams(window.location.search);
+      var tabParam = urlParams.get('tab');
+      if (tabParam) {
+        var matchingParamTab = document.querySelector('#' + tabParam + '-tab, [data-bs-target="#' + tabParam + 'Pane"]');
+        if (matchingParamTab) activateTab(matchingParamTab);
+      }
+    });
+  </script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

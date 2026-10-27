@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ page_title }} &middot; UniLibrary Circulation Desk{% endblock %}
+
+{% block content %}
+<div class="row g-4 py-4 justify-content-center">
+  <!-- Left Staff Sidebar -->
+  <div class="col-lg-3">
+    {% include "staff/sidebar.html" with active_nav="books" %}
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="col-lg-9">
+    <div class="card-custom bg-white p-4 mb-4">
+      <!-- Title & Breadcrumb -->
+      <div class="d-flex justify-content-between align-items-center pb-3 mb-4 border-bottom flex-wrap gap-2">
+        <div>
+          <h1 class="h3 fw-bold text-navy mb-1">{{ page_title }}</h1>
+          <p class="text-muted small mb-0">
+            {% if is_edit %}
+              Update bibliographic metadata for {{ book.title }}.
+            {% else %}
+              Register a new bibliographic title and generate its initial shelf accession copies.
+            {% endif %}
+          </p>
+        </div>
+        <a href="{% url 'staff_book_list' %}" class="btn btn-outline-secondary btn-sm">
+          &larr; Back to Books List
+        </a>
+      </div>
+
+      <!-- Form Error Summary -->
+      {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+          {% for error in form.non_field_errors %}
+            <div><i class="fa-solid fa-xmark"></i> {{ error }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- Book Metadata Form -->
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="row g-3">
+          <!-- Title -->
+          <div class="col-md-12">
+            <label for="{{ form.title.id_for_label }}" class="form-label fw-semibold text-navy">
+              Book Title <span class="text-danger">*</span>
+            </label>
+            {{ form.title }}
+            {% if form.title.errors %}
+              <div class="text-danger small mt-1">{{ form.title.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Author -->
+          <div class="col-md-6">
+            <label for="{{ form.author.id_for_label }}" class="form-label fw-semibold text-navy">
+              Author(s) <span class="text-danger">*</span>
+            </label>
+            {{ form.author }}
+            {% if form.author.errors %}
+              <div class="text-danger small mt-1">{{ form.author.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- ISBN -->
+          <div class="col-md-6">
+            <label for="{{ form.isbn.id_for_label }}" class="form-label fw-semibold text-navy">
+              ISBN Identifier <span class="text-danger">*</span>
+            </label>
+            {{ form.isbn }}
+            {% if form.isbn.errors %}
+              <div class="text-danger small mt-1">{{ form.isbn.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Category -->
+          <div class="col-md-6">
+            <label for="{{ form.category.id_for_label }}" class="form-label fw-semibold text-navy">
+              Subject Department / Category <span class="text-danger">*</span>
+            </label>
+            {{ form.category }}
+            {% if form.category.errors %}
+              <div class="text-danger small mt-1">{{ form.category.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Cover Image Upload -->
+          <div class="col-md-6">
+            <label for="{{ form.cover_image.id_for_label }}" class="form-label fw-semibold text-navy">
+              Front Cover Image (Optional)
+            </label>
+            {{ form.cover_image }}
+            <small class="text-muted d-block mt-1">Accepts JPG, PNG. Displays uncropped in catalogue.</small>
+            {% if form.cover_image.errors %}
+              <div class="text-danger small mt-1">{{ form.cover_image.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Description / Synopsis -->
+          <div class="col-md-12">
+            <label for="{{ form.description.id_for_label }}" class="form-label fw-semibold text-navy">
+              Synopsis &amp; Description
+            </label>
+            {{ form.description }}
+            {% if form.description.errors %}
+              <div class="text-danger small mt-1">{{ form.description.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Add-Only Fields: Initial Copies & Shelf Location (Section 7.3) -->
+          {% if not is_edit %}
+            <div class="col-md-12">
+              <div class="p-3 rounded border bg-light mt-2">
+                <h2 class="h6 fw-bold text-navy mb-2">Initial Physical Inventory</h2>
+                <div class="row g-3">
+                  <div class="col-md-4">
+                    <label for="{{ form.num_copies.id_for_label }}" class="form-label fw-semibold text-navy">
+                      Initial Copies Count <span class="text-danger">*</span>
+                    </label>
+                    {{ form.num_copies }}
+                    <small class="text-muted">Generates accession numbers (e.g. C0001)</small>
+                    {% if form.num_copies.errors %}
+                      <div class="text-danger small mt-1">{{ form.num_copies.errors.0 }}</div>
+                    {% endif %}
+                  </div>
+                  <div class="col-md-8">
+                    <label for="{{ form.location.id_for_label }}" class="form-label fw-semibold text-navy">
+                      Physical Shelf Location
+                    </label>
+                    {{ form.location }}
+                    <small class="text-muted">e.g. Main Library, Shelf CS-1</small>
+                    {% if form.location.errors %}
+                      <div class="text-danger small mt-1">{{ form.location.errors.0 }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+
+          <!-- Submit Buttons -->
+          <div class="col-12 mt-4 pt-3 border-top d-flex gap-2 justify-content-end">
+            <a href="{% url 'staff_book_list' %}" class="btn btn-outline-secondary">
+              Cancel
+            </a>
+            <button type="submit" class="btn btn-navy px-4">
+              {% if is_edit %}Save Changes{% else %}Create Book &amp; Generate Copies{% endif %}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

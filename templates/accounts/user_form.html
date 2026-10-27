@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ action_title }} &middot; UniLibrary Admin{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center py-4">
+  <div class="col-lg-8">
+    <div class="card-custom p-4 p-md-5">
+      <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+        <div>
+          <h1 class="h4 mb-0 fw-bold text-navy">{{ action_title }}</h1>
+          <span class="text-muted small">Configure user account credentials and role permissions</span>
+        </div>
+        <a href="{% url 'admin_user_list' %}" class="btn btn-secondary-custom btn-sm">
+          &larr; Back to Users
+        </a>
+      </div>
+
+      <form method="POST" novalidate id="admin-user-form">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger py-2 small" role="alert">
+            {% for err in form.non_field_errors %}
+              <div>&bull; {{ err }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div class="row g-3 mb-4">
+          <!-- Full Name -->
+          <div class="col-md-12">
+            <label for="{{ form.full_name.id_for_label }}" class="form-label small fw-semibold text-navy">
+              Full Name <span class="text-danger">*</span>
+            </label>
+            {{ form.full_name }}
+            {% if form.full_name.errors %}
+              <div class="text-danger small mt-1">{{ form.full_name.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Email -->
+          <div class="col-md-6">
+            <label for="{{ form.email.id_for_label }}" class="form-label small fw-semibold text-navy">
+              Email Address <span class="text-danger">*</span>
+            </label>
+            {{ form.email }}
+            {% if form.email.errors %}
+              <div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Matric Number -->
+          <div class="col-md-6">
+            <label for="{{ form.matric_number.id_for_label }}" class="form-label small fw-semibold text-navy">
+              Matriculation Number
+            </label>
+            {{ form.matric_number }}
+            <div class="form-text small text-muted">Required if role is set to Student.</div>
+            {% if form.matric_number.errors %}
+              <div class="text-danger small mt-1">{{ form.matric_number.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Role -->
+          <div class="col-md-6">
+            <label for="{{ form.role.id_for_label }}" class="form-label small fw-semibold text-navy">
+              User Role <span class="text-danger">*</span>
+            </label>
+            {{ form.role }}
+            {% if form.role.errors %}
+              <div class="text-danger small mt-1">{{ form.role.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Password (Only on Add) -->
+          {% if form.password %}
+            <div class="col-md-6">
+              <label for="{{ form.password.id_for_label }}" class="form-label small fw-semibold text-navy">
+                Temporary Password <span class="text-danger">*</span>
+              </label>
+              {{ form.password }}
+              <div class="form-text small text-muted">Minimum 8 characters.</div>
+              {% if form.password.errors %}
+                <div class="text-danger small mt-1">{{ form.password.errors.0 }}</div>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          <!-- Active Status -->
+          <div class="col-12 mt-3">
+            <div class="form-check form-switch">
+              {{ form.is_active }}
+              <label class="form-check-label fw-semibold text-navy small" for="{{ form.is_active.id_for_label }}">
+                Account Active (User can log in)
+              </label>
+            </div>
+            {% if form.is_active.errors %}
+              <div class="text-danger small mt-1">{{ form.is_active.errors.0 }}</div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 pt-3 border-top">
+          <a href="{% url 'admin_user_list' %}" class="btn btn-secondary-custom">Cancel</a>
+          <button type="submit" class="btn btn-gold px-4">
+            Save User
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

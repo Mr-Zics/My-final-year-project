@@ -1,0 +1,30 @@
+{% load static %}
+<div class="card-custom p-3 bg-white" id="adminSidebar">
+  <div class="d-flex align-items-center gap-2 pb-3 mb-3 border-bottom">
+    <img src="{% static 'img/logo.svg' %}" alt="Logo" width="28" height="28">
+    <div>
+      <h2 class="h6 mb-0 fw-bold text-navy">Admin Portal</h2>
+      <small class="text-muted">System Administration</small>
+    </div>
+  </div>
+
+  <nav class="d-flex flex-column gap-1" aria-label="Admin Navigation">
+    <small class="text-muted text-uppercase fw-bold px-2 pt-1" style="font-size: 0.7rem; letter-spacing: 0.05em;">Administration</small>
+    <a href="{% url 'admin_dashboard' %}" class="btn btn-sm text-start {% if active_nav == 'dashboard' %}btn-navy active{% else %}btn-secondary-custom border-0{% endif %}" {% if active_nav == 'dashboard' %}style="border-left: 4px solid var(--gold);"{% endif %}>
+      <i class="fa-solid fa-chart-line"></i> System Overview
+    </a>
+    <a href="{% url 'admin_user_list' %}" class="btn btn-sm text-start {% if active_nav == 'users' %}btn-navy active{% else %}btn-secondary-custom border-0{% endif %}" {% if active_nav == 'users' %}style="border-left: 4px solid var(--gold);"{% endif %}>
+      <i class="fa-solid fa-users"></i> User Management
+    </a>
+
+    <small class="text-muted text-uppercase fw-bold px-2 pt-2" style="font-size: 0.7rem; letter-spacing: 0.05em;">Automation &amp; Maintenance</small>
+    <a href="{% url 'admin_daily_job' %}" class="btn btn-sm text-start {% if active_nav == 'job' %}btn-navy active{% else %}btn-secondary-custom border-0{% endif %}" {% if active_nav == 'job' %}style="border-left: 4px solid var(--gold);"{% endif %}>
+      <i class="fa-solid fa-stopwatch"></i> Daily Scheduled Job
+    </a>
+
+    <small class="text-muted text-uppercase fw-bold px-2 pt-2" style="font-size: 0.7rem; letter-spacing: 0.05em;">Intelligence &amp; Operations</small>
+    <a href="{% url 'reports_hub' %}" class="btn btn-sm text-start {% if active_nav == 'reports' %}btn-navy active{% else %}btn-secondary-custom border-0{% endif %}" {% if active_nav == 'reports' %}style="border-left: 4px solid var(--gold);"{% endif %}>
+      <i class="fa-solid fa-chart-pie"></i> Accountability Reports
+    </a>
+  </nav>
+</div>

@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Login &middot; UniLibrary Management System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center py-5">
+  <div class="col-xl-9 col-lg-10">
+    <div class="card-custom p-0 overflow-hidden shadow-lg border-0" style="border-radius: 14px;">
+      <div class="row g-0">
+        <!-- Left Brand Panel (Matches Screen 1 of UI Mockup) -->
+        <div class="col-md-5 d-none d-md-flex flex-column justify-content-between p-5 text-white" 
+             style="background: linear-gradient(135deg, rgba(14, 28, 48, 0.90) 0%, rgba(30, 58, 95, 0.92) 100%), url('{% static 'img/library_bg.jpg' %}') center/cover no-repeat; border-right: 3px solid var(--gold);">
+          <div>
+            <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-4" style="background: rgba(217, 154, 43, 0.25); border: 1px solid var(--gold); color: #F4DEB3; font-size: 0.82rem;">
+              <i class="fa-solid fa-landmark text-gold"></i> Academic Physical Library
+            </div>
+            <div class="d-flex align-items-center gap-3 mb-2">
+              <img src="{% static 'img/logo.svg' %}" alt="UniLibrary Logo" width="48" height="48">
+              <h1 class="h2 text-white mb-0" style="font-family: var(--font-heading); letter-spacing: -0.02em;">UniLibrary</h1>
+            </div>
+            <p class="text-white-50 fs-6">University Library Management System</p>
+          </div>
+
+          <div class="my-4">
+            <ul class="list-unstyled d-flex flex-column gap-3 small text-light mb-0">
+              <li class="d-flex align-items-center gap-2">
+                <span class="badge-status badge-success" style="font-size: 0.75rem;"><i class="fa-solid fa-check"></i></span> Automated queue reservations
+              </li>
+              <li class="d-flex align-items-center gap-2">
+                <span class="badge-status badge-info" style="font-size: 0.75rem;"><i class="fa-solid fa-star"></i></span> 48-hour pickup window alerts
+              </li>
+              <li class="d-flex align-items-center gap-2">
+                <span class="badge-status badge-warning" style="font-size: 0.75rem;"><i class="fa-solid fa-clock"></i></span> Automatic due date reminders
+              </li>
+            </ul>
+          </div>
+
+          <div class="pt-3 border-top border-secondary text-white-50 small">
+            <strong>Learn &middot; Research &middot; Grow</strong>
+          </div>
+        </div>
+
+        <!-- Right Login Form Panel -->
+        <div class="col-md-7 p-4 p-lg-5 bg-white d-flex flex-column justify-content-center">
+          <div class="mb-4">
+            <h2 class="h3 fw-bold text-navy mb-1" style="font-family: var(--font-heading);">Welcome</h2>
+            <p class="text-muted small">Sign in to your account to continue to UniLibrary.</p>
+          </div>
+
+          <form method="POST" action="{% url 'login' %}" novalidate id="login-form">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+              <div class="alert alert-danger py-2 small" role="alert" id="login-errors">
+                {% for err in form.non_field_errors %}
+                  <div>&bull; {{ err }}</div>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            <!-- Email or Matric Number Input -->
+            <div class="mb-3">
+              <label for="{{ form.identifier.id_for_label }}" class="form-label small fw-semibold text-navy">
+                Email or Matric Number <span class="text-danger">*</span>
+              </label>
+              {{ form.identifier }}
+              {% if form.identifier.errors %}
+                <div class="text-danger small mt-1">{{ form.identifier.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Password Input -->
+            <div class="mb-3">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <label for="{{ form.password.id_for_label }}" class="form-label small fw-semibold text-navy mb-0">
+                  Password <span class="text-danger">*</span>
+                </label>
+                <a href="#forgot" class="small text-muted text-decoration-none" title="Contact the circulation desk">Forgot password?</a>
+              </div>
+              <div class="input-group input-group-lg">
+                {{ form.password }}
+                <button class="btn btn-outline-secondary toggle-password-btn" type="button" data-target="{{ form.password.id_for_label }}" title="Show / Hide Password" aria-label="Toggle password visibility">
+                  <span class="password-eye-icon"><i class="fa-solid fa-eye"></i></span>
+                </button>
+              </div>
+              {% if form.password.errors %}
+                <div class="text-danger small mt-1">{{ form.password.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Remember Me Checkbox -->
+            <div class="mb-4 form-check">
+              {{ form.remember_me }}
+              <label class="form-check-label small text-muted" for="{{ form.remember_me.id_for_label }}">
+                Remember me on this computer
+              </label>
+            </div>
+
+            <!-- Submit Button (Matching Screen 1) -->
+            <div class="d-grid mb-3">
+              <button type="submit" class="btn btn-gold btn-lg py-2" id="btn-submit-login">
+                Login
+              </button>
+            </div>
+
+            <!-- Link to Register -->
+            <div class="text-center small text-muted pt-2 border-top">
+              Don't have an account? 
+              <a href="{% url 'register' %}" class="fw-bold" style="color: var(--navy);" id="link-to-register">Register as Student</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
